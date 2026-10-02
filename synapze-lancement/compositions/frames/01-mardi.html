@@ -180,7 +180,14 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         ground: "dark", x0: -1600, x1: 8000, orangeTo: X19, point: X19, clock: "",
         ticks: [[X17, "17:00"], [X18, "18:00"], [X19, "19:00"], [X20, "20:00"]],
       });
+      // the dot grid (trame 7 %) keeps its 48 px pitch on screen at every camera scale (P01 at 0.43, P02 at 1.6):
+      // the kit's grid is re-hosted on the stage, just under the cam, and travels with the line (see camMove).
+      // At cam(3000, 540, 1) it lands on exactly the kit's position, so the seam with the next frame matches.
       var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      // box trimmed to what this frame's travel needs (same pattern, same phase: left/top stay -2000 modulo 48);
+      // the full 20000 px box under a filtered cam stalls Chromium's raster at sub-pixel offsets
+      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "3888px", height: "1872px" });
       // past 19:00 the line is still orange in the opening; it turns grey (kit grey segment) while off screen
       var lineO = filEl(h.world, "fil-line", { left: X19, top: FIL.Y, width: 8000 - X19 });
       h.point.id = "f01-point"; h.clock.id = "f01-clock"; h.halo.id = "f01-halo";
@@ -221,31 +228,41 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 
       // marks of the line keep their screen size whatever the camera scale (the look of P01 / P04):
       // counter scale 1 / s, exactly, through an ease derived from the camera ease (no callbacks, seek-safe)
-      var hudScale = [h.point, h.clock, dots].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudScale = [h.point, h.clock].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
       var hudY = [h.orange, h.grey, lineO];
       var hudX = [ag.thread];
       gsap.set(h.clock, { transformOrigin: "50% 230px" });
       h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
-      gsap.set(dots, { transformOrigin: (2000 + 1600) + "px " + (2000 + FIL.Y) + "px" });
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt([PX0, PY, S0]));
       gsap.set(hudScale, { scale: 1 / S0 });
       gsap.set(hudY, { scaleY: 1 / S0 });
       gsap.set(hudX, { scaleX: 1 / S0 });
 
       var tl = gsap.timeline({ paused: true });
       function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
-      function inv(sA, sB, easeName) {
-        var E = gsap.parseEase(easeName), kA = 1 / sA, kB = 1 / sB;
-        return function (p) { return (1 / (sA + (sB - sA) * E(p)) - kA) / (kB - kA); };
-      }
-      function camMove(t0, dur, a, b, easeName) {
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      // the camera: world x (px), world y (py) and cam scale (s) may each have their own ease; the dot grid and the
+      // counter-scaled marks of the line follow through eases derived from those, so they stay exact at every frame
+      function camMove(t0, dur, a, b, ex, ey, es) {
         // a, b: [px, py, s]
-        ft(h.world, { x: 960 - a[0], y: 540 - a[1] }, { x: 960 - b[0], y: 540 - b[1], duration: dur, ease: easeName }, t0);
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
         if (a[2] !== b[2]) {
-          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: easeName }, t0);
-          var e = inv(a[2], b[2], easeName);
-          ft(hudScale, { scale: 1 / a[2] }, { scale: 1 / b[2], duration: dur, ease: e }, t0);
-          ft(hudY, { scaleY: 1 / a[2] }, { scaleY: 1 / b[2], duration: dur, ease: e }, t0);
-          ft(hudX, { scaleX: 1 / a[2] }, { scaleX: 1 / b[2], duration: dur, ease: e }, t0);
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
         }
       }
       // Scene 1: drift along the line, then the notch toward the 18:00 row (expo.inOut, blur 6)
@@ -253,9 +270,12 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       camMove(1.30, 0.20, [PX1, PY, S0], [PXC, PYC, S1], "expo.inOut");
       ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(6px)", duration: 0.10, ease: "power2.in" }, 1.30);
       ft(h.cam, { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.10, ease: "power2.out" }, 1.40);
-      // Scene 2: slow drift, then the whip right along the line (blur 0 → 12) into handoff_out
-      camMove(1.50, 1.90, [PXC, PYC, S1], [PXD, PYC, S1], "none");
-      camMove(3.40, 0.30, [PXD, PYC, S1], [PXW, PYW, SW], "power2.in");
+      // Scene 2: slow drift, then the whip right along the line (blur 0 → 12) into handoff_out.
+      // x: accelerating whip whose speed at 3.70 is the handoff's +5200 px/s (f(p) = a p² + b p³, f'(1) = 5200 · 0.3 / dx);
+      // y and scale land on the line (540, ×1) with zero speed, so the next frame only carries the horizontal whip.
+      var WV = 5200 * 0.30 / (PXW - PXD), WA = 3 - WV, WB = WV - 2;
+      var whipX = function (p) { return WA * p * p + WB * p * p * p; };
+      camMove(3.40, 0.30, [PXD, PYC, S1], [PXW, PYW, SW], whipX, "power2.inOut", "power2.inOut");
       ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(12px)", duration: 0.30, ease: "power2.in" }, 3.40);
 
       /* ---------------- Scene 1 (0.00 – 1.50) ---------------- */
@@ -279,7 +299,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // 0.60 « 19:00 » rolls above the point, digit by digit
       ft(h.clock, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out" }, 0.60);
       steps.forEach(function (st) {
-        ft(st.el, { y: 0 }, { y: -160, duration: 0.3, ease: "expo.out" }, 0.60 + st.col * 0.025 + st.k * 0.07);
+        ft(st.el, { y: 0 }, { y: -160, duration: 0.2, ease: "expo.out" }, 0.60 + st.col * 0.012 + st.k * 0.035);
       });
       // 1.00 the warm halo lights behind the point
       ft(h.halo, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.00);

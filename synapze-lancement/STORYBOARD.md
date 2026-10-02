@@ -52,7 +52,7 @@ patterns: ../patterns/STORYBOARD-CRAFT.md, ../patterns/PATTERNS.md
 - scene: La ligne du temps orange sur le bleu nuit ; l'agenda « Mardi » pend à 18:00 ; le point arrive à 19:00 ; le rendez-vous de 18:00 se coche et son étiquette part hors champ
 - duration: 3.70s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-mardi.html
 - voiceover: "Mardi, dix-neuf heures. Votre dernier rendez-vous vient de partir."
 - type: hook
