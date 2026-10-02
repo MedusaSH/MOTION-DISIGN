@@ -110,3 +110,24 @@ html,body{width:1920px;height:1080px;overflow:hidden;font-family:"DM Sans",sans-
 .scrim{position:absolute;left:0;right:0;bottom:0;height:300px;z-index:45;pointer-events:none}
 .dark .scrim{background:linear-gradient(transparent,rgba(14,22,36,.92) 45%,#0E1624)}
 .light .scrim{background:linear-gradient(transparent,rgba(241,235,222,.92) 45%,#F1EBDE)}
+/* WhatsApp iOS (copie de l'interface, sans logo) */
+.wa2{height:100%;display:flex;flex-direction:column;background:#EFEAE2;font-family:"DM Sans",-apple-system,sans-serif;color:#111}
+.wa2 .st{height:48px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 30px 4px;font:600 16px "DM Sans";background:#F6F5F3}
+.wa2 .hd{background:#F6F5F3;border-bottom:1px solid #DEDCD7;padding:8px 14px 10px;display:flex;align-items:center;gap:10px}
+.wa2 .back{color:#1DAB61;font:400 30px/1 "DM Sans";margin-right:2px}
+.wa2 .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#C9B79C,#A88F6E);display:grid;place-items:center;color:#fff;font:600 15px "DM Sans"}
+.wa2 .nm{font:600 17px "DM Sans";line-height:1.1}.wa2 .nm small{display:block;font:400 12px "DM Sans";color:#667781}
+.wa2 .ic{margin-left:auto;display:flex;gap:18px}.wa2 .ic i{width:22px;height:16px;border:2px solid #1DAB61;border-radius:4px;display:block}
+.wa2 .body{flex:1;padding:8px 0;background-color:#EFEAE2;background-image:radial-gradient(rgba(0,0,0,.035) 2px,transparent 2.5px),radial-gradient(rgba(0,0,0,.03) 1.5px,transparent 2px);background-size:34px 34px,22px 22px;background-position:0 0,11px 17px;overflow:hidden}
+.wa2 .pill{margin:8px auto;width:max-content;background:#fff;border-radius:8px;padding:4px 10px;font:500 12px "DM Sans";color:#54656F;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+.wa2 .sys{margin:6px 22px;background:#FFF3C4;border-radius:8px;padding:6px 10px;font:400 11.5px/1.35 "DM Sans";color:#54656F;text-align:center}
+.wa2 .b{position:relative;max-width:78%;margin:3px 12px;padding:6px 9px 18px;border-radius:9px;font:400 15.5px/1.32 "DM Sans";background:#fff;box-shadow:0 1px .5px rgba(11,20,26,.13);width:max-content}
+.wa2 .b.in{border-top-left-radius:0}.wa2 .b.out{background:#D9FDD3;margin-left:auto;border-top-right-radius:0}
+.wa2 .b .t{position:absolute;right:8px;bottom:3px;font:400 11px "DM Sans";color:#667781}
+.wa2 .b .t .k{color:#53BDEB;letter-spacing:-3px;margin-left:4px}
+.wa2 .b .t .k.g{color:#8696A0}
+.wa2 .typing{margin:3px 12px;background:#fff;border-radius:9px;border-top-left-radius:0;padding:10px 14px;width:max-content;display:flex;gap:5px}
+.wa2 .typing i{width:7px;height:7px;border-radius:50%;background:#8696A0}
+.wa2 .in-bar{background:#F6F5F3;padding:8px 12px 26px;display:flex;align-items:center;gap:12px;color:#1DAB61;font:400 26px "DM Sans"}
+.wa2 .in-bar .f{flex:1;height:34px;border-radius:17px;background:#fff;border:1px solid #E1DED8}
+.wa2 .in-bar .m{width:18px;height:26px;border:2.5px solid #1DAB61;border-radius:9px}
