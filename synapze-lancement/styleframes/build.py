@@ -43,12 +43,12 @@ def lock(date, time, notif="", grey=False):
     return f'<div class="lock" style="height:100%"><div class="d">{date}</div><div class="t">{time}</div>{n}</div>'
 
 
-def crm(fields, note=False, wave=False, title="Nouveau prospect", caret_on=None):
+def crm(fields, note=False, wave=False, title="Nouveau prospect", caret_on=None, brand=False):
     f = ""
     for i, (k, v) in enumerate(fields):
         car = '<span class="caret"></span>' if caret_on == i else ""
         f += f'<div class="field"><div class="k">{k}</div><div class="v{" on" if car else ""}">{v}{car}</div></div>'
-    side = '<div class="side"><div class="lg">Synapze</div><i class="on"></i><i></i><i></i><i></i><i></i></div>'
+    side = ('<div class="side"><div class="lg">Synapze</div>' if brand else '<div class="side"><div style="font:500 16px DM Mono;letter-spacing:2px;color:#9AA3B4;margin-bottom:8px">MON CRM</div>') + '<i class="on"></i><i></i><i></i><i></i><i></i></div>'
     if note:
         bars = "".join(f'<i style="height:{20 + (i * 37 % 70)}px"></i>' for i in range(30))
         left = (f'<div style="width:420px;margin-right:40px"><div class="lbl">Note vocale · après le RDV</div>'
@@ -63,25 +63,26 @@ def laptop(x, y, s=1, content="", cls=""):
     return f'<div {at(x, y, s, 0, "laptop sh " + cls)}><div class="scr">{content}</div></div>'
 
 
-EMPTY = [("Nom", ""), ("Foyer", ""), ("Besoins", ""), ("Budget", "")]
+EMPTY = [("Nom", ""), ("Date de naissance", ""), ("Ville", ""), ("Besoin", "")]
 
 
 def carnet(x, y, s=1, lines=4, r=-2, cls=""):
-    L = ["Lebrun · 18:00", "marié, 2 enfants", "mutuelle famille,", "hospitalisation ++",
+    L = ["Louis Lebrun · 18:00", "né le 10/10/1978,", "Paris 15e", "mutuelle santé famille",
          '<span class="arrow">→ conseil : garanties renforcées</span>']
     return f'<div {at(x, y, s, r, "carnet sh " + cls)}>{"<br>".join(L[:lines])}</div>'
 
 
 def dda(x, y, s=1, n=3, light=False, cursor=False, stamp=False, cls=""):
     rows = ["Besoins exprimés", "Situation familiale", "Budget", "Garanties proposées", "Justification du conseil"]
-    r = "".join(f'<div class="ln"><div class="ck{" on" if i < n else ""}"></div>{t}</div>' for i, t in enumerate(rows))
+    chip = '<span style="font:500 14px DM Mono;color:#F24E1E;background:#FBE3D9;padding:3px 8px;border-radius:4px;margin-left:auto">IA</span>' if light else ""
+    r = "".join(f'<div class="ln"><div class="ck{" on" if i < n else ""}"></div>{t}{chip if i < n else ""}</div>' for i, t in enumerate(rows))
     if light:
         bar = f'<div style="margin-top:28px;font:500 16px DM Mono;letter-spacing:2px;color:#5B6578">COMPLÉTUDE</div><div style="height:14px;border-radius:7px;background:#E8E0D0;margin-top:10px"><div style="height:100%;width:100%;border-radius:7px;background:#F24E1E"></div></div>'
-        head = '<div class="lbl" style="font:500 16px DM Mono;letter-spacing:2px;color:#5B6578">SYNAPZE · DDA</div><h3 style="font:400 44px DM Serif Display;color:#0E1624">Devoir de conseil</h3><div class="s">Louis Lebrun · Mutuelle famille</div>'
+        head = '<h3>Fiche de conseil · Santé Individuel</h3><div class="s">Louis Lebrun · remplie automatiquement</div>'
     else:
         bar = ""
         head = '<h3>Fiche de conseil · Mutuelle santé</h3><div class="s">Modèle_DDA_v3.docx</div>'
-    st = f'<div class="o stamp" style="right:60px;top:70px;transform:rotate(-6deg)">PISTE D\'AUDIT · HORODATÉE</div>' if stamp else ""
+    st = f'<div class="o stamp" style="right:60px;top:150px;transform:rotate(-6deg)">PISTE D\'AUDIT · HORODATÉE</div>' if stamp else ""
     cur = '<div class="cursor" style="left:96px;top:520px"></div>' if cursor else ""
     return f'<div {at(x, y, s, 0, "doc sh " + cls, "position:absolute")}>{head}{r}{bar}{st}{cur}</div>'
 
@@ -119,7 +120,7 @@ S["P06"] = page("dark",
     'Pas la <span class="trait">saisie.</span>')
 S["P07"] = page("dark",
     carnet(160, 60, .95, lines=5, r=0) +
-    laptop(1000, 80, .66, crm([("Nom", "Lebrun"), ("Foyer", "marié, 2 enfants"), ("Besoins", "mutuelle famille"), ("Budget", "")], caret_on=2)) +
+    laptop(1000, 80, .66, crm([("Nom", "Lebrun"), ("Date de naissance", "10/10/1978"), ("Ville", "Paris"), ("Besoin", "")], caret_on=2)) +
     f'<div {at(1060, 130, .66, 0, "laptop", "opacity:.0")}></div>',
     'Pourtant, vous <span class="box">retapez</span> vos notes, fiche par fiche.')
 S["P08"] = page("dark",
@@ -137,23 +138,21 @@ S["P11"] = page("black",
 S["P12"] = page("light",
     '<div class="o wave" style="left:510px;top:330px;height:260px">' +
     "".join(f'<i style="height:{30 + (i * 53 % 200)}px"></i>' for i in range(64)) + '</div>' +
-    '<div class="o rec sh" style="left:820px;top:660px">Enregistrement…</div>',
+    '<div class="o sh" style="left:800px;top:660px;background:#F24E1E;color:#fff;font:600 30px DM Sans;padding:22px 40px;border-radius:6px">🎙 Enregistrement…</div>',
     'Avec <span class="box">Synapze,</span> vous <span class="trait">parlez.</span>')
 S["P13"] = page("light",
-    laptop(160, 20, 1.22, crm([("Identité", "Louis Lebrun"), ("Foyer", "marié, 2 enfants"),
-                                ("Besoins", "mutuelle famille, hospitalisation"), ("Budget", "")],
-                               note=True, title="Louis Lebrun", caret_on=3)),
+    laptop(250, 20, 1.08, '<img src="../assets/ui/voice-note-fin.png" style="width:100%;height:100%;object-fit:cover;display:block">'),
     'Une note vocale après le rendez-vous, et la fiche client <span class="box">s\'écrit.</span>')
 S["P14"] = page("light",
     dda(410, 40, 1.0, n=5, light=True, stamp=True),
     'Le devoir de conseil se remplit <span class="box">tout seul,</span> traçable.')
 S["P15"] = page("light",
     phone(760, 30, 1.0, wa('<div class="pill">Samedi</div>' + CAM + REP)) +
-    laptop(1500, 640, .7, crm(EMPTY), cls="blur12"),
+    laptop(1500, 640, .7, crm(EMPTY, brand=True), cls="blur12"),
     'Sur WhatsApp, votre assistant répond à vos clients, <span class="box">jour et nuit.</span>')
 S["P16"] = page("light",
     agenda(90, 110, .5) + carnet(740, 70, .62, lines=5, r=-3) + phone(1580, 40, .5, lock("mardi 12", "19:05")) +
-    laptop(1250, 470, .48, crm([("Identité", "Louis Lebrun"), ("Foyer", "marié, 2 enfants"), ("Besoins", "mutuelle famille"), ("Budget", "à préciser")], title="Louis Lebrun")) +
+    laptop(1250, 470, .48, crm([("Nom", "Lebrun"), ("Date de naissance", "10/10/1978"), ("Ville", "Paris"), ("Prénom", "Louis")], title="Louis Lebrun", brand=True)) +
     '<div class="o cup blur8" style="left:120px;top:640px"></div>',
     'Elle le rend <span class="trait">imbattable.</span>')
 S["P17"] = page("dark",

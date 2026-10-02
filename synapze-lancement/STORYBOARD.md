@@ -19,7 +19,7 @@ patterns: ../patterns/STORYBOARD-CRAFT.md, ../patterns/PATTERNS.md
 - **Text** (readable without sound): every sentence of the voice is a `subtitle` at the bottom center (band y 890 to 980, nothing else in it) that arrives WORD BY WORD on the timestamps given in each frame (`word@seconds`, frame-local). Exactly ONE word or group per sentence sits in the `key-word-box` (named in the Scene lines as [boîte : …]). No other colored or glowing text. Typographic moments (the sentence IS the image, centered, 84 px at most): « Et si vous arrêtiez d'écrire ? » (frame 6) ; « Le courtier parle. L'IA fait tout le reste. » (frame 11).
 - **Peaks**: only the 4 peaks named as [trait : …] (saisie, lundi, parlez, imbattable): a thin accent stroke or a tapered brush stroke under THE key word. No giant word, no big box.
 - **One thing to look at**: in every shot the camera isolates the subject of the sentence and shows the whole only when it makes sense; a clear zoom in one direction, never a back-and-forth; side-by-side layouts with equal margins; no decor without meaning, no line crossing a sentence.
-- **Real interfaces** (frame.md, from recent screenshots): CRM Synapze (fiche prospect « Louis Lebrun », panneau « Une note vocale suffit. », forme d'onde orange, bouton « Enregistrement… »), panneau DDA de Synapze, WhatsApp (iPhone). Dessinés d'après la description du site en attendant les captures : À REMPLACER PAR DES CAPTURES RÉCENTES avant l'animation. Uncluttered, the same device in the whole film.
+- **Real interfaces** (frame.md, from recent screenshots): CRM Synapze, écran « Une note vocale suffit. » reproduit d'après la vidéo du site `assets/ui/voice-note-fr.mp4` (1440×810, 11 s) : barre latérale bleu nuit (Tableau de bord, Clients, Appels, Calendrier, Commissions, Contrats, Pilotage IA, Comparateur PDF, Emails), en-tête « CRM · PROSPECT », fiche « Louis Lebrun » (pastille LL orange, « LEAD », « Santé Individuel en souscription »), bouton « Enregistrement… », carte de transcription (forme d'onde, « 0:18 », « TRANSCRIPTION IA », citation entre « »), bloc « IDENTITÉ » aux champs remplis avec la puce « IA » et « REMPLIE AUTOMATIQUEMENT », frise d'étapes « Découverte · Qualification · Offres · Devis · Souscription · Signature · Converti ». Avant le pivot, le CRM montré est un outil générique sans marque. La fiche de conseil DDA est un document (pas d'écran Synapze connu). WhatsApp : à remplacer par une capture du chatbot. Uncluttered, the same device in the whole film.
 - **Motion grammar**: two speeds, gestures of 1 to 6 images (expo.out) and linear drifts that never stop; the 0.3 to 0.9 s range is kept for the camera and the cursor (expo, power3 or power4); elements arrive too big and blurred then settle, never faded in at their final size; no frozen hold (every hold names its living layer); no "effect" transition.
 - **Visible copy**: exactly the quoted copy of the Scene lines, nothing else.
 - **Negative list**: slideshow (everything at t=0), screensaver (many things floating), doubled object, colored text instead of the box, big sentence, giant word, abstract symbol, hesitating cursor, several objects moving during a seam, any hue other than the accent except real interfaces and tool-tile brand colors.
@@ -37,7 +37,7 @@ patterns: ../patterns/STORYBOARD-CRAFT.md, ../patterns/PATTERNS.md
 - Registres de texte : sous-titre mot à mot (chaque mot monte de 12 px, flou 6 → net en 0,08 s, expo.out) ; boîte du mot clé (fond orange qui s'ouvre de gauche à droite en 0,12 s derrière le mot, power3.out) ; trait de pic (pinceau effilé orange tracé sous le mot en 0,25 s, power2.out) ; moment typographique (DM Serif Display 84 px centré, mot à mot, chaque mot ×1,1 flou 8 → net en 0,1 s)
 - Rimes : l'horloge du téléphone « 19:00 » (0.70) revient « 19:05 » (35.20) ; la notification de samedi 21:14 (17.25) devient la conversation à laquelle l'assistant répond (31.11) ; la fiche DDA cochée à la main (15.20) se coche seule (27.78) ; la forme d'onde née du caret (21.70) respire sous le bouton de fin (41.00)
 
-**PARTITION CAMÉRA** (global times) : 0.00 atterrissage ×1,3 → ×1 sur l'Agenda · 1.30 cran vers la ligne 18:00 · 3.40 whip droite vers l'Ordinateur · 5.60 pull ×1,4 → ×0,8 (bureau, téléphone, tasse) · 7.20 push vers le Carnet · 9.30 cran ×1,8 sur le clavier · 10.20 pull en plan partagé Carnet | CRM · 12.90 tilt bas vers la fiche DDA · 15.95 whip gauche vers le Téléphone · 19.50 coupe franche (noir) · 21.83 flash clair · 23.70 pull de la forme d'onde au CRM entier · 26.40 cran bas vers le panneau DDA · 29.30 whip gauche vers le Téléphone · 32.70 pull au bureau entier · 36.00 implosion vers le centre · 36.45 carte de fin, dérive lente jusqu'à l'iris
+**PARTITION CAMÉRA** (global times) : 0.00 atterrissage ×1,3 → ×1 sur l'Agenda · 1.30 cran vers la ligne 18:00 · 3.40 whip droite vers l'Ordinateur · 5.60 pull ×1,4 → ×0,8 (bureau, téléphone, tasse) · 7.20 push vers le Carnet · 9.30 cran ×1,8 sur le clavier · 10.20 pull en plan partagé Carnet | CRM · 12.90 tilt bas vers la fiche DDA · 15.95 whip gauche vers le Téléphone · 19.50 coupe franche (noir) · 21.83 flash clair · 23.70 pull de la forme d'onde au CRM entier · 26.40 cran bas vers la fiche de conseil · 29.30 whip gauche vers le Téléphone · 32.70 pull au bureau entier · 36.00 implosion vers le centre · 36.45 carte de fin, dérive lente jusqu'à l'iris
 
 **VOIX** : timings in onsets.json ; silences over 0.4 s, each written as a shot with its silent action : 5.49 à 7.49 (le gag : l'horloge file de 19:00 à 22:47, la tasse se vide, le caret clignote toujours) · 20.91 à 22.06 (le caret efface la phrase, devient une barre de son, flash) · 40.75 à 43.80 (clic, tenue vivante, iris)
 
@@ -106,7 +106,7 @@ Word cues: Et@0.13 votre@0.24 deuxième@0.51 journée@0.93 commence@1.31 (silenc
 Scene 1 (0.00 à 1.80 s) : P3, l'ordinateur s'allume
   TEXTE ÉCRAN : subtitle « Et votre deuxième journée commence. » word by word from 0.13, [boîte : deuxième journée] at 0.51 ; écart synchro
   IMAGE DE DÉPART : handoff_in.
-  ÉTAPES : 0.00 à 0.20 fin du whip, l'ordinateur se pose (×1,1 flou → net) ; 0.40 écran noir avec reflet de la lampe ; 1.15 l'écran s'allume (0,15 s avant « commence ») : CRM, fiche « Nouveau prospect » qui s'ouvre d'un trait (clip-path 0,22 s power3.out) ; 1.40 les libellés Nom, Foyer, Besoins, Budget s'impriment (0,04 s d'écart), champs vides gris ; 1.60 le caret orange apparaît dans « Nom ».
+  ÉTAPES : 0.00 à 0.20 fin du whip, l'ordinateur se pose (×1,1 flou → net) ; 0.40 écran noir avec reflet de la lampe ; 1.15 l'écran s'allume (0,15 s avant « commence ») : CRM, fiche « Nouveau prospect » qui s'ouvre d'un trait (clip-path 0,22 s power3.out) ; 1.40 les libellés Nom, Date de naissance, Ville, Besoin s’impriment (0,04 s d'écart), champs vides gris ; 1.60 le caret orange apparaît dans « Nom ».
   PISTE CAMÉRA : 0.00 à 0.20 fin du whip expo.out ; dérive push +2 %/s sur l'écran.
   COUCHES ET PROFONDEUR : sujet l'écran ; fond le clavier et le bureau ; avant-plan la tasse floue coupée en bas à gauche ; couches animées 2.
   OBJET-PONT ET VECTEUR : le caret devient le sujet du gag (plan 4).
@@ -144,10 +144,10 @@ Word cues: Votre@0.09 métier@0.39 c'est@0.81 le@1.12 conseil@1.24 Pas@2.02 la@2
 Scene 1 (0.00 à 1.90 s) : P5, les notes du conseil
   TEXTE ÉCRAN : subtitle « Votre métier, c'est le conseil. » word by word from 0.09, [boîte : le conseil.] at 1.12 ; écart synchro
   IMAGE DE DÉPART : handoff_in.
-  ÉTAPES : 0.00 à 0.20 fin du push, le Carnet ouvert se pose (×1,1 → ×1) ; 0.25 « Lebrun · 18:00 » s'écrit à la main (Caveat, encre crème, tracé 0,3 s) ; 0.60 « marié, 2 enfants » ; 0.95 « mutuelle famille, hospitalisation ++ » ; 1.10 une flèche manuscrite « → conseil : garanties renforcées » (tracée 0,25 s, 0,02 s avant « conseil ») ; 1.50 la page dérive, le stylo posé en avant-plan.
+  ÉTAPES : 0.00 à 0.20 fin du push, le Carnet ouvert se pose (×1,1 → ×1) ; 0.25 « Louis Lebrun · 18:00 » s'écrit à la main (Caveat, encre crème, tracé 0,3 s) ; 0.60 « né le 10/10/1978, Paris 15e » ; 0.95 « mutuelle santé pour sa famille » ; 1.10 une flèche manuscrite « → conseil : garanties renforcées » (tracée 0,25 s, 0,02 s avant « conseil ») ; 1.50 la page dérive, le stylo posé en avant-plan.
   PISTE CAMÉRA : dérive x -14 px/s, rotation +0,3°/s (on lit la page).
   COUCHES ET PROFONDEUR : avant-plan le stylo flou coupé par le bord droit ; sujet les notes ; fond l'ordinateur flou à droite ; couches animées 2.
-  OBJET-PONT ET VECTEUR : la ligne « mutuelle famille » sera retapée au plan 7 ; vecteur : cran vers la droite, sur le clavier.
+  OBJET-PONT ET VECTEUR : ces lignes seront retapées au plan 7, puis dictées au plan 13 (les mêmes mots) ; vecteur : cran vers la droite, sur le clavier.
   SON : aucun (la voix ; le stylo gratte sous la musique).
   IMAGE CLÉ : 1.30 : le carnet ouvert, quatre lignes manuscrites et la flèche « → conseil », « Votre métier, c'est [le conseil.] » en bas.
 
@@ -164,12 +164,12 @@ Scene 2 (1.90 à 2.80 s) : P6, pas la saisie
 Scene 3 (2.80 à 5.80 s) : P7, retaper fiche par fiche
   TEXTE ÉCRAN : subtitle « Pourtant, vous retapez vos notes, fiche par fiche. » word by word from 2.87, [boîte : retapez] at 3.60 ; écart synchro
   IMAGE DE DÉPART : plan partagé, marges égales : le Carnet à gauche (x 160 à 900), la fiche du CRM à droite (x 1020 à 1760).
-  ÉTAPES : 2.80 à 3.20 pull power3.out vers le plan partagé ; 3.40 la ligne « Lebrun » du carnet s'éclaire ; 3.60 le caret orange retape « Lebrun » dans « Nom » lettre par lettre (0,05 s par lettre) ; 3.95 « 2 enfants » dans « Foyer » ; 4.20 « mutuelle famille » dans « Besoins » ; 4.60 la fiche remplie descend d'un cran ; 4.66 / 4.98 / 5.17 deux nouvelles fiches vides tombent par-dessus, chacune ×1,1 floue → posée (0,08 s), décalées de 6 px : une pile de trois ; 5.50 début du tilt vers le bas.
+  ÉTAPES : 2.80 à 3.20 pull power3.out vers le plan partagé ; 3.40 la ligne « Lebrun » du carnet s'éclaire ; 3.60 le caret orange retape « Lebrun » dans « Nom » lettre par lettre (0,05 s par lettre) ; 3.95 « 10/10/1978 » dans « Date de naissance » ; 4.20 « Paris » dans « Ville » ; 4.60 la fiche remplie descend d'un cran ; 4.66 / 4.98 / 5.17 deux nouvelles fiches vides tombent par-dessus, chacune ×1,1 floue → posée (0,08 s), décalées de 6 px : une pile de trois ; 5.50 début du tilt vers le bas.
   PISTE CAMÉRA : dérive x +10 px/s ; 5.50 à 5.80 tilt bas power3.in vers la fiche DDA, ×1,3, flou 0 → 8 px.
   COUCHES ET PROFONDEUR : sujet la fiche qui se remplit ; à gauche le carnet net mais secondaire ; fond la trame ; couches animées 3 (caret, fiches, dérive).
   OBJET-PONT ET VECTEUR : la pile de fiches glisse vers le bas et la dernière devient la fiche de conseil DDA du plan 8.
   SON : typing de 3.60 à 4.40 (volume 0,2) ; pop à 4.66 / 4.98 / 5.17 (les fiches).
-  IMAGE CLÉ : 4.30 : carnet à gauche, fiche à droite où le caret orange retape « mutuelle famille », « Pourtant, vous [retapez] vos notes, » en bas.
+  IMAGE CLÉ : 4.30 : carnet à gauche, fiche à droite où le caret orange retape « Paris », « Pourtant, vous [retapez] vos notes, » en bas.
 
 ## Frame 4: Case par case · 13.20 → 16.20
 
@@ -279,7 +279,7 @@ Scene 1 (0.00 à 2.45 s) : P11, le pivot
 - rules: stat-bars-and-fills, discrete-text-sequence, multi-phase-camera
 - world: light
 - handoff_in: à 0.00 : flash clair d'assemble.sh depuis (960, 540) au maximum ; sous le flash, une barre orange verticale de 8 × 120 px au centre (le caret devenu barre de son) ; aucun sous-titre
-- handoff_out: à 4.75 : cam(3400, 1800, 1.4) au milieu d'un cran vers le bas (expo.inOut), flou 6 px ; monde clair crème ; l'écran du CRM : panneau « Une note vocale suffit. » à gauche, fiche « Louis Lebrun » remplie à droite ; le panneau DDA entre par le bas ; sous-titre sorti ; trame bleu nuit 6 %
+- handoff_out: à 4.75 : cam(3400, 1800, 1.4) au milieu d'un cran vers le bas (expo.inOut), flou 6 px ; monde clair crème ; l'écran du CRM : panneau « Une note vocale suffit. » à gauche, fiche « Louis Lebrun » remplie à droite ; la fiche de conseil entre par le bas ; sous-titre sorti ; trame bleu nuit 6 %
 
 Word cues: Avec@0.11 Synapze@0.36 vous@0.87 parlez@1.12 Une@1.86 note@2.00 vocale@2.18 après@2.45 le@2.68 rendez-vous@2.77 et@3.48 la@3.57 fiche@3.67 client@3.90 s'écrit@4.18
 
@@ -296,16 +296,16 @@ Scene 1 (0.00 à 1.80 s) : P12, vous parlez
 Scene 2 (1.80 à 4.75 s) : P13, la fiche s'écrit
   TEXTE ÉCRAN : subtitle « Une note vocale après le rendez-vous, et la fiche client s'écrit. » word by word from 1.86, [boîte : s'écrit.] at 4.18 ; écart synchro
   IMAGE DE DÉPART : l'onde et le bouton au centre.
-  ÉTAPES : 1.75 à 2.30 pull power3.out : l'onde se range dans le panneau gauche du CRM (titre « Une note vocale suffit. », étiquette DM Mono « NOTE VOCALE · APRÈS LE RDV ») ; à droite la fiche « Louis Lebrun » vide ; 2.40 l'onde se fige en note enregistrée « 0:48 » ; 3.40 le caret orange part de la note et écrit seul : « Identité : Louis Lebrun » (3.48), « Foyer : marié, 2 enfants » (3.70), « Besoins : mutuelle famille, hospitalisation » (3.92), « Budget : à préciser » (4.10), chaque champ en 0,15 s ; 4.18 la fiche est complète, un liseré orange en fait le tour (0,2 s) ; 4.45 début du cran vers le bas.
-  PISTE CAMÉRA : 1.75 à 2.30 pull ×2,2 → ×1 ; dérive x -10 px/s ; 4.45 à 4.75 cran bas expo.inOut vers le panneau DDA, ×1,4, flou 6 px.
-  COUCHES ET PROFONDEUR : plan partagé à marges égales (note à gauche, fiche à droite) ; sujet la fiche ; fond l'écran ; couches animées 3 (caret, champs, dérive).
-  OBJET-PONT ET VECTEUR : les champs de la fiche alimentent le panneau DDA qui entre par le bas au plan 14 ; la fiche répond à la fiche vide du plan 3 (rime).
+  ÉTAPES : 1.75 à 2.30 pull power3.out : l'onde se range dans la carte de transcription du vrai écran Synapze (« CRM · PROSPECT », « Une note vocale suffit. », fiche « Louis Lebrun · LEAD · Santé Individuel en souscription », bouton « Enregistrement… ») ; le bloc « IDENTITÉ » en dessous, champs à « — » ; 2.40 « 0:18 » et « TRANSCRIPTION IA » ; 2.50 à 3.40 la citation s'écrit mot à mot : « Louis Lebrun, né le 10 octobre 1978, Paris 15e. Il cherche une mutuelle santé pour sa famille. » ; 3.48 à 4.18 les champs se remplissent seuls avec la puce « IA », 0,12 s d'écart : Civilité Monsieur, Prénom Louis, Nom Lebrun, Date de naissance 10/10/1978, Code postal 75015, Ville Paris (le champ actif s'éclaire en orange pâle, comme dans la vidéo du site) ; 4.18 « REMPLIE AUTOMATIQUEMENT » s'imprime à droite du bloc ; 4.45 début du cran vers le bas. Source : assets/ui/voice-note-fr.mp4 (on peut caler la vidéo elle-même dans l'écran, accélérée).
+  PISTE CAMÉRA : 1.75 à 2.30 pull ×2,2 → ×1 ; dérive x -10 px/s ; 4.45 à 4.75 cran bas expo.inOut vers la fiche de conseil, ×1,4, flou 6 px.
+  COUCHES ET PROFONDEUR : l'écran entier centré ; sujet la carte de transcription puis le bloc Identité ; fond l'écran ; couches animées 3 (caret, champs, dérive).
+  OBJET-PONT ET VECTEUR : la fiche remplie pousse la fiche de conseil qui entre par le bas au plan 14 ; la fiche répond à la fiche vide du plan 3 (rime).
   SON : typing de 3.48 à 4.20 (volume 0,15) ; ping à 4.18 (la fiche complète).
-  IMAGE CLÉ : 4.00 : le CRM Synapze, la note vocale à gauche, la fiche « Louis Lebrun » qui se remplit seule à droite, « …et la fiche client [s'écrit.] » en bas.
+  IMAGE CLÉ : 4.00 : le vrai écran Synapze, la transcription de la note vocale, le bloc Identité qui se remplit avec les puces « IA », « …et la fiche client [s'écrit.] » en bas.
 
 ## Frame 8: Tout seul, traçable · 26.70 → 29.65
 
-- scene: Le panneau DDA de Synapze : les cinq cases de la fiche de conseil se cochent seules, la complétude se remplit, un tampon « Piste d'audit horodatée » se pose
+- scene: La fiche de conseil du plan 8 revient : ses cinq cases se cochent seules, chacune avec la puce « IA » du CRM, la complétude se remplit, un tampon « Piste d'audit horodatée » se pose
 - duration: 2.95s
 - transition_in: cut
 - status: outline
@@ -316,20 +316,20 @@ Scene 2 (1.80 à 4.75 s) : P13, la fiche s'écrit
 - focal: les cases qui se cochent seules
 - rules: stat-bars-and-fills, svg-path-draw
 - world: light
-- handoff_in: à 0.00 : cam(3400, 1800, 1.4) au milieu d'un cran vers le bas (expo.inOut), flou 6 px ; monde clair crème ; l'écran du CRM : panneau « Une note vocale suffit. » à gauche, fiche « Louis Lebrun » remplie à droite ; le panneau DDA entre par le bas ; sous-titre sorti ; trame bleu nuit 6 %
-- handoff_out: à 2.95 : cam(2300, 640, 1.2) au sommet d'un whip vers la gauche-haut (-5000 px/s), flou 12 px ; monde clair ; le panneau DDA complet sort à droite ; le Téléphone entre au centre, WhatsApp ouvert ; sous-titre sorti ; trame 6 %
+- handoff_in: à 0.00 : cam(3400, 1800, 1.4) au milieu d'un cran vers le bas (expo.inOut), flou 6 px ; monde clair crème ; l'écran du CRM : panneau « Une note vocale suffit. » à gauche, fiche « Louis Lebrun » remplie à droite ; la fiche de conseil entre par le bas ; sous-titre sorti ; trame bleu nuit 6 %
+- handoff_out: à 2.95 : cam(2300, 640, 1.2) au sommet d'un whip vers la gauche-haut (-5000 px/s), flou 12 px ; monde clair ; la fiche de conseil complète sort à droite ; le Téléphone entre au centre, WhatsApp ouvert ; sous-titre sorti ; trame 6 %
 
 Word cues: Le@0.06 devoir@0.17 de@0.49 conseil@0.60 se@0.97 remplit@1.08 tout@1.46 seul@1.67 traçable@2.17
 
 Scene 1 (0.00 à 2.95 s) : P14, la fiche de conseil se remplit seule
   TEXTE ÉCRAN : subtitle « Le devoir de conseil se remplit tout seul, traçable. » word by word from 0.06, [boîte : tout seul,] at 1.46 ; écart synchro
   IMAGE DE DÉPART : handoff_in.
-  ÉTAPES : 0.00 à 0.15 fin du cran, le panneau « Devoir de conseil · DDA » se pose ; 0.30 les cinq mêmes lignes qu'au plan 8, cases vides ; 1.08 sur « remplit » les cases se cochent seules, de haut en bas, 0,12 s d'écart (1.08 à 1.56), sans curseur ; 1.10 la barre « Complétude » se remplit en même temps (scaleX 0 → 1, 0,5 s power2.out) ; 2.10 le tampon « PISTE D'AUDIT · HORODATÉE » (DM Mono, encre orange, cadre fin) fonce depuis la caméra (×4 flou 12 → ×1, rotation -6°, 0,2 s expo.out), contact à 2.17 ; 2.50 le panneau dérive ; 2.65 début du whip.
+  ÉTAPES : 0.00 à 0.15 fin du cran, la fiche « Fiche de conseil · Santé Individuel · Louis Lebrun » se pose (même mise en page qu'au plan 8, papier crème) ; 0.30 les cinq mêmes lignes qu'au plan 8, cases vides ; 1.08 sur « remplit » les cases se cochent seules, de haut en bas, 0,12 s d'écart (1.08 à 1.56), sans curseur, une puce « IA » à côté de chacune ; 1.10 la barre « Complétude » se remplit en même temps (scaleX 0 → 1, 0,5 s power2.out) ; 2.10 le tampon « PISTE D'AUDIT · HORODATÉE » (DM Mono, encre orange, cadre fin) fonce depuis la caméra (×4 flou 12 → ×1, rotation -6°, 0,2 s expo.out), contact à 2.17 ; 2.50 le panneau dérive ; 2.65 début du whip.
   PISTE CAMÉRA : dérive push +3 %/s ; 2.65 à 2.95 whip gauche-haut expo.in vers le Téléphone, flou 0 → 12 px.
   COUCHES ET PROFONDEUR : sujet les cases ; la barre ; le tampon devant le panneau ; fond la fiche floue au-dessus ; couches animées 3 (pic 3 au tampon).
   OBJET-PONT ET VECTEUR : la coche (signature 2) passe aux coches bleues de WhatsApp au plan 15 ; vecteur : whip gauche-haut, comme au frame 4.
   SON : click-soft à 1.08 / 1.20 / 1.32 / 1.44 / 1.56 (volume 0,15) ; pop à 2.17 (le tampon) ; whoosh-short à 2.70.
-  IMAGE CLÉ : 2.30 : le panneau DDA de Synapze, cinq cases cochées, la barre de complétude pleine, le tampon « Piste d'audit · horodatée » posé de biais, « …se remplit [tout seul,] traçable. » en bas.
+  IMAGE CLÉ : 2.30 : la fiche de conseil, cinq cases cochées avec leur puce « IA », la barre de complétude pleine, le tampon « Piste d'audit · horodatée » posé de biais, « …se remplit [tout seul,] traçable. » en bas.
 
 ## Frame 9: Jour et nuit · 29.65 → 32.95
 
@@ -344,7 +344,7 @@ Scene 1 (0.00 à 2.95 s) : P14, la fiche de conseil se remplit seule
 - focal: la bulle de réponse
 - rules: vertical-spring-ticker, depth-of-field-blur
 - world: light
-- handoff_in: à 0.00 : cam(2300, 640, 1.2) au sommet d'un whip vers la gauche-haut (-5000 px/s), flou 12 px ; monde clair ; le panneau DDA complet sort à droite ; le Téléphone entre au centre, WhatsApp ouvert ; sous-titre sorti ; trame 6 %
+- handoff_in: à 0.00 : cam(2300, 640, 1.2) au sommet d'un whip vers la gauche-haut (-5000 px/s), flou 12 px ; monde clair ; la fiche de conseil complète sort à droite ; le Téléphone entre au centre, WhatsApp ouvert ; sous-titre sorti ; trame 6 %
 - handoff_out: à 3.30 : cam(2900, 1500, 0.7) au milieu d'un pull power3.out sur le bureau clair entier ; le Téléphone en haut à gauche (conversation à 03:12) ; l'Ordinateur au centre avec la fiche remplie ; sous-titre sorti ; trame 6 %
 
 Word cues: Sur@0.09 WhatsApp@0.25 votre@0.72 assistant@0.99 répond@1.46 à@1.78 vos@1.83 clients@1.99 jour@2.57 et@2.78 nuit@2.89
