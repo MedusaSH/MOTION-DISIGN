@@ -1,0 +1,323 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f01-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
+    #f01-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f01-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f01-wrap .fil-ground.dark { background: #0E1624; }
+  #f01-wrap .fil-ground.light { background: #F1EBDE; }
+  #f01-wrap .fil-ground.black { background: #0A0F1A; }
+  #f01-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f01-wrap .light .fil-dots, #f01-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f01-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f01-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f01-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f01-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f01-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f01-wrap .fil-line.grey { background: #5B6578; }
+  #f01-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f01-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f01-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f01-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f01-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f01-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f01-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f01-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f01-wrap .on-light .fil-clock { color: #0E1624; }
+  #f01-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f01-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f01-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
+    #f01-wrap #f01-point, #f01-wrap #f01-clock, #f01-wrap #f01-halo, #f01-wrap #f01-thread,
+    #f01-wrap #f01-tk19, #f01-wrap #f01-lb19, #f01-wrap #f01-tk20, #f01-wrap #f01-lb20 { opacity: 0; }
+
+    /* clock: digit columns that roll (vertical ticker, one nested wrapper per step) */
+    #f01-wrap .f01-col { display: inline-block; height: 160px; overflow: hidden; vertical-align: top; }
+    #f01-wrap .f01-step { display: block; }
+    #f01-wrap .f01-dg { display: block; height: 160px; line-height: 160px; }
+    #f01-wrap .f01-colon { display: inline-block; height: 160px; line-height: 160px; vertical-align: top; }
+
+    /* hanging agenda « Mardi » (styleframe P01 / P02, sf.css .agenda) */
+    #f01-agw { width: 643.7px; height: 816.4px; }
+    #f01-wrap .f01-agenda { position: absolute; left: 0; top: 0; width: 820px; height: 1040px; box-sizing: border-box;
+      transform: scale(0.785); transform-origin: 0 0; background: #FBF7EE; border-radius: 10px; padding: 56px 64px; color: #0E1624;
+      box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
+    #f01-wrap .f01-agenda h1 { margin: 0 0 6px; font: 400 72px "DM Serif Display", serif; }
+    #f01-wrap .f01-date { font: 500 22px "DM Mono", monospace; color: #5B6578; letter-spacing: 2px; margin-bottom: 34px; }
+    #f01-wrap .f01-row { display: flex; align-items: center; gap: 24px; height: 74px; border-top: 1px solid #D9D0BF; font: 400 26px "DM Sans", sans-serif; }
+    #f01-wrap .f01-h { font: 500 22px "DM Mono", monospace; color: #5B6578; width: 90px; }
+    #f01-wrap .f01-ck { width: 30px; height: 30px; box-sizing: border-box; border: 2px solid #B9AF9C; border-radius: 6px; position: relative; flex: none; }
+    #f01-wrap .f01-ck.on { border-color: #F24E1E; }
+    #f01-wrap .f01-ck.on::after { content: ""; position: absolute; left: 7px; top: 1px; width: 9px; height: 17px; box-sizing: content-box;
+      border: solid #F24E1E; border-width: 0 4px 4px 0; transform: rotate(42deg); }
+    #f01-wrap .f01-ckb { position: absolute; left: -2px; top: -2px; width: 30px; height: 30px; box-sizing: border-box;
+      border: 2px solid #F24E1E; border-radius: 6px; opacity: 0; }
+    #f01-wrap .f01-ckm { position: absolute; left: 7px; top: 1px; width: 13px; height: 21px; transform: rotate(42deg); transform-origin: 50% 50%; }
+    #f01-wrap .f01-leg1 { position: absolute; left: 0; bottom: 0; width: 13px; height: 4px; background: #F24E1E; transform-origin: 0 50%; opacity: 0; }
+    #f01-wrap .f01-leg2 { position: absolute; right: 0; bottom: 0; width: 4px; height: 21px; background: #F24E1E; transform-origin: 50% 100%; opacity: 0; }
+    #f01-wrap .f01-tab { background: #F6E7C9; border-left: 6px solid #F24E1E; padding: 10px 18px; font: 600 24px "DM Sans", sans-serif;
+      color: #0E1624; border-radius: 4px; white-space: nowrap; }
+
+    /* foreground: one blurred graduation (×2.5) passing low left */
+    #f01-fg { position: absolute; left: 0; top: 0; width: 5px; height: 70px; background: rgba(241,235,222,.55);
+      filter: blur(5px); opacity: 0; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box) */
+    #f01-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(transparent, rgba(14,22,36,.92) 45%, #0E1624); }
+    #root .f01-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #F1EBDE; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+    #root .f01-w { display: inline-block; opacity: 0; }
+    #root .f01-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f01-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f01-kbox .f01-w { position: relative; }
+  </style>
+
+  <div id="root" data-composition-id="01-mardi" data-width="1920" data-height="1080" data-duration="3.7">
+    <div id="f01-bg" class="clip" data-start="0" data-duration="3.7" data-track-index="0"></div>
+    <div id="f01-wrap"></div>
+
+    <!-- the agenda page (moved under the line by filHang) -->
+    <div id="f01-agw">
+      <div class="f01-agenda">
+        <h1>Mardi</h1>
+        <div class="f01-date">MARDI 12 · SEMAINE 42</div>
+        <div class="f01-row"><div class="f01-h">14:00</div><div class="f01-ck on" style="opacity:.45"></div><span style="opacity:.55">Point portefeuille</span></div>
+        <div class="f01-row"><div class="f01-h">15:30</div><div class="f01-ck on" style="opacity:.45"></div><span style="opacity:.55">Signature Martin · auto</span></div>
+        <div class="f01-row"><div class="f01-h">16:30</div><div class="f01-ck on" style="opacity:.45"></div><span style="opacity:.55">Appel assureur</span></div>
+        <div class="f01-row"><div class="f01-h">18:00</div>
+          <div class="f01-ck"><div class="f01-ckb" id="f01-ckb"></div><div class="f01-ckm"><i class="f01-leg1" id="f01-leg1"></i><i class="f01-leg2" id="f01-leg2"></i></div></div>
+          <div class="f01-tab" id="f01-tab">RDV M. Lebrun · mutuelle famille</div></div>
+      </div>
+    </div>
+
+    <div id="f01-fg"></div>
+    <div id="f01-scrim"></div>
+
+    <div class="f01-sub" id="f01-s1"><span class="f01-w" data-cue="0.03">Mardi,</span> <span class="f01-kbox"><i class="f01-kbg" id="f01-k1"></i><span class="f01-w" data-cue="0.67">dix-neuf</span> <span class="f01-w" data-cue="0.99">heures.</span></span></div>
+    <div class="f01-sub" id="f01-s2"><span class="f01-w" data-cue="1.58">Votre</span> <span class="f01-w" data-cue="1.83">dernier</span> <span class="f01-w" data-cue="2.19">rendez-vous</span> <span class="f01-w" data-cue="2.74">vient</span> <span class="f01-w" data-cue="3.00">de</span> <span class="f01-kbox"><i class="f01-kbg" id="f01-k2"></i><span class="f01-w" data-cue="3.10">partir.</span></span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "01-mardi";
+      var DUR = 3.7;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world ---------------- */
+      var X17 = FIL.hx(17), X18 = FIL.hx(18), X19 = FIL.hx(19), X20 = FIL.hx(20);
+      var h = filBuild($("f01-wrap"), {
+        ground: "dark", x0: -1600, x1: 8000, orangeTo: X19, point: X19, clock: "",
+        ticks: [[X17, "17:00"], [X18, "18:00"], [X19, "19:00"], [X20, "20:00"]],
+      });
+      var dots = h.world.querySelector(".fil-dots");
+      // past 19:00 the line is still orange in the opening; it turns grey (kit grey segment) while off screen
+      var lineO = filEl(h.world, "fil-line", { left: X19, top: FIL.Y, width: 8000 - X19 });
+      h.point.id = "f01-point"; h.clock.id = "f01-clock"; h.halo.id = "f01-halo";
+      h.ticks[2][0].id = "f01-tk19"; h.ticks[2][1].id = "f01-lb19";
+      h.ticks[3][0].id = "f01-tk20"; h.ticks[3][1].id = "f01-lb20";
+
+      // clock « 19:00 » as rolling digit columns (vertical ticker: nested wrappers, one per step, additive)
+      var COLS = [["0", "1"], ["7", "8", "9"], null, ["4", "5", "0"], ["8", "9", "0"]];
+      var steps = [];
+      COLS.forEach(function (items, ci) {
+        if (!items) { var c = document.createElement("span"); c.className = "f01-colon"; c.textContent = ":"; h.clock.appendChild(c); return; }
+        var col = document.createElement("span"); col.className = "f01-col";
+        var inner = col;
+        for (var s = 0; s < items.length - 1; s++) {
+          var w = document.createElement("span"); w.className = "f01-step"; inner.appendChild(w); inner = w;
+          steps.push({ el: w, col: ci, k: s });
+        }
+        items.forEach(function (d) { var e = document.createElement("span"); e.className = "f01-dg"; e.textContent = d; inner.appendChild(e); });
+        h.clock.appendChild(col);
+      });
+
+      // the agenda hangs at 18:00
+      var AG_LEN = 115;
+      var ag = filHang(h.world, X18, $("f01-agw"), { len: AG_LEN });
+      ag.thread.id = "f01-thread";
+      h.world.appendChild(h.point); h.world.appendChild(h.clock);
+
+      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
+      var S0 = 520 / 1200;                  // P01: one hour = 520 px on screen
+      var PX0 = 1612, PY = 540, VX1 = 120;  // drift +120 px/s along the line
+      var PX1 = PX0 + VX1 * 1.30;
+      var S1 = 1.6, PXC = 1297, PYC = 109;  // P02: the 18:00 row of the agenda, close
+      var PXD = PXC + 12 * 1.90;            // drift +12 px/s until the whip
+      var PXW = 3000, PYW = 540, SW = 1;    // handoff_out
+      filCamSet(h, PX0, PY, S0);
+      gsap.set(h.world, { x: 960 - PX0, y: 540 - PY });
+      gsap.set(h.cam, { scale: S0, filter: "blur(0px)" });
+
+      // marks of the line keep their screen size whatever the camera scale (the look of P01 / P04):
+      // counter scale 1 / s, exactly, through an ease derived from the camera ease (no callbacks, seek-safe)
+      var hudScale = [h.point, h.clock, dots].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudY = [h.orange, h.grey, lineO];
+      var hudX = [ag.thread];
+      gsap.set(h.clock, { transformOrigin: "50% 230px" });
+      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      gsap.set(dots, { transformOrigin: (2000 + 1600) + "px " + (2000 + FIL.Y) + "px" });
+      gsap.set(hudScale, { scale: 1 / S0 });
+      gsap.set(hudY, { scaleY: 1 / S0 });
+      gsap.set(hudX, { scaleX: 1 / S0 });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function inv(sA, sB, easeName) {
+        var E = gsap.parseEase(easeName), kA = 1 / sA, kB = 1 / sB;
+        return function (p) { return (1 / (sA + (sB - sA) * E(p)) - kA) / (kB - kA); };
+      }
+      function camMove(t0, dur, a, b, easeName) {
+        // a, b: [px, py, s]
+        ft(h.world, { x: 960 - a[0], y: 540 - a[1] }, { x: 960 - b[0], y: 540 - b[1], duration: dur, ease: easeName }, t0);
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: easeName }, t0);
+          var e = inv(a[2], b[2], easeName);
+          ft(hudScale, { scale: 1 / a[2] }, { scale: 1 / b[2], duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: 1 / a[2] }, { scaleY: 1 / b[2], duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: 1 / a[2] }, { scaleX: 1 / b[2], duration: dur, ease: e }, t0);
+        }
+      }
+      // Scene 1: drift along the line, then the notch toward the 18:00 row (expo.inOut, blur 6)
+      camMove(0, 1.30, [PX0, PY, S0], [PX1, PY, S0], "none");
+      camMove(1.30, 0.20, [PX1, PY, S0], [PXC, PYC, S1], "expo.inOut");
+      ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(6px)", duration: 0.10, ease: "power2.in" }, 1.30);
+      ft(h.cam, { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.10, ease: "power2.out" }, 1.40);
+      // Scene 2: slow drift, then the whip right along the line (blur 0 → 12) into handoff_out
+      camMove(1.50, 1.90, [PXC, PYC, S1], [PXD, PYC, S1], "none");
+      camMove(3.40, 0.30, [PXD, PYC, S1], [PXW, PYW, SW], "power2.in");
+      ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(12px)", duration: 0.30, ease: "power2.in" }, 3.40);
+
+      /* ---------------- Scene 1 (0.00 – 1.50) ---------------- */
+      // 0.00 → 0.27 the agenda falls (×1.15, blur 8) and catches at 18:00, swings 2° once, then drifts 1°
+      ft(ag.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, 0);
+      ft(ag.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.15);
+      ft(ag.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.15);
+      ft(ag.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.27);
+      ft(ag.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.47);
+      ft(ag.hang, { rotation: 0 }, { rotation: 1, duration: 0.6, ease: "sine.inOut" }, 1.20);
+      ft(ag.hang, { rotation: 1 }, { rotation: -0.6, duration: 0.8, ease: "sine.inOut" }, 1.80);
+      ft(ag.hang, { rotation: -0.6 }, { rotation: 0.4, duration: 0.8, ease: "sine.inOut" }, 2.60);
+      // 0.30 graduations 19:00 and 20:00 print (0.04 s apart)
+      [[h.ticks[2], 0.30], [h.ticks[3], 0.34]].forEach(function (p) {
+        ft(p[0][0], { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power3.out" }, p[1]);
+        ft(p[0][1], { opacity: 0, y: 14, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.16, ease: "power3.out" }, p[1]);
+      });
+      // 0.45 the point slides in from the left along the line and lands on 19:00
+      ft(h.point, { x: -700 }, { x: 0, duration: 0.25, ease: "expo.out" }, 0.45);
+      ft(h.point, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.45);
+      // 0.60 « 19:00 » rolls above the point, digit by digit
+      ft(h.clock, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out" }, 0.60);
+      steps.forEach(function (st) {
+        ft(st.el, { y: 0 }, { y: -160, duration: 0.3, ease: "expo.out" }, 0.60 + st.col * 0.025 + st.k * 0.07);
+      });
+      // 1.00 the warm halo lights behind the point
+      ft(h.halo, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.00);
+      // foreground: a blurred graduation (×2.5) crosses low left, faster than the line (parallax)
+      ft($("f01-fg"), { x: 760, y: 690 }, { x: 300, duration: 1.0, ease: "none" }, 0.30);
+      ft($("f01-fg"), { opacity: 0 }, { opacity: 0.5, duration: 0.2, ease: "power2.out" }, 0.30);
+      ft($("f01-fg"), { x: 300 }, { x: -500, duration: 0.2, ease: "expo.in" }, 1.30);
+
+      /* ---------------- Scene 2 (1.50 – 3.70) ---------------- */
+      // off screen during the close-up: the line past 19:00 becomes the grey of the evening to come
+      tl.set(lineO, { opacity: 0 }, 2.40);
+      var tab = $("f01-tab");
+      // 2.19 the appointment label lifts
+      ft(tab, { y: 0, scale: 1, filter: "drop-shadow(0px 0px 0px rgba(0,0,0,0)) blur(0px)" },
+        { y: -4, scale: 1.02, filter: "drop-shadow(0px 6px 10px rgba(14,22,36,0.28)) blur(0px)", duration: 0.08, ease: "power3.out" }, 2.19);
+      // 2.95 the orange tick is drawn in the box
+      ft($("f01-ckb"), { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 2.95);
+      ft($("f01-leg1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.06, ease: "power2.in" }, 2.95);
+      ft($("f01-leg2"), { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.09, ease: "power3.out" }, 3.01);
+      // 3.00 → 3.15 on « partir » the label flies left out of frame
+      ft(tab, { x: 0, rotation: 0, filter: "drop-shadow(0px 6px 10px rgba(14,22,36,0.28)) blur(0px)" },
+        { x: -900, rotation: -8, filter: "drop-shadow(0px 6px 10px rgba(14,22,36,0.28)) blur(14px)", duration: 0.15, ease: "power2.in" }, 3.00);
+
+      /* ---------------- subtitles: word by word, one key-word box per sentence ---------------- */
+      ["f01-s1", "f01-s2"].forEach(function (s) {
+        Array.prototype.forEach.call($(s).querySelectorAll(".f01-w"), function (w) {
+          var cue = parseFloat(w.getAttribute("data-cue"));
+          ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+        });
+      });
+      ft($("f01-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 0.62);
+      ft($("f01-k2"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 3.04);
+      ft($("f01-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 1.40);
+      ft($("f01-s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 3.40);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>
