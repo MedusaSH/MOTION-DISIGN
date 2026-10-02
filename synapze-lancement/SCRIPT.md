@@ -9,7 +9,7 @@ Non utilisé : l'essai gratuit (non confirmé sur le site), les chiffres du blog
 
 ---
 
-## Version A : « La deuxième journée »
+## Version retenue : A, « La deuxième journée »
 
 Angle : le courtier finit ses rendez-vous, puis passe sa soirée à écrire. Synapze lui retire l'écriture.
 
@@ -22,7 +22,7 @@ Angle : le courtier finit ses rendez-vous, puis passe sa soirée à écrire. Syn
 | 5. Solution | 27-40 s | Avec Synapze, vous parlez. Une note vocale après le rendez-vous, et la fiche client s'écrit. Le devoir de conseil se remplit tout seul, traçable. Sur WhatsApp, votre assistant répond à vos clients, jour et nuit. L'IA ne remplace pas le courtier. Elle le rend imbattable. | Vraie interface : forme d'onde orange, fiche « Louis Lebrun » qui se remplit ; score de complétude DDA ; conversation WhatsApp à 3 h du matin. |
 | 6. Marque + CTA | 40-45 s | Synapze. Le courtier parle, l'IA fait tout le reste. Demandez votre démo. | Logo « • Synapze • », bouton orange « Demander une démo », synapze.eu. |
 
-Texte à coller dans ElevenLabs (111 mots) :
+Texte à coller dans ElevenLabs (111 mots). « Synapze » y est écrit « Synapse » pour que la voix dise un s ; l'écran garde « Synapze ».
 
 ```
 Mardi, dix-neuf heures. Votre dernier rendez-vous vient de partir. Et votre deuxième journée commence.
@@ -34,55 +34,18 @@ Et le prospect qui vous écrit samedi soir... attend lundi.
 
 Et si vous arrêtiez d'écrire ?
 
-Avec Synapze, vous parlez.
+Avec Synapse, vous parlez.
 Une note vocale après le rendez-vous, et la fiche client s'écrit.
 Le devoir de conseil se remplit tout seul, traçable.
 Sur WhatsApp, votre assistant répond à vos clients, jour et nuit.
 L'IA ne remplace pas le courtier. Elle le rend imbattable.
 
-Synapze. Le courtier parle, l'IA fait tout le reste. Demandez votre démo.
+Synapse. Le courtier parle, l'IA fait tout le reste. Demandez votre démo.
 ```
 
 ---
 
-## Version B : « Courtier, pas secrétaire »
+## Décisions
 
-Angle : un seul client, Monsieur Martin, suivi du post-it à la souscription. Plus concret, plus factuel.
-
-| Temps | Durée | Texte dit | À l'écran |
-|---|---|---|---|
-| 1. Accroche | 0-6 s | Lundi, neuf heures. Monsieur Martin appelle pour sa mutuelle. Vous notez. Sur un post-it. | Téléphone qui sonne, « M. Martin », une main griffonne sur un post-it jaune. |
-| 2. Gag muet | 6-9 s | *(silence)* | Le post-it se décolle et glisse derrière le bureau. |
-| 3. Diagnostic | 9-24 s | Le problème, ce n'est pas votre conseil. C'est tout ce qui vient après. Quinze heures de saisie par semaine. Trois devis à comparer, à la main, dans Excel. Et une fiche de conseil à remplir... pour chaque dossier. | Compteur « 15 h / semaine » ; trois PDF de devis et un tableur aux colonnes qui ne s'alignent pas ; une pile de fiches DDA qui monte. |
-| 4. Pivot | 24-27 s | Vous êtes courtier. Pas secrétaire. | Noir, la phrase seule, 1,5 s de silence. |
-| 5. Solution | 27-41 s | Synapze écoute vos appels et remplit la fiche. Le devoir de conseil est prêt, avec sa piste d'audit. Les devis sont comparés, notés, prêts à présenter. Et vos clients ont enfin une réponse sur WhatsApp, même le dimanche. Hébergé en France. En place en quarante-huit heures. | Fiche « Martin » qui se remplit pendant l'appel ; fiche DDA horodatée ; ComparOffer qui classe les trois devis ; WhatsApp le dimanche. |
-| 6. Marque + CTA | 41-45 s | Synapze. Vous parlez. L'IA fait tout le reste. Demandez votre démo. | Logo, bouton orange « Demander une démo », synapze.eu. |
-
-Texte à coller dans ElevenLabs (110 mots) :
-
-```
-Lundi, neuf heures. Monsieur Martin appelle pour sa mutuelle. Vous notez. Sur un post-it.
-
-Le problème, ce n'est pas votre conseil. C'est tout ce qui vient après.
-Quinze heures de saisie par semaine.
-Trois devis à comparer, à la main, dans Excel.
-Et une fiche de conseil à remplir... pour chaque dossier.
-
-Vous êtes courtier. Pas secrétaire.
-
-Synapze écoute vos appels et remplit la fiche.
-Le devoir de conseil est prêt, avec sa piste d'audit.
-Les devis sont comparés, notés, prêts à présenter.
-Et vos clients ont enfin une réponse sur WhatsApp, même le dimanche.
-Hébergé en France. En place en quarante-huit heures.
-
-Synapze. Vous parlez. L'IA fait tout le reste. Demandez votre démo.
-```
-
----
-
-## À trancher
-
-- Prononciation de « Synapze » (« Si-napz » ?) : à fixer dans ElevenLabs (dictionnaire de prononciation) avant la voix.
-- Version B : « Quinze heures de saisie par semaine » vient du tableau Avant/Après du site, sans source. À garder seulement si Synapze l'assume.
-- Version B : la comparaison de devis (ComparOffer) n'est que dans le plan Business.
+- Version A retenue (version B abandonnée).
+- Prononciation : « Synapze » se dit comme il s'écrit, avec un s à la place du z (« Synapse »).
