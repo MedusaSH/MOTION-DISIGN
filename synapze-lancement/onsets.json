@@ -1,0 +1,1044 @@
+{
+ "audio": "assets/audio/voix-montage.wav",
+ "duration": 48.2,
+ "threshold_db": -40.0,
+ "min_silence": 0.12,
+ "stats": {
+  "p10_db": -120.0,
+  "p50_db": -34.3,
+  "p95_db": -16.5
+ },
+ "phrases": [
+  {
+   "start": 0.03,
+   "end": 0.54,
+   "silence_after": 0.13,
+   "cut_point": 0.6,
+   "text": "Mardi,",
+   "words": [
+    0
+   ]
+  },
+  {
+   "start": 0.67,
+   "end": 1.28,
+   "silence_after": 0.5,
+   "cut_point": 1.53,
+   "text": "dix-neuf heures.",
+   "words": [
+    1,
+    2
+   ]
+  },
+  {
+   "start": 1.78,
+   "end": 3.65,
+   "silence_after": 0.38,
+   "cut_point": 3.84,
+   "text": "Votre dernier rendez-vous vient de partir.",
+   "words": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "start": 4.03,
+   "end": 5.69,
+   "silence_after": 2.9,
+   "cut_point": 7.14,
+   "text": "Et votre deuxième journée commence.",
+   "words": [
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  {
+   "start": 8.59,
+   "end": 10.22,
+   "silence_after": 0.47,
+   "cut_point": 10.46,
+   "text": "Votre métier, c'est le conseil.",
+   "words": [
+    14,
+    15,
+    16,
+    17,
+    18
+   ]
+  },
+  {
+   "start": 10.69,
+   "end": 11.24,
+   "silence_after": 0.4,
+   "cut_point": 11.44,
+   "text": "Pas la saisie.",
+   "words": [
+    19,
+    20,
+    21
+   ]
+  },
+  {
+   "start": 11.64,
+   "end": 12.08,
+   "silence_after": 0.12,
+   "cut_point": 12.14,
+   "text": "Pourtant,",
+   "words": [
+    22
+   ]
+  },
+  {
+   "start": 12.2,
+   "end": 13.27,
+   "silence_after": 0.16,
+   "cut_point": 13.35,
+   "text": "vous retapez vos notes,",
+   "words": [
+    23,
+    24,
+    25,
+    26
+   ]
+  },
+  {
+   "start": 13.43,
+   "end": 14.33,
+   "silence_after": 0.34,
+   "cut_point": 14.5,
+   "text": "fiche par fiche.",
+   "words": [
+    27,
+    28,
+    29
+   ]
+  },
+  {
+   "start": 14.67,
+   "end": 16.35,
+   "silence_after": 0.22,
+   "cut_point": 16.46,
+   "text": "Vous remplissez le devoir de conseil,",
+   "words": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35
+   ]
+  },
+  {
+   "start": 16.57,
+   "end": 17.38,
+   "silence_after": 0.43,
+   "cut_point": 17.59,
+   "text": "case par case.",
+   "words": [
+    36,
+    37,
+    38
+   ]
+  },
+  {
+   "start": 17.81,
+   "end": 19.77,
+   "silence_after": 0.39,
+   "cut_point": 19.96,
+   "text": "Et le prospect qui vous écrit samedi soir...",
+   "words": [
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46
+   ]
+  },
+  {
+   "start": 20.16,
+   "end": 20.79,
+   "silence_after": 0.92,
+   "cut_point": 21.25,
+   "text": "attend lundi.",
+   "words": [
+    47,
+    48
+   ]
+  },
+  {
+   "start": 21.71,
+   "end": 23.03,
+   "silence_after": 1.75,
+   "cut_point": 23.91,
+   "text": "Et si vous arrêtiez d'écrire?",
+   "words": [
+    49,
+    50,
+    51,
+    52,
+    53
+   ]
+  },
+  {
+   "start": 24.78,
+   "end": 26.23,
+   "silence_after": 0.3,
+   "cut_point": 26.38,
+   "text": "Avec Synapze, vous parlez.",
+   "words": [
+    54,
+    55,
+    56,
+    57
+   ]
+  },
+  {
+   "start": 26.53,
+   "end": 27.99,
+   "silence_after": 0.16,
+   "cut_point": 28.07,
+   "text": "Une note vocale après le rendez-vous,",
+   "words": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ]
+  },
+  {
+   "start": 28.15,
+   "end": 29.22,
+   "silence_after": 0.26,
+   "cut_point": 29.35,
+   "text": "et la fiche client s'écrit.",
+   "words": [
+    64,
+    65,
+    66,
+    67,
+    68
+   ]
+  },
+  {
+   "start": 29.48,
+   "end": 31.36,
+   "silence_after": 0.23,
+   "cut_point": 31.48,
+   "text": "Le devoir de conseil se remplit tout seul,",
+   "words": [
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76
+   ]
+  },
+  {
+   "start": 31.59,
+   "end": 32.07,
+   "silence_after": 0.39,
+   "cut_point": 32.27,
+   "text": "traçable.",
+   "words": [
+    77
+   ]
+  },
+  {
+   "start": 32.46,
+   "end": 34.78,
+   "silence_after": 0.16,
+   "cut_point": 34.86,
+   "text": "Sur WhatsApp, votre assistant répond à vos clients,",
+   "words": [
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85
+   ]
+  },
+  {
+   "start": 34.94,
+   "end": 35.52,
+   "silence_after": 0.28,
+   "cut_point": 35.66,
+   "text": "jour et nuit.",
+   "words": [
+    86,
+    87,
+    88
+   ]
+  },
+  {
+   "start": 35.8,
+   "end": 37.45,
+   "silence_after": 0.28,
+   "cut_point": 37.59,
+   "text": "L'IA ne remplace pas le courtier.",
+   "words": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+   ]
+  },
+  {
+   "start": 37.73,
+   "end": 38.21,
+   "silence_after": 0.17,
+   "cut_point": 38.3,
+   "text": "Elle le rend",
+   "words": [
+    95,
+    96,
+    97
+   ]
+  },
+  {
+   "start": 38.38,
+   "end": 38.98,
+   "silence_after": 0.83,
+   "cut_point": 39.39,
+   "text": "imbattable.",
+   "words": [
+    98
+   ]
+  },
+  {
+   "start": 39.81,
+   "end": 40.36,
+   "silence_after": 0.23,
+   "cut_point": 40.48,
+   "text": "Synapze.",
+   "words": [
+    99
+   ]
+  },
+  {
+   "start": 40.59,
+   "end": 41.47,
+   "silence_after": 0.2,
+   "cut_point": 41.57,
+   "text": "Le courtier parle,",
+   "words": [
+    100,
+    101,
+    102
+   ]
+  },
+  {
+   "start": 41.67,
+   "end": 42.73,
+   "silence_after": 0.35,
+   "cut_point": 42.91,
+   "text": "l'IA fait tout le reste.",
+   "words": [
+    103,
+    104,
+    105,
+    106,
+    107
+   ]
+  },
+  {
+   "start": 43.08,
+   "end": 43.97,
+   "silence_after": 4.23,
+   "cut_point": null,
+   "text": "Demandez votre démo.",
+   "words": [
+    108,
+    109,
+    110
+   ]
+  }
+ ],
+ "words": [
+  {
+   "w": "Mardi,",
+   "s": 0.03,
+   "e": 0.54,
+   "whisper_s": 0.03
+  },
+  {
+   "w": "dix-neuf",
+   "s": 0.67,
+   "e": 0.99,
+   "whisper_s": 0.67
+  },
+  {
+   "w": "heures.",
+   "s": 0.99,
+   "e": 1.28,
+   "whisper_s": 0.99
+  },
+  {
+   "w": "Votre",
+   "s": 1.78,
+   "e": 2.03,
+   "whisper_s": 1.78
+  },
+  {
+   "w": "dernier",
+   "s": 2.03,
+   "e": 2.39,
+   "whisper_s": 2.03
+  },
+  {
+   "w": "rendez-vous",
+   "s": 2.39,
+   "e": 2.94,
+   "whisper_s": 2.39
+  },
+  {
+   "w": "vient",
+   "s": 2.94,
+   "e": 3.19,
+   "whisper_s": 2.94
+  },
+  {
+   "w": "de",
+   "s": 3.19,
+   "e": 3.3,
+   "whisper_s": 3.19
+  },
+  {
+   "w": "partir.",
+   "s": 3.3,
+   "e": 3.65,
+   "whisper_s": 3.3
+  },
+  {
+   "w": "Et",
+   "s": 4.03,
+   "e": 4.14,
+   "whisper_s": 4.03
+  },
+  {
+   "w": "votre",
+   "s": 4.14,
+   "e": 4.41,
+   "whisper_s": 4.14
+  },
+  {
+   "w": "deuxième",
+   "s": 4.41,
+   "e": 4.83,
+   "whisper_s": 4.41
+  },
+  {
+   "w": "journée",
+   "s": 4.83,
+   "e": 5.21,
+   "whisper_s": 4.83
+  },
+  {
+   "w": "commence.",
+   "s": 5.21,
+   "e": 5.69,
+   "whisper_s": 5.21
+  },
+  {
+   "w": "Votre",
+   "s": 8.59,
+   "e": 8.89,
+   "whisper_s": 8.59
+  },
+  {
+   "w": "métier,",
+   "s": 8.89,
+   "e": 9.31,
+   "whisper_s": 8.89
+  },
+  {
+   "w": "c'est",
+   "s": 9.31,
+   "e": 9.62,
+   "whisper_s": 9.31
+  },
+  {
+   "w": "le",
+   "s": 9.62,
+   "e": 9.74,
+   "whisper_s": 9.62
+  },
+  {
+   "w": "conseil.",
+   "s": 9.74,
+   "e": 10.22,
+   "whisper_s": 9.74
+  },
+  {
+   "w": "Pas",
+   "s": 10.69,
+   "e": 10.83,
+   "whisper_s": 10.69
+  },
+  {
+   "w": "la",
+   "s": 10.83,
+   "e": 10.92,
+   "whisper_s": 10.83
+  },
+  {
+   "w": "saisie.",
+   "s": 10.92,
+   "e": 11.24,
+   "whisper_s": 10.92
+  },
+  {
+   "w": "Pourtant,",
+   "s": 11.64,
+   "e": 12.08,
+   "whisper_s": 11.64
+  },
+  {
+   "w": "vous",
+   "s": 12.2,
+   "e": 12.41,
+   "whisper_s": 12.2
+  },
+  {
+   "w": "retapez",
+   "s": 12.41,
+   "e": 12.79,
+   "whisper_s": 12.41
+  },
+  {
+   "w": "vos",
+   "s": 12.79,
+   "e": 12.95,
+   "whisper_s": 12.79
+  },
+  {
+   "w": "notes,",
+   "s": 12.95,
+   "e": 13.27,
+   "whisper_s": 12.95
+  },
+  {
+   "w": "fiche",
+   "s": 13.43,
+   "e": 13.75,
+   "whisper_s": 13.43
+  },
+  {
+   "w": "par",
+   "s": 13.75,
+   "e": 13.94,
+   "whisper_s": 13.75
+  },
+  {
+   "w": "fiche.",
+   "s": 13.94,
+   "e": 14.33,
+   "whisper_s": 13.94
+  },
+  {
+   "w": "Vous",
+   "s": 14.67,
+   "e": 14.88,
+   "whisper_s": 14.67
+  },
+  {
+   "w": "remplissez",
+   "s": 14.88,
+   "e": 15.4,
+   "whisper_s": 14.88
+  },
+  {
+   "w": "le",
+   "s": 15.4,
+   "e": 15.51,
+   "whisper_s": 15.4
+  },
+  {
+   "w": "devoir",
+   "s": 15.51,
+   "e": 15.82,
+   "whisper_s": 15.51
+  },
+  {
+   "w": "de",
+   "s": 15.82,
+   "e": 15.93,
+   "whisper_s": 15.82
+  },
+  {
+   "w": "conseil,",
+   "s": 15.93,
+   "e": 16.35,
+   "whisper_s": 15.93
+  },
+  {
+   "w": "case",
+   "s": 16.57,
+   "e": 16.84,
+   "whisper_s": 16.57
+  },
+  {
+   "w": "par",
+   "s": 16.84,
+   "e": 17.04,
+   "whisper_s": 16.84
+  },
+  {
+   "w": "case.",
+   "s": 17.04,
+   "e": 17.38,
+   "whisper_s": 17.04
+  },
+  {
+   "w": "Et",
+   "s": 17.81,
+   "e": 17.92,
+   "whisper_s": 17.81
+  },
+  {
+   "w": "le",
+   "s": 17.92,
+   "e": 18.02,
+   "whisper_s": 17.92
+  },
+  {
+   "w": "prospect",
+   "s": 18.02,
+   "e": 18.45,
+   "whisper_s": 18.02
+  },
+  {
+   "w": "qui",
+   "s": 18.45,
+   "e": 18.61,
+   "whisper_s": 18.45
+  },
+  {
+   "w": "vous",
+   "s": 18.61,
+   "e": 18.82,
+   "whisper_s": 18.61
+  },
+  {
+   "w": "écrit",
+   "s": 18.82,
+   "e": 19.08,
+   "whisper_s": 18.82
+  },
+  {
+   "w": "samedi",
+   "s": 19.08,
+   "e": 19.4,
+   "whisper_s": 19.08
+  },
+  {
+   "w": "soir...",
+   "s": 19.4,
+   "e": 19.77,
+   "whisper_s": 19.4
+  },
+  {
+   "w": "attend",
+   "s": 20.16,
+   "e": 20.48,
+   "whisper_s": 20.16
+  },
+  {
+   "w": "lundi.",
+   "s": 20.48,
+   "e": 20.79,
+   "whisper_s": 20.48
+  },
+  {
+   "w": "Et",
+   "s": 21.71,
+   "e": 21.82,
+   "whisper_s": 21.71
+  },
+  {
+   "w": "si",
+   "s": 21.82,
+   "e": 21.92,
+   "whisper_s": 21.82
+  },
+  {
+   "w": "vous",
+   "s": 21.92,
+   "e": 22.13,
+   "whisper_s": 21.92
+  },
+  {
+   "w": "arrêtiez",
+   "s": 22.13,
+   "e": 22.55,
+   "whisper_s": 22.13
+  },
+  {
+   "w": "d'écrire?",
+   "s": 22.55,
+   "e": 23.03,
+   "whisper_s": 22.55
+  },
+  {
+   "w": "Avec",
+   "s": 24.78,
+   "e": 25.03,
+   "whisper_s": 24.78
+  },
+  {
+   "w": "Synapze,",
+   "s": 25.03,
+   "e": 25.54,
+   "whisper_s": 25.03
+  },
+  {
+   "w": "vous",
+   "s": 25.54,
+   "e": 25.79,
+   "whisper_s": 25.54
+  },
+  {
+   "w": "parlez.",
+   "s": 25.79,
+   "e": 26.23,
+   "whisper_s": 25.79
+  },
+  {
+   "w": "Une",
+   "s": 26.53,
+   "e": 26.67,
+   "whisper_s": 26.53
+  },
+  {
+   "w": "note",
+   "s": 26.67,
+   "e": 26.85,
+   "whisper_s": 26.67
+  },
+  {
+   "w": "vocale",
+   "s": 26.85,
+   "e": 27.12,
+   "whisper_s": 26.85
+  },
+  {
+   "w": "après",
+   "s": 27.12,
+   "e": 27.35,
+   "whisper_s": 27.12
+  },
+  {
+   "w": "le",
+   "s": 27.35,
+   "e": 27.44,
+   "whisper_s": 27.35
+  },
+  {
+   "w": "rendez-vous,",
+   "s": 27.44,
+   "e": 27.99,
+   "whisper_s": 27.44
+  },
+  {
+   "w": "et",
+   "s": 28.15,
+   "e": 28.24,
+   "whisper_s": 28.15
+  },
+  {
+   "w": "la",
+   "s": 28.24,
+   "e": 28.34,
+   "whisper_s": 28.24
+  },
+  {
+   "w": "fiche",
+   "s": 28.34,
+   "e": 28.57,
+   "whisper_s": 28.34
+  },
+  {
+   "w": "client",
+   "s": 28.57,
+   "e": 28.85,
+   "whisper_s": 28.57
+  },
+  {
+   "w": "s'écrit.",
+   "s": 28.85,
+   "e": 29.22,
+   "whisper_s": 28.85
+  },
+  {
+   "w": "Le",
+   "s": 29.48,
+   "e": 29.59,
+   "whisper_s": 29.48
+  },
+  {
+   "w": "devoir",
+   "s": 29.59,
+   "e": 29.91,
+   "whisper_s": 29.59
+  },
+  {
+   "w": "de",
+   "s": 29.91,
+   "e": 30.02,
+   "whisper_s": 29.91
+  },
+  {
+   "w": "conseil",
+   "s": 30.02,
+   "e": 30.39,
+   "whisper_s": 30.02
+  },
+  {
+   "w": "se",
+   "s": 30.39,
+   "e": 30.5,
+   "whisper_s": 30.39
+  },
+  {
+   "w": "remplit",
+   "s": 30.5,
+   "e": 30.88,
+   "whisper_s": 30.5
+  },
+  {
+   "w": "tout",
+   "s": 30.88,
+   "e": 31.09,
+   "whisper_s": 30.88
+  },
+  {
+   "w": "seul,",
+   "s": 31.09,
+   "e": 31.36,
+   "whisper_s": 31.09
+  },
+  {
+   "w": "traçable.",
+   "s": 31.59,
+   "e": 32.07,
+   "whisper_s": 31.59
+  },
+  {
+   "w": "Sur",
+   "s": 32.46,
+   "e": 32.62,
+   "whisper_s": 32.46
+  },
+  {
+   "w": "WhatsApp,",
+   "s": 32.62,
+   "e": 33.09,
+   "whisper_s": 32.62
+  },
+  {
+   "w": "votre",
+   "s": 33.09,
+   "e": 33.36,
+   "whisper_s": 33.09
+  },
+  {
+   "w": "assistant",
+   "s": 33.36,
+   "e": 33.83,
+   "whisper_s": 33.36
+  },
+  {
+   "w": "répond",
+   "s": 33.83,
+   "e": 34.15,
+   "whisper_s": 33.83
+  },
+  {
+   "w": "à",
+   "s": 34.15,
+   "e": 34.2,
+   "whisper_s": 34.15
+  },
+  {
+   "w": "vos",
+   "s": 34.2,
+   "e": 34.36,
+   "whisper_s": 34.2
+  },
+  {
+   "w": "clients,",
+   "s": 34.36,
+   "e": 34.78,
+   "whisper_s": 34.36
+  },
+  {
+   "w": "jour",
+   "s": 34.94,
+   "e": 35.15,
+   "whisper_s": 34.94
+  },
+  {
+   "w": "et",
+   "s": 35.15,
+   "e": 35.26,
+   "whisper_s": 35.15
+  },
+  {
+   "w": "nuit.",
+   "s": 35.26,
+   "e": 35.52,
+   "whisper_s": 35.26
+  },
+  {
+   "w": "L'IA",
+   "s": 35.8,
+   "e": 36.04,
+   "whisper_s": 35.8
+  },
+  {
+   "w": "ne",
+   "s": 36.04,
+   "e": 36.15,
+   "whisper_s": 36.04
+  },
+  {
+   "w": "remplace",
+   "s": 36.15,
+   "e": 36.62,
+   "whisper_s": 36.15
+  },
+  {
+   "w": "pas",
+   "s": 36.62,
+   "e": 36.8,
+   "whisper_s": 36.62
+  },
+  {
+   "w": "le",
+   "s": 36.8,
+   "e": 36.92,
+   "whisper_s": 36.8
+  },
+  {
+   "w": "courtier.",
+   "s": 36.92,
+   "e": 37.45,
+   "whisper_s": 36.92
+  },
+  {
+   "w": "Elle",
+   "s": 37.73,
+   "e": 37.92,
+   "whisper_s": 37.73
+  },
+  {
+   "w": "le",
+   "s": 37.92,
+   "e": 38.02,
+   "whisper_s": 37.92
+  },
+  {
+   "w": "rend",
+   "s": 38.02,
+   "e": 38.21,
+   "whisper_s": 38.02
+  },
+  {
+   "w": "imbattable.",
+   "s": 38.38,
+   "e": 38.98,
+   "whisper_s": 38.38
+  },
+  {
+   "w": "Synapze.",
+   "s": 39.81,
+   "e": 40.36,
+   "whisper_s": 39.81
+  },
+  {
+   "w": "Le",
+   "s": 40.59,
+   "e": 40.7,
+   "whisper_s": 40.59
+  },
+  {
+   "w": "courtier",
+   "s": 40.7,
+   "e": 41.14,
+   "whisper_s": 40.7
+  },
+  {
+   "w": "parle,",
+   "s": 41.14,
+   "e": 41.47,
+   "whisper_s": 41.14
+  },
+  {
+   "w": "l'IA",
+   "s": 41.67,
+   "e": 41.88,
+   "whisper_s": 41.67
+  },
+  {
+   "w": "fait",
+   "s": 41.88,
+   "e": 42.09,
+   "whisper_s": 41.88
+  },
+  {
+   "w": "tout",
+   "s": 42.09,
+   "e": 42.31,
+   "whisper_s": 42.09
+  },
+  {
+   "w": "le",
+   "s": 42.31,
+   "e": 42.41,
+   "whisper_s": 42.31
+  },
+  {
+   "w": "reste.",
+   "s": 42.41,
+   "e": 42.73,
+   "whisper_s": 42.41
+  },
+  {
+   "w": "Demandez",
+   "s": 43.08,
+   "e": 43.48,
+   "whisper_s": 43.08
+  },
+  {
+   "w": "votre",
+   "s": 43.48,
+   "e": 43.72,
+   "whisper_s": 43.48
+  },
+  {
+   "w": "démo.",
+   "s": 43.72,
+   "e": 43.97,
+   "whisper_s": 43.72
+  }
+ ]
+}

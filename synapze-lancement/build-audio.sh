@@ -13,9 +13,9 @@ cd "$(dirname "$0")"
 
 # ---- settings (all paths relative to this project folder) ----------------------------------------------------------
 RAW="${RAW:-assets/audio/voix.mp3}"                # raw voice exported from ElevenLabs
-CUTS="${CUTS:-}"                                   # "cut:silence" pairs in raw seconds, e.g. "14.00:0.8 34.75:0.4" (empty = no cut)
+CUTS="${CUTS:-5.89:2.5 18.55:0.4 20.35:1.3 34.95:0.5}"                                   # "cut:silence" pairs in raw seconds, e.g. "14.00:0.8 34.75:0.4" (empty = no cut)
 TAIL="${TAIL:-4.0}"                                # silence added after the voice (end card hold)
-TOTAL="${TOTAL:-45.0}"                             # final duration in seconds = STORYBOARD duration = TOTAL in assemble.sh
+TOTAL="${TOTAL:-48.2}"                             # final duration in seconds = STORYBOARD duration = TOTAL in assemble.sh
 MUSIC="${MUSIC-assets/audio/music.mp3}"            # CC0 track (set MUSIC="" for no music)
 MUSIC_START="${MUSIC_START:-0}"                    # where to start in the track (skip a quiet intro, see pitfalls.md)
 MUSIC_VOLUME="${MUSIC_VOLUME:-0.12}"               # 0.10 to 0.15 under a voice
