@@ -72,7 +72,7 @@ haut ; le bouton micro. Rime : l'écran verrouillé de 19:00 revient à 19:05, v
 
 ## Choix
 
-Direction retenue : à choisir (A, B ou C, éventuellement avec un emprunt aux autres, par exemple la WhatsApp de C ou
-la ligne de B pour le pivot).
+Direction retenue : B « Le fil de la soirée », avec deux emprunts à C : C2 (l'iPhone dans le noir, samedi 21:14)
+et C3 (WhatsApp iOS). A1 écarté (le bureau vu de dessus) ; l'ancien storyboard A est gardé dans STORYBOARD-A-bureau.md.
 Images de style de référence pour la charte et le storyboard : styleframes/png/A1 à C3.png, planche :
 styleframes/png/directions.png.

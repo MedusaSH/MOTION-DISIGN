@@ -1,4 +1,4 @@
-# Contrôle du storyboard (STORYBOARD-CRAFT.md § 5 + Control grid du skill)
+# Contrôle du storyboard (direction B) (STORYBOARD-CRAFT.md § 5 + Control grid du skill)
 
 | # | Point | Verdict |
 |---|---|---|
@@ -15,9 +15,9 @@
 | 11 | ≥ 3 verbes joués par un objet | OK (partir, retapez, s'écrit, remplit, répond) |
 | 12 | 3 niveaux de profondeur dans la moitié des plans | OK (11 plans sur 19) |
 | 13 | Couches animées courant ≥ 2, pic 3 à 4 | OK |
-| 14 | Rime | OK (19:00 → 19:05 ; notification → réponse ; DDA à la main → seule ; onde sous le bouton) |
+| 14 | Rime | OK (19:00 → 22:47 → 19:05 ; notification → réponse à 21:14 ; fiche à la main → seule ; ligne → onde → soulignement) |
 | 15 | Fin : rassemblement, curseur en courbe, clic direct, tenue vivante, iris | OK |
 | — | Logo pas avant 5 s, marque après le pivot | OK (22.31) |
 | — | Somme des durées = 43,8 s ; aucun `{{` | OK |
-| — | Interfaces réelles et récentes | À FAIRE : CRM, DDA et WhatsApp dessinés d'après le site, à remplacer par des captures |
-| — | frame.md (charte, géométrie du monde) | À FAIRE après validation de la planche |
+| — | Interfaces réelles et récentes | OK : écran Synapze réel (vidéo du site) ; WhatsApp recopié d'iOS (pas de capture du chatbot) ; fiche de conseil = document |
+| — | frame.md (charte, géométrie du monde) | OK (direction B, grep {{ vide) |
