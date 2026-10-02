@@ -1,5 +1,5 @@
 {
- "duration": 48.2,
+ "duration": 43.8,
  "words": [
   {
    "w": "Mardi,",
@@ -18,543 +18,543 @@
   },
   {
    "w": "Votre",
-   "start": 1.78,
-   "end": 2.033
+   "start": 1.58,
+   "end": 1.833
   },
   {
    "w": "dernier",
-   "start": 2.033,
-   "end": 2.386
+   "start": 1.833,
+   "end": 2.186
   },
   {
    "w": "rendez-vous",
-   "start": 2.386,
-   "end": 2.942
+   "start": 2.186,
+   "end": 2.742
   },
   {
    "w": "vient",
-   "start": 2.942,
-   "end": 3.195
+   "start": 2.742,
+   "end": 2.995
   },
   {
    "w": "de",
-   "start": 3.195,
-   "end": 3.296
+   "start": 2.995,
+   "end": 3.096
   },
   {
    "w": "partir.",
-   "start": 3.296,
-   "end": 3.65
+   "start": 3.096,
+   "end": 3.45
   },
   {
    "w": "Et",
-   "start": 4.03,
-   "end": 4.137
+   "start": 3.83,
+   "end": 3.937
   },
   {
    "w": "votre",
-   "start": 4.137,
-   "end": 4.405
+   "start": 3.937,
+   "end": 4.205
   },
   {
    "w": "deuxième",
-   "start": 4.405,
-   "end": 4.833
+   "start": 4.205,
+   "end": 4.633
   },
   {
    "w": "journée",
-   "start": 4.833,
-   "end": 5.208
+   "start": 4.633,
+   "end": 5.008
   },
   {
    "w": "commence.",
-   "start": 5.208,
-   "end": 5.69
+   "start": 5.008,
+   "end": 5.49
   },
   {
    "w": "Votre",
-   "start": 8.59,
-   "end": 8.892
+   "start": 7.49,
+   "end": 7.792
   },
   {
    "w": "métier,",
-   "start": 8.892,
-   "end": 9.314
+   "start": 7.792,
+   "end": 8.214
   },
   {
    "w": "c'est",
-   "start": 9.314,
-   "end": 9.616
+   "start": 8.214,
+   "end": 8.516
   },
   {
    "w": "le",
-   "start": 9.616,
-   "end": 9.737
+   "start": 8.516,
+   "end": 8.637
   },
   {
    "w": "conseil.",
-   "start": 9.737,
-   "end": 10.22
+   "start": 8.637,
+   "end": 9.12
   },
   {
    "w": "Pas",
-   "start": 10.69,
-   "end": 10.828
+   "start": 9.42,
+   "end": 9.558
   },
   {
    "w": "la",
-   "start": 10.828,
-   "end": 10.919
+   "start": 9.558,
+   "end": 9.649
   },
   {
    "w": "saisie.",
-   "start": 10.919,
-   "end": 11.24
+   "start": 9.649,
+   "end": 9.97
   },
   {
    "w": "Pourtant,",
-   "start": 11.64,
-   "end": 12.08
+   "start": 10.27,
+   "end": 10.776
   },
   {
    "w": "vous",
-   "start": 12.2,
-   "end": 12.414
+   "start": 10.776,
+   "end": 11.001
   },
   {
    "w": "retapez",
-   "start": 12.414,
-   "end": 12.788
+   "start": 11.001,
+   "end": 11.394
   },
   {
    "w": "vos",
-   "start": 12.788,
-   "end": 12.949
+   "start": 11.394,
+   "end": 11.563
   },
   {
    "w": "notes,",
-   "start": 12.949,
-   "end": 13.27
+   "start": 11.563,
+   "end": 11.9
   },
   {
    "w": "fiche",
-   "start": 13.43,
-   "end": 13.751
+   "start": 12.06,
+   "end": 12.381
   },
   {
    "w": "par",
-   "start": 13.751,
-   "end": 13.944
+   "start": 12.381,
+   "end": 12.574
   },
   {
    "w": "fiche.",
-   "start": 13.944,
-   "end": 14.33
+   "start": 12.574,
+   "end": 12.96
   },
   {
    "w": "Vous",
-   "start": 14.67,
-   "end": 14.88
+   "start": 13.3,
+   "end": 13.51
   },
   {
    "w": "remplissez",
-   "start": 14.88,
-   "end": 15.405
+   "start": 13.51,
+   "end": 14.035
   },
   {
    "w": "le",
-   "start": 15.405,
-   "end": 15.51
+   "start": 14.035,
+   "end": 14.14
   },
   {
    "w": "devoir",
-   "start": 15.51,
-   "end": 15.825
+   "start": 14.14,
+   "end": 14.455
   },
   {
    "w": "de",
-   "start": 15.825,
-   "end": 15.93
+   "start": 14.455,
+   "end": 14.56
   },
   {
    "w": "conseil,",
-   "start": 15.93,
-   "end": 16.35
+   "start": 14.56,
+   "end": 14.98
   },
   {
    "w": "case",
-   "start": 16.57,
-   "end": 16.84
+   "start": 15.2,
+   "end": 15.47
   },
   {
    "w": "par",
-   "start": 16.84,
-   "end": 17.043
+   "start": 15.47,
+   "end": 15.673
   },
   {
    "w": "case.",
-   "start": 17.043,
-   "end": 17.38
+   "start": 15.673,
+   "end": 16.01
   },
   {
    "w": "Et",
-   "start": 17.81,
-   "end": 17.916
+   "start": 16.29,
+   "end": 16.396
   },
   {
    "w": "le",
-   "start": 17.916,
-   "end": 18.022
+   "start": 16.396,
+   "end": 16.502
   },
   {
    "w": "prospect",
-   "start": 18.022,
-   "end": 18.446
+   "start": 16.502,
+   "end": 16.926
   },
   {
    "w": "qui",
-   "start": 18.446,
-   "end": 18.605
+   "start": 16.926,
+   "end": 17.085
   },
   {
    "w": "vous",
-   "start": 18.605,
-   "end": 18.816
+   "start": 17.085,
+   "end": 17.296
   },
   {
    "w": "écrit",
-   "start": 18.816,
-   "end": 19.081
+   "start": 17.296,
+   "end": 17.561
   },
   {
    "w": "samedi",
-   "start": 19.081,
-   "end": 19.399
+   "start": 17.561,
+   "end": 17.879
   },
   {
    "w": "soir...",
-   "start": 19.399,
-   "end": 19.77
+   "start": 17.879,
+   "end": 18.25
   },
   {
    "w": "attend",
-   "start": 20.16,
-   "end": 20.475
+   "start": 18.64,
+   "end": 18.955
   },
   {
    "w": "lundi.",
-   "start": 20.475,
-   "end": 20.79
+   "start": 18.955,
+   "end": 19.27
   },
   {
    "w": "Et",
-   "start": 21.71,
-   "end": 21.816
+   "start": 19.59,
+   "end": 19.696
   },
   {
    "w": "si",
-   "start": 21.816,
-   "end": 21.921
+   "start": 19.696,
+   "end": 19.801
   },
   {
    "w": "vous",
-   "start": 21.921,
-   "end": 22.132
+   "start": 19.801,
+   "end": 20.012
   },
   {
    "w": "arrêtiez",
-   "start": 22.132,
-   "end": 22.555
+   "start": 20.012,
+   "end": 20.435
   },
   {
    "w": "d'écrire?",
-   "start": 22.555,
-   "end": 23.03
+   "start": 20.435,
+   "end": 20.91
   },
   {
    "w": "Avec",
-   "start": 24.78,
-   "end": 25.032
+   "start": 22.06,
+   "end": 22.312
   },
   {
    "w": "Synapze,",
-   "start": 25.032,
-   "end": 25.537
+   "start": 22.312,
+   "end": 22.817
   },
   {
    "w": "vous",
-   "start": 25.537,
-   "end": 25.789
+   "start": 22.817,
+   "end": 23.069
   },
   {
    "w": "parlez.",
-   "start": 25.789,
-   "end": 26.23
+   "start": 23.069,
+   "end": 23.51
   },
   {
    "w": "Une",
-   "start": 26.53,
-   "end": 26.667
+   "start": 23.81,
+   "end": 23.947
   },
   {
    "w": "note",
-   "start": 26.667,
-   "end": 26.849
+   "start": 23.947,
+   "end": 24.129
   },
   {
    "w": "vocale",
-   "start": 26.849,
-   "end": 27.123
+   "start": 24.129,
+   "end": 24.403
   },
   {
    "w": "après",
-   "start": 27.123,
-   "end": 27.351
+   "start": 24.403,
+   "end": 24.631
   },
   {
    "w": "le",
-   "start": 27.351,
-   "end": 27.442
+   "start": 24.631,
+   "end": 24.722
   },
   {
    "w": "rendez-vous,",
-   "start": 27.442,
-   "end": 27.99
+   "start": 24.722,
+   "end": 25.27
   },
   {
    "w": "et",
-   "start": 28.15,
-   "end": 28.243
+   "start": 25.43,
+   "end": 25.523
   },
   {
    "w": "la",
-   "start": 28.243,
-   "end": 28.336
+   "start": 25.523,
+   "end": 25.616
   },
   {
    "w": "fiche",
-   "start": 28.336,
-   "end": 28.569
+   "start": 25.616,
+   "end": 25.849
   },
   {
    "w": "client",
-   "start": 28.569,
-   "end": 28.848
+   "start": 25.849,
+   "end": 26.128
   },
   {
    "w": "s'écrit.",
-   "start": 28.848,
-   "end": 29.22
+   "start": 26.128,
+   "end": 26.5
   },
   {
    "w": "Le",
-   "start": 29.48,
-   "end": 29.587
+   "start": 26.76,
+   "end": 26.867
   },
   {
    "w": "devoir",
-   "start": 29.587,
-   "end": 29.91
+   "start": 26.867,
+   "end": 27.19
   },
   {
    "w": "de",
-   "start": 29.91,
-   "end": 30.017
+   "start": 27.19,
+   "end": 27.297
   },
   {
    "w": "conseil",
-   "start": 30.017,
-   "end": 30.393
+   "start": 27.297,
+   "end": 27.673
   },
   {
    "w": "se",
-   "start": 30.393,
-   "end": 30.501
+   "start": 27.673,
+   "end": 27.781
   },
   {
    "w": "remplit",
-   "start": 30.501,
-   "end": 30.877
+   "start": 27.781,
+   "end": 28.157
   },
   {
    "w": "tout",
-   "start": 30.877,
-   "end": 31.091
+   "start": 28.157,
+   "end": 28.371
   },
   {
    "w": "seul,",
-   "start": 31.091,
-   "end": 31.36
+   "start": 28.371,
+   "end": 28.64
   },
   {
    "w": "traçable.",
-   "start": 31.59,
-   "end": 32.07
+   "start": 28.87,
+   "end": 29.35
   },
   {
    "w": "Sur",
-   "start": 32.46,
-   "end": 32.618
+   "start": 29.74,
+   "end": 29.898
   },
   {
    "w": "WhatsApp,",
-   "start": 32.618,
-   "end": 33.093
+   "start": 29.898,
+   "end": 30.373
   },
   {
    "w": "votre",
-   "start": 33.093,
-   "end": 33.356
+   "start": 30.373,
+   "end": 30.636
   },
   {
    "w": "assistant",
-   "start": 33.356,
-   "end": 33.831
+   "start": 30.636,
+   "end": 31.111
   },
   {
    "w": "répond",
-   "start": 33.831,
-   "end": 34.147
+   "start": 31.111,
+   "end": 31.427
   },
   {
    "w": "à",
-   "start": 34.147,
-   "end": 34.2
+   "start": 31.427,
+   "end": 31.48
   },
   {
    "w": "vos",
-   "start": 34.2,
-   "end": 34.358
+   "start": 31.48,
+   "end": 31.638
   },
   {
    "w": "clients,",
-   "start": 34.358,
-   "end": 34.78
+   "start": 31.638,
+   "end": 32.06
   },
   {
    "w": "jour",
-   "start": 34.94,
-   "end": 35.151
+   "start": 32.22,
+   "end": 32.431
   },
   {
    "w": "et",
-   "start": 35.151,
-   "end": 35.256
+   "start": 32.431,
+   "end": 32.536
   },
   {
    "w": "nuit.",
-   "start": 35.256,
-   "end": 35.52
+   "start": 32.536,
+   "end": 32.8
   },
   {
    "w": "L'IA",
-   "start": 35.8,
-   "end": 36.036
+   "start": 33.08,
+   "end": 33.316
   },
   {
    "w": "ne",
-   "start": 36.036,
-   "end": 36.154
+   "start": 33.316,
+   "end": 33.434
   },
   {
    "w": "remplace",
-   "start": 36.154,
-   "end": 36.625
+   "start": 33.434,
+   "end": 33.905
   },
   {
    "w": "pas",
-   "start": 36.625,
-   "end": 36.802
+   "start": 33.905,
+   "end": 34.082
   },
   {
    "w": "le",
-   "start": 36.802,
-   "end": 36.92
+   "start": 34.082,
+   "end": 34.2
   },
   {
    "w": "courtier.",
-   "start": 36.92,
-   "end": 37.45
+   "start": 34.2,
+   "end": 34.73
   },
   {
    "w": "Elle",
-   "start": 37.73,
-   "end": 37.922
+   "start": 35.01,
+   "end": 35.202
   },
   {
    "w": "le",
-   "start": 37.922,
-   "end": 38.018
+   "start": 35.202,
+   "end": 35.298
   },
   {
    "w": "rend",
-   "start": 38.018,
-   "end": 38.21
+   "start": 35.298,
+   "end": 35.49
   },
   {
    "w": "imbattable.",
-   "start": 38.38,
-   "end": 38.98
+   "start": 35.66,
+   "end": 36.26
   },
   {
    "w": "Synapze.",
-   "start": 39.81,
-   "end": 40.36
+   "start": 36.59,
+   "end": 37.14
   },
   {
    "w": "Le",
-   "start": 40.59,
-   "end": 40.7
+   "start": 37.37,
+   "end": 37.48
   },
   {
    "w": "courtier",
-   "start": 40.7,
-   "end": 41.14
+   "start": 37.48,
+   "end": 37.92
   },
   {
    "w": "parle,",
-   "start": 41.14,
-   "end": 41.47
+   "start": 37.92,
+   "end": 38.25
   },
   {
    "w": "l'IA",
-   "start": 41.67,
-   "end": 41.882
+   "start": 38.45,
+   "end": 38.662
   },
   {
    "w": "fait",
-   "start": 41.882,
-   "end": 42.094
+   "start": 38.662,
+   "end": 38.874
   },
   {
    "w": "tout",
-   "start": 42.094,
-   "end": 42.306
+   "start": 38.874,
+   "end": 39.086
   },
   {
    "w": "le",
-   "start": 42.306,
-   "end": 42.412
+   "start": 39.086,
+   "end": 39.192
   },
   {
    "w": "reste.",
-   "start": 42.412,
-   "end": 42.73
+   "start": 39.192,
+   "end": 39.51
   },
   {
    "w": "Demandez",
-   "start": 43.08,
-   "end": 43.476
+   "start": 39.86,
+   "end": 40.256
   },
   {
    "w": "votre",
-   "start": 43.476,
-   "end": 43.723
+   "start": 40.256,
+   "end": 40.503
   },
   {
    "w": "démo.",
-   "start": 43.723,
-   "end": 43.97
+   "start": 40.503,
+   "end": 40.75
   }
  ]
 }
