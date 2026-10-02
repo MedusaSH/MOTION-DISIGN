@@ -26,9 +26,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 # ---- settings -------------------------------------------------------------------------------------------------------
-DUR = 45.0          # film duration (s) = TOTAL in assemble.sh
-PIVOT = 14.02       # the pivot word or silence where the music stops (e.g. « Stop. »)
-LIGHT = 14.30       # the light flash where the music comes back, drop on it (LEAK_AT + 0.05 in assemble.sh)
+DUR = 43.8          # film duration (s) = TOTAL in assemble.sh
+PIVOT = 19.50       # hard cut to black on « Et » (si vous arrêtiez d'écrire ?)
+LIGHT = 21.75       # the light flash where the music comes back, drop on it (LEAK_AT + 0.05 in assemble.sh)
 VOICE = "assets/audio/voix-montage.wav"        # voice montage from build-audio.sh
 SFX_EVENTS = "assets/audio/sfx-events.json"    # [["name", seconds, gain], ...] of the film (build-audio.sh format)
 OUT = "assets/audio/mix-{id}.wav"
@@ -36,16 +36,24 @@ MUSIC_DIR = os.environ.get("MUSIC_DIR", os.path.join(HERE, "assets", "music"))
 SFX_DIR = os.environ.get("SFX_DIR", os.path.join(HERE, "..", ".claude", "skills", "media-use", "audio", "assets", "sfx"))
 
 # Music segments: (file in MUSIC_DIR, track_start, film_start, film_end, gain, fade_in, fade_out).
-# Pattern 1: two tracks, tension until PIVOT, then elan from LIGHT (track_start = its drop time, so the drop hits LIGHT).
-# Pattern 2: one track with a drop: same file twice, the second segment starts at (first track_start + LIGHT).
+# All tracks CC0 1.0 (Free Music Archive, mirrored in github.com/SoundSafari/CC0-1.0-Music); drops measured with
+# scripts/analyze-music.py --drop-at 21.88.
 OPTIONS = {
-    "M1": {"name": "tension then elan", "riser": 0.18, "segments": [
-        ("tension-waiting-tttt.mp3", 0.0, 0.0, PIVOT, 0.42, 0.4, 0.02),
-        ("elan-dear-mr-super-computer.mp3", 5.59, LIGHT, DUR, 0.30, 0.0, 2.4),
+    "M1": {"name": "Cyber Anxiety -> Dear Mr Super Computer", "riser": 0.18, "segments": [
+        ("tension-cyber-anxiety.mp3", 9.06 - 0.6, 0.0, PIVOT, 0.14, 0.4, 0.02),
+        ("elan-dear-mr-super-computer.mp3", 5.66, LIGHT, DUR, 0.10, 0.0, 2.6),
     ]},
-    "M2": {"name": "one track, drop on the light", "riser": 0.0, "segments": [
-        ("complet-retro-synths.mp3", 1.62, 0.0, PIVOT, 0.34, 0.6, 0.02),
-        ("complet-retro-synths.mp3", 1.62 + LIGHT, LIGHT, DUR, 0.30, 0.0, 2.4),
+    "M2": {"name": "Time Attack Research -> Back In The 80s", "riser": 0.18, "segments": [
+        ("tension-time-attack-research.mp3", 4.0, 0.0, PIVOT, 0.40, 0.4, 0.02),
+        ("elan-back-in-the-80s.mp3", 8.02, LIGHT, DUR, 0.19, 0.0, 2.6),
+    ]},
+    "M3": {"name": "Retro Synths, drop on the light", "riser": 0.0, "segments": [
+        ("complet-retro-synths.mp3", 0.0, 0.0, PIVOT, 0.135, 0.6, 0.02),
+        ("complet-retro-synths.mp3", 16.0, LIGHT, DUR, 0.065, 0.0, 2.6),
+    ]},
+    "M4": {"name": "Waiting TTTT -> Machines With Feelings", "riser": 0.18, "segments": [
+        ("tension-waiting-tttt.mp3", 4.88 - 0.4, 0.0, PIVOT, 0.40, 0.4, 0.02),
+        ("complet-machines-with-feelings.mp3", 19.22, LIGHT, DUR, 0.17, 0.0, 2.6),
     ]},
 }
 

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Synapze · Le fil de la soirée, référence exécutable</title>
+<!--
+  Référence exécutable de la direction B (voir frame.md, composant time-line). Source UNIQUE du monde « fil » :
+  chaque séquence qui montre la ligne copie MOT POUR MOT le bloc CSS et le kit JS ci-dessous (entre les marqueurs).
+  Seuls changements autorisés : « ../assets/ » devient « assets/ », et les sélecteurs reçoivent le préfixe de la
+  séquence si besoin (« #f03 .fil-line »). Ouvrir ce fichier dans Chromium : il dessine l'état de P04 (le gag).
+  Aucune dépendance : le kit construit le DOM ; les séquences animent avec GSAP (une seule timeline en pause).
+-->
+<style>
+  @font-face { font-family: "DM Sans"; src: url("../assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+  @font-face { font-family: "DM Mono"; src: url("../assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+  html, body { margin: 0; background: #0E1624; }
+  #frame { position: relative; width: 1920px; height: 1080px; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  .fil-ground.dark { background: #0E1624; }
+  .fil-ground.light { background: #F1EBDE; }
+  .fil-ground.black { background: #0A0F1A; }
+  .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  .light .fil-dots, .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  .fil-line.grey { background: #5B6578; }
+  .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  .on-light .fil-tick { background: rgba(14,22,36,.5); } .on-light .fil-label { color: rgba(14,22,36,.5); }
+  .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  .on-light .fil-clock { color: #0E1624; }
+  .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+</style>
+</head>
+<body>
+<div id="frame"></div>
+<script>
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+/* demo: state of P04 (the gag) */
+const h = filBuild(document.getElementById("frame"), {
+  ground: "dark", x0: 0, x1: 12000, orangeTo: FIL.hx(19), hatch: [FIL.hx(19), FIL.hx(22, 15)], point: FIL.hx(22, 15), clock: "22:15",
+  ticks: [[FIL.hx(19), "19:00"], [FIL.hx(20), "20:00"], [FIL.hx(21), "21:00"], [FIL.hx(22), "22:00"], [FIL.hx(23), "23:00"]],
+});
+filCamSet(h, FIL.hx(21), FIL.Y, 0.42);
+</script>
+</body>
+</html>
