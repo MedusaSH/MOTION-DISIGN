@@ -48,7 +48,8 @@
     /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
     #f10-wrap #f10-point, #f10-wrap #f10-clock, #f10-wrap #f10-seg, #f10-wrap #f10-navy,
     #f10-wrap #f10-tk18, #f10-wrap #f10-lb18, #f10-wrap #f10-tk19, #f10-wrap #f10-lb19, #f10-wrap #f10-tk20, #f10-wrap #f10-lb20,
-    #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp { opacity: 0; }
+    #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp, #f10-wrap #f10-h-ag, #f10-wrap #f10-t-ag,
+    #f10-wrap #f10-h-cn, #f10-wrap #f10-t-cn, #f10-wrap #f10-h-fm, #f10-wrap #f10-t-fm { opacity: 0; }
     #f10-wrap #f10-navy { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; overflow: hidden;
       clip-path: circle(0px at 960px 540px); }
 
@@ -428,6 +429,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         ft(r.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, t + 0.27);
         ft(r.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, t + 0.47);
       });
+      // the objects of the beginning of the evening are switched on while still off screen (0.30, left of the frame):
+      // the pull reveals them already hanging
+      ft([H.ag.hang, H.ag.thread, H.cn.hang, H.cn.thread, H.fm.hang, H.fm.thread], { opacity: 0 }, { opacity: 1, duration: 0.04, ease: "none" }, 0.30);
       // living hold: the other objects drift 1° (finite)
       ["ag", "fm", "lp", "ph"].forEach(function (k, i) {
         var t = 0.95 + i * 0.12;
