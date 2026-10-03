@@ -101,7 +101,7 @@
     /* revealed on their cues */
     #root .f09-rv { opacity: 0; }
     /* typing dots that stand where the first reply will land */
-    #root #f09-ty1 { position: absolute; left: 0; top: 0; margin: 0 12px; }
+    #root #f09-ty1 { position: absolute; left: 0; top: 136px; margin: 0 12px; }
     /* the second reply: arrives from outside the phone, lands in its slot (child of the phone, outside the screen clip) */
     #root #f09-fly { position: absolute; right: 26px; top: 0; max-width: 290px; margin: 0; opacity: 0; transform-origin: 50% 50%;
       box-shadow: 0 1px .5px rgba(11,20,26,.13), 0 18px 36px rgba(14,22,36,.14); }
@@ -326,6 +326,13 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 
       /* ---------------- the advice form leaves on the left (no own motion, the whip carries it) ---------------- */
 
+      /* ---------------- « SAM. 21:14 » ---------------- */
+      // it enters from the right with the whip; while the camera rises to the phone the line sits just above the
+      // subtitle band, so the graduation steps back (never under the sentence) and returns as the pull lifts the line
+      var samMarks = [h.ticks[0][0], h.ticks[0][1]];
+      ft(samMarks, { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.in" }, 0.25);
+      ft(samMarks, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 3.02);
+
       /* ---------------- the iPhone ---------------- */
       // 0.10 → 0.37 falls (×1.15, blur 8) and catches at « SAM. 21:14 », swings 2° once, then drifts 1°, upright for P15
       ft(ph.hang, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, 0.10);
@@ -379,7 +386,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // 2.78 → 3.22 the next reply comes from the right, in the foreground, ×1.25 and blurred (P15 at 2.95),
       // then racks into focus as it lands in its slot (depth of field: foreground blurred, the phone sharp)
       var fly = $("f09-fly");
-      var FLY_TOP = 470, FLY_W = 262, FLY_H = 56;       // landing slot (phone-local), measured on the layout
+      var FLY_TOP = 449, FLY_W = 290, FLY_H = 65;       // landing slot (phone-local: 14 + 105 + 330), measured on the layout
       var LX = 374 - FLY_W / 2, LY = FLY_TOP + FLY_H / 2; // landing center
       var KX = 676, KY = 479;                            // P15 center at 2.95, phone-local
       gsap.set(fly, { top: FLY_TOP });

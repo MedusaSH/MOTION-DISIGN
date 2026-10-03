@@ -288,9 +288,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft(doc.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.25);
       ft(doc.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.37);
       ft(doc.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.57);
-      ft(doc.hang, { rotation: 0 }, { rotation: 0.8, duration: 0.6, ease: "sine.inOut" }, 1.00);
-      ft(doc.hang, { rotation: 0.8 }, { rotation: -0.5, duration: 0.8, ease: "sine.inOut" }, 1.60);
-      ft(doc.hang, { rotation: -0.5 }, { rotation: 0, duration: 0.5, ease: "sine.inOut" }, 2.40);
+      // living hold: drifts 1° then comes back level for the clicks (P08 at 2.40 is straight)
+      ft(doc.hang, { rotation: 0 }, { rotation: 1, duration: 0.5, ease: "sine.inOut" }, 0.95);
+      ft(doc.hang, { rotation: 1 }, { rotation: -0.4, duration: 0.5, ease: "sine.inOut" }, 1.45);
+      ft(doc.hang, { rotation: -0.4 }, { rotation: 0, duration: 0.4, ease: "sine.inOut" }, 1.95);
       // the warm lamp behind it
       ft(h.halo, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.20);
       // 0.30 graduations 22:30 and 22:47 print
