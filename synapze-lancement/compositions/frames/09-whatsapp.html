@@ -46,22 +46,26 @@
     /* elements born after t = 0 (built by the kit, ids given right after filBuild / filHang) */
     #f09-wrap #f09-phhang, #f09-wrap #f09-phthread { opacity: 0; }
 
-    /* the complete advice form of frame 8, leaving on the left at t = 0 (styleframe P14, sf.css .doc) */
-    #f09-formw { width: 1100px; height: 690px; }
-    #root .f09-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 690px; box-sizing: border-box; background: #fff; border-radius: 6px;
-      padding: 60px 80px; color: #222; font: 400 26px "DM Sans", sans-serif;
-      box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
-    #root .f09-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
-    #root .f09-doc .f09-s { font: 400 20px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
-    #root .f09-doc .f09-ln { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; }
-    #root .f09-doc .f09-ck { width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; position: relative; }
-    #root .f09-doc .f09-ck::after { content: ""; position: absolute; left: 9px; top: 2px; width: 9px; height: 17px; box-sizing: content-box;
-      border: solid #F24E1E; border-width: 0 4px 4px 0; transform: rotate(42deg); }
-    #root .f09-doc .f09-ia { font: 500 14px "DM Mono", monospace; color: #F24E1E; background: #FBE3D9; padding: 3px 8px; border-radius: 4px; margin-left: auto; }
-    #root .f09-doc .f09-cl { margin-top: 28px; font: 500 16px "DM Mono", monospace; letter-spacing: 2px; color: #5B6578; }
-    #root .f09-doc .f09-bar { height: 14px; border-radius: 7px; background: #F24E1E; margin-top: 10px; }
-    #root .f09-doc .f09-stamp { position: absolute; right: 60px; top: 150px; transform: rotate(-6deg); border: 3px solid #F24E1E; color: #F24E1E;
-      font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85); }
+    /* the complete advice form of frame 8 (copied from 08-tracable.html, in its final state at 2.95 s), leaving on the left */
+    #f09-wrap .f09-doc { width: 1100px; box-sizing: border-box; background: #fff; border-radius: 6px; padding: 60px 80px; color: #222;
+      font: 400 26px "DM Sans", sans-serif; box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #f09-wrap .f09-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #f09-wrap .f09-s { margin: 0 0 30px; font: 400 20px "DM Sans", sans-serif; color: #888; }
+    #f09-wrap .f09-ln { display: flex; align-items: center; gap: 22px; height: 78px; box-sizing: border-box; border-bottom: 1px solid #eee; }
+    #f09-wrap .f09-ck { width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; position: relative; flex: none; }
+    #f09-wrap .f09-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
+      border: 2px solid #F24E1E; border-radius: 4px; }
+    #f09-wrap .f09-ckm { position: absolute; left: 9px; top: 3px; width: 11px; height: 19px; transform: rotate(42deg); transform-origin: 50% 50%; }
+    #f09-wrap .f09-leg1 { position: absolute; left: 0; bottom: 0; width: 11px; height: 4px; background: #F24E1E; transform-origin: 0 50%; }
+    #f09-wrap .f09-leg2 { position: absolute; right: 0; bottom: 0; width: 4px; height: 19px; background: #F24E1E; transform-origin: 50% 100%; }
+    #f09-wrap .f09-ia { margin-left: auto; font: 500 14px "DM Mono", monospace; color: #F24E1E; background: #FBE3D9; padding: 3px 8px;
+      border-radius: 4px; transform-origin: 100% 50%; }
+    #f09-wrap .f09-cl { margin-top: 28px; font: 500 16px "DM Mono", monospace; letter-spacing: 2px; color: #5B6578; }
+    #f09-wrap .f09-track { height: 14px; border-radius: 7px; background: #E8E0D0; margin-top: 10px; overflow: hidden; }
+    #f09-wrap .f09-fill { width: 100%; height: 100%; border-radius: 7px; background: #F24E1E; transform-origin: 0 50%; }
+    #f09-wrap .f09-stamp { position: absolute; right: 60px; top: 150px; border: 3px solid #F24E1E; color: #F24E1E;
+      font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85);
+      white-space: nowrap; transform-origin: 50% 50%; transform: rotate(-6deg); }
 
     /* the iPhone (sf.css .phone) with WhatsApp iOS (frame.md whatsapp-ios, sf.css .wa2, styleframe C3) */
     #f09-phw { width: 400px; height: 820px; }
@@ -130,19 +134,17 @@
     <div id="f09-wrap"></div>
 
     <!-- the advice form of frame 8 (moved under the line by filHang), leaving on the left -->
-    <div id="f09-formw">
-      <div class="f09-doc">
-        <h3>Fiche de conseil · Santé Individuel</h3>
-        <div class="f09-s">Louis Lebrun · remplie automatiquement</div>
-        <div class="f09-ln"><div class="f09-ck"></div>Besoins exprimés<span class="f09-ia">IA</span></div>
-        <div class="f09-ln"><div class="f09-ck"></div>Situation familiale<span class="f09-ia">IA</span></div>
-        <div class="f09-ln"><div class="f09-ck"></div>Budget<span class="f09-ia">IA</span></div>
-        <div class="f09-ln"><div class="f09-ck"></div>Garanties proposées<span class="f09-ia">IA</span></div>
-        <div class="f09-ln"><div class="f09-ck"></div>Justification du conseil<span class="f09-ia">IA</span></div>
-        <div class="f09-cl">COMPLÉTUDE</div>
-        <div class="f09-bar"></div>
-        <div class="f09-stamp">PISTE D'AUDIT · HORODATÉE</div>
-      </div>
+    <div class="f09-doc" id="f09-doc">
+      <h3>Fiche de conseil · Santé Individuel</h3>
+      <div class="f09-s">Louis Lebrun · remplie automatiquement</div>
+      <div class="f09-ln"><div class="f09-ck"><div class="f09-ckb"></div><div class="f09-ckm"><i class="f09-leg1"></i><i class="f09-leg2"></i></div></div>Besoins exprimés<span class="f09-ia">IA</span></div>
+      <div class="f09-ln"><div class="f09-ck"><div class="f09-ckb"></div><div class="f09-ckm"><i class="f09-leg1"></i><i class="f09-leg2"></i></div></div>Situation familiale<span class="f09-ia">IA</span></div>
+      <div class="f09-ln"><div class="f09-ck"><div class="f09-ckb"></div><div class="f09-ckm"><i class="f09-leg1"></i><i class="f09-leg2"></i></div></div>Budget<span class="f09-ia">IA</span></div>
+      <div class="f09-ln"><div class="f09-ck"><div class="f09-ckb"></div><div class="f09-ckm"><i class="f09-leg1"></i><i class="f09-leg2"></i></div></div>Garanties proposées<span class="f09-ia">IA</span></div>
+      <div class="f09-ln"><div class="f09-ck"><div class="f09-ckb"></div><div class="f09-ckm"><i class="f09-leg1"></i><i class="f09-leg2"></i></div></div>Justification du conseil<span class="f09-ia">IA</span></div>
+      <div class="f09-cl">COMPLÉTUDE</div>
+      <div class="f09-track"><div class="f09-fill"></div></div>
+      <div class="f09-stamp">PISTE D'AUDIT · HORODATÉE</div>
     </div>
 
     <!-- the iPhone, WhatsApp open (moved under the line by filHang) -->
@@ -242,8 +244,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // box trimmed to what this frame's travel needs (same pattern, same phase as the pilot: left ≡ -560, top ≡ -752 mod 48)
       Object.assign(dots.style, { left: "4144px", top: "-368px", width: "4992px", height: "1488px" });
 
-      // the complete advice form of frame 8, already leaving on the left at t = 0
-      var fm = filHang(h.world, 5690, $("f09-formw"), { len: 130 });
+      // the complete advice form of frame 8 (world x 5950, as in 08-tracable), already leaving on the left at t = 0
+      var fm = filHang(h.world, 5950, $("f09-doc"), { len: 130 });
+      gsap.set(fm.hang, { rotation: -0.6 });   // frame 8 ends its living hold at -0.6°
       // the iPhone hangs at « SAM. 21:14 »
       var PH_LEN = 20;
       var ph = filHang(h.world, XSAM, $("f09-phw"), { len: PH_LEN });
