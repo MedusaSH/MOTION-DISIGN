@@ -109,7 +109,7 @@
           <div id="f06-halo"></div>
           <div id="f06-flare2"></div>
           <div id="f06-streaks"></div>
-          <div id="f06-row"><span class="f06-wd" data-cue="0.09">Et</span> <span class="f06-wd" data-cue="0.20">si</span> <span class="f06-wd" data-cue="0.30">vous</span> <span class="f06-wd" data-cue="0.51">arrêtiez</span> <span class="f06-wd" data-cue="0.93">d’écrire ?</span><div id="f06-caret"><div id="f06-cr" class="f06-cc"></div><div id="f06-cb" class="f06-cc"></div><div id="f06-bar"><div id="f06-core"></div></div></div></div>
+          <div id="f06-row"><span class="f06-wd" data-cue="0.09">Et</span> <span class="f06-wd" data-cue="0.20">si</span> <span class="f06-wd" data-cue="0.30">vous</span> <span class="f06-wd" data-cue="0.51">arrêtiez</span> <span class="f06-wd" data-cue="0.93">d’écrire ?</span><div id="f06-caret"><div id="f06-cr" class="f06-cc"></div><div id="f06-cb" class="f06-cc"></div><div id="f06-bar"><div id="f06-core"></div></div></div></div>
           <div id="f06-sheen"></div>
           <div id="f06-flare"></div>
           <div id="f06-ring"></div>
@@ -131,7 +131,7 @@
 /* ===================== FX : début du kit JS à copier ===================== */
 /* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
 const FX = {
-  /* deterministic pseudo-random from an index (never Math.random) */
+  /* deterministic pseudo-random from an index (no random) */
   rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
   /* split text of el into .fx-w spans per word (call once at build) */
   words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
