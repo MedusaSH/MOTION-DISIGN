@@ -75,7 +75,7 @@
     [data-composition-id="11-fin"] .f11-ch { display: inline-block; }
     [data-composition-id="11-fin"] .f11-dot { position: absolute; width: 28px; height: 28px; border-radius: 50%; background: #f24e1e;
       box-shadow: 0 0 18px rgba(242,78,30,.55); }
-    #f11-dl { left: 766px; top: 526px; }   /* t = 0: the point at the left end of the stroke (780, 540) */
+    #f11-dl { left: 766px; top: 526px; box-shadow: none; }   /* t = 0: the point at the left end of the stroke (780, 540) */
     #f11-dr { left: 1316px; top: 433px; }  /* the right dot (1330, 447) */
     #f11-line { position: absolute; left: 780px; top: 538px; width: 360px; height: 4px; border-radius: 4px; background: #f24e1e; }
     #f11-streak { left: 0; top: 446px; width: 520px; height: 3px; box-shadow: 0 0 16px rgba(255,176,138,.9); }
@@ -260,8 +260,9 @@ const FX = {
 
         /* ---------------- Scene 1 (0.00 – 0.90): the stroke becomes « • Synapze • » ---------------- */
         var dl = $("f11-dl"), dr = $("f11-dr"), line = $("f11-line");
-        // 0.00 the point (24 px at the stroke's left end) springs up to become the left dot (590, 447), 28 px
-        ft(dl, { x: 0, scale: 24 / 28 }, { x: -190, scale: 1, duration: 0.24, ease: "power3.inOut" }, 0);
+        // 0.00 the point (18 px at the stroke's left end) springs up to become the left dot (590, 447), 28 px
+        ft(dl, { x: 0, scale: 18 / 28 }, { x: -190, scale: 1, duration: 0.24, ease: "power3.inOut" }, 0);
+        ft(dl, { boxShadow: "0 0 0px rgba(242,78,30,0)" }, { boxShadow: "0 0 18px rgba(242,78,30,0.55)", duration: 0.24, ease: "power2.out" }, 0);
         ft(dl, { y: 0 }, { y: -93, duration: 0.24, ease: "back.out(1.6)" }, 0);
         // 0.05 – 0.40 the letters rise out of the stroke (hard mask on the line), 0.035 s apart
         $$(".f11-ch").forEach(function (c, i) {
