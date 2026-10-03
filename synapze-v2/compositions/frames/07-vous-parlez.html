@@ -310,7 +310,7 @@ const FX = {
       var cam = $("f07-cam2");
       /* baked target offsets from the frame centre, measured in the settled pose (card rotY −6, rotX 4) */
       var T_OFF = { x: 91, y: -96 }, I_OFF = { x: 90, y: 68 };
-      var S1 = 1.5, S2 = 1.62;
+      var S1 = 1.38, S2 = 1.46;
       tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.03, duration: 0.59, ease: "none", immediateRender: false }, 1.86);
       FX.punch(tl, cam, 2.45, { s: S1, x: -T_OFF.x * S1, y: -T_OFF.y * S1, d: 0.2, drift: 0.035, hold: 0.83 });
       FX.punch(tl, cam, 3.48, { s: S2, x: -I_OFF.x * S2, y: -I_OFF.y * S2, d: 0.2, drift: 0.03, hold: DUR - 3.68 });
