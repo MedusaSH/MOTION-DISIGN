@@ -103,7 +103,7 @@ const FX = {
   flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
   /* WHIP: blur-pan out of a shot (exit) */
   whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
-  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: d, ease: "expo.out", immediateRender: false }, t); },
   /* PUNCH: fast zoom-in on a target (camera), then slow drift */
   punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
     tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);

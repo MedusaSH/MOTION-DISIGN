@@ -93,7 +93,7 @@
     #f09-cam1 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
     #f09-ph1w { position: absolute; left: 750px; top: 18px; width: 420px; height: 861px; transform-origin: 50% 50%; }
     #f09-ph1w .f09-phone { transform: scale(1.05); box-shadow: 0 0 0 2px #2b303b inset, 0 0 0 1px rgba(255,255,255,.12) inset, -50px 60px 120px rgba(120,50,10,.28), -10px 16px 30px rgba(40,20,10,.18); }
-    #f09-glow1 { left: 960px; top: 470px; }
+    #f09-glow1 { left: 960px; top: 470px; opacity: .7; }
     #f09-blob1 { position: absolute; left: 1280px; top: -120px; width: 900px; height: 700px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,176,138,.55), rgba(255,176,138,0)); }
     #f09-blob2 { position: absolute; left: -260px; top: 560px; width: 1000px; height: 700px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,150,110,.40), rgba(255,150,110,0)); }
     #f09-st1 { left: 1100px; top: 330px; width: 820px; }
@@ -328,7 +328,7 @@ const FX = {
       // 1.46 punch ×1.25 on the answer + notification ripple + glow pulse
       FX.punch(tl, cam1, 1.46, { s: 1.25 * 1.03, x: 0, y: 70, d: 0.18, drift: 0.03, hold: CUT - 1.64 });
       ft($("f09-a-ring"), { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.12, duration: 0.42, ease: "power2.out" }, 1.46);
-      ft($("f09-glow1"), { opacity: 1.6 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.46);
+      ft($("f09-glow1"), { opacity: 1 }, { opacity: 0.7, duration: 0.6, ease: "power2.out" }, 1.46);
       // 1.72 read receipts turn blue
       ft($("f09-a-kg"), { opacity: 1 }, { opacity: 0, duration: 0.1, ease: "none" }, 1.72);
       // 2.05 a glare sweeps across the glass
