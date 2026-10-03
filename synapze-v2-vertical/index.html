@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #F6F1EA;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="43.8"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="paperbed" class="clip" data-start="21.9" data-duration="14.55" data-track-index="12" style="position:absolute;inset:0;background:#F6F1EA"></div>
+
+      <div
+        id="el-01-mardi"
+        class="scene"
+        data-composition-id="01-mardi"
+        data-composition-src="compositions/frames/01-mardi.html"
+        data-start="0"
+        data-duration="3.7"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-02-deuxieme-journee"
+        class="scene"
+        data-composition-id="02-deuxieme-journee"
+        data-composition-src="compositions/frames/02-deuxieme-journee.html"
+        data-start="3.7"
+        data-duration="3.7"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-saisie"
+        class="scene"
+        data-composition-id="03-saisie"
+        data-composition-src="compositions/frames/03-saisie.html"
+        data-start="7.4"
+        data-duration="5.8"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-04-case-par-case"
+        class="scene"
+        data-composition-id="04-case-par-case"
+        data-composition-src="compositions/frames/04-case-par-case.html"
+        data-start="13.2"
+        data-duration="3"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-samedi"
+        class="scene"
+        data-composition-id="05-samedi"
+        data-composition-src="compositions/frames/05-samedi.html"
+        data-start="16.2"
+        data-duration="3.3"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-06-pivot"
+        class="scene"
+        data-composition-id="06-pivot"
+        data-composition-src="compositions/frames/06-pivot.html"
+        data-start="19.5"
+        data-duration="2.45"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-07-vous-parlez"
+        class="scene"
+        data-composition-id="07-vous-parlez"
+        data-composition-src="compositions/frames/07-vous-parlez.html"
+        data-start="21.95"
+        data-duration="4.75"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-08-tracable"
+        class="scene"
+        data-composition-id="08-tracable"
+        data-composition-src="compositions/frames/08-tracable.html"
+        data-start="26.7"
+        data-duration="2.95"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-09-whatsapp"
+        class="scene"
+        data-composition-id="09-whatsapp"
+        data-composition-src="compositions/frames/09-whatsapp.html"
+        data-start="29.65"
+        data-duration="3.3"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-10-imbattable"
+        class="scene"
+        data-composition-id="10-imbattable"
+        data-composition-src="compositions/frames/10-imbattable.html"
+        data-start="32.949999999999996"
+        data-duration="3.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-11-fin"
+        class="scene"
+        data-composition-id="11-fin"
+        data-composition-src="compositions/frames/11-fin.html"
+        data-start="36.449999999999996"
+        data-duration="7.35"
+        data-track-index="1"
+      ></div>
+      <audio id="mix" data-start="0" data-duration="43.8" data-track-index="11" src="assets/audio/mix-V2.wav" data-volume="1"></audio>
+      <div id="fxleak" class="clip" data-start="21.7" data-duration="0.9" data-track-index="30" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:60">
+        <div id="fxleak-sweep" style="position:absolute;left:-200px;top:-100px;width:1500px;height:2200px;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 50% 50%,rgba(255,208,191,0.85) 0%,rgba(245,122,80,0.5) 35%,rgba(242,78,30,0) 70%)"></div>
+        <div id="fxleak-core" style="position:absolute;left:500px;top:880px;width:600px;height:600px;margin:-300px 0 0 -300px;border-radius:50%;opacity:0;background:radial-gradient(circle,rgba(251,249,247,1) 0%,#F6F1EA 30%,rgba(255,201,181,0.9) 50%,rgba(242,78,30,0.5) 64%,rgba(242,78,30,0) 76%)"></div>
+        <div id="fxleak-streak" style="position:absolute;left:-240px;top:877px;width:2400px;height:6px;border-radius:3px;opacity:0;background:linear-gradient(90deg,rgba(255,226,215,0),rgba(255,241,235,1) 50%,rgba(255,226,215,0));box-shadow:0 0 34px 12px rgba(255,183,156,0.7)"></div>
+        <div id="fxleak-flash" style="position:absolute;inset:0;opacity:0;background:#F6F1EA"></div>
+      </div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+        // orchestrator layer (motion-design skill): light flash and iris
+        tl.fromTo("#fxleak-core", { scale: 0.02, opacity: 0 }, { scale: 4.6, opacity: 1, duration: 0.22, ease: "expo.in", immediateRender: false }, 21.73);
+        tl.fromTo("#fxleak-streak", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.16, ease: "power3.in", immediateRender: false }, 21.75);
+        tl.fromTo("#fxleak-sweep", { x: 1100, opacity: 0 }, { x: -700, opacity: 1, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 21.73);
+        tl.fromTo("#fxleak-flash", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.in", immediateRender: false }, 21.85);
+        tl.to("#fxleak-flash", { opacity: 0, duration: 0.5, ease: "power2.out" }, 22.0);
+        tl.to(["#fxleak-core", "#fxleak-streak", "#fxleak-sweep"], { opacity: 0, duration: 0.4, ease: "power2.out" }, 21.97);
+        tl.to({}, { duration: 43.8 }, 0);
+        window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
