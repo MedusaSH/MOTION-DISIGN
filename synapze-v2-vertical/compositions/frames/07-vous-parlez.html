@@ -70,23 +70,26 @@
 [data-composition-id="07-vous-parlez"] #f07-pw { opacity: 0; }
 [data-composition-id="07-vous-parlez"] #f07-streak1 { left: 70px; top: 880px; width: 860px; }
 
-/* ---- Scene 2 : the real screen (image scale K = 1066 / 1440 = 0.74028) ---- */
-[data-composition-id="07-vous-parlez"] #f07-s2 { opacity: 0; }
-[data-composition-id="07-vous-parlez"] #f07-glow2 { left: 500px; top: 1130px; opacity: 0; }
-[data-composition-id="07-vous-parlez"] #f07-floor { position: absolute; left: 60px; top: 1090px; width: 880px; height: 120px; border-radius: 50%; opacity: 0;
-  background: radial-gradient(closest-side, rgba(184,39,10,.28), rgba(184,39,10,0)); }
-[data-composition-id="07-vous-parlez"] #f07-card { left: -105px; top: 493px; width: 1080px; height: 614px; padding: 0; box-sizing: border-box; overflow: visible; border-radius: 20px; }
-[data-composition-id="07-vous-parlez"] #f07-scr { position: absolute; left: 7px; top: 7px; width: 1066px; height: 600px; border-radius: 13px; overflow: hidden; background: #efe8dd; }
-[data-composition-id="07-vous-parlez"] #f07-scr img { position: absolute; left: 0; top: 0; width: 1066px; height: 599.6px; opacity: 0; }
+/* ---- Scene 2 : the real screen at native size (1 image px = 1 layout px), macro camera ---- */
+[data-composition-id="07-vous-parlez"] #f07-stage #f07-s2 { opacity: 0; overflow: hidden; }
+[data-composition-id="07-vous-parlez"] #f07-bd { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; opacity: 0; filter: blur(30px); }
+[data-composition-id="07-vous-parlez"] #f07-bd img { position: absolute; left: -1300px; top: -60px; width: 3640px; height: 2048px; }
+[data-composition-id="07-vous-parlez"] #f07-bdwash { position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(700px 900px at 50% 45%, rgba(246,241,234,.10), rgba(246,241,234,.55) 100%); }
+[data-composition-id="07-vous-parlez"] #f07-glow2 { left: 500px; top: 880px; opacity: 0; }
+[data-composition-id="07-vous-parlez"] #f07-card { left: -230px; top: 465px; width: 1460px; height: 830px; padding: 0; box-sizing: border-box; overflow: visible; border-radius: 24px; }
+[data-composition-id="07-vous-parlez"] #f07-scr { position: absolute; left: 10px; top: 10px; width: 1440px; height: 810px; border-radius: 16px; overflow: hidden; background: #efe8dd; }
+[data-composition-id="07-vous-parlez"] #f07-scr img { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; opacity: 0; }
 [data-composition-id="07-vous-parlez"] #f07-scr .f07-mk { position: absolute; width: 2px; height: 2px; margin: -1px 0 0 -1px; }
-[data-composition-id="07-vous-parlez"] #f07-sheen { position: absolute; left: -520px; top: -160px; width: 300px; height: 940px; opacity: 0; mix-blend-mode: soft-light;
+[data-composition-id="07-vous-parlez"] #f07-sheen { position: absolute; left: -700px; top: -200px; width: 420px; height: 1300px; opacity: 0; mix-blend-mode: soft-light;
   background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9), rgba(255,255,255,0)); }
-[data-composition-id="07-vous-parlez"] #f07-sweep { position: absolute; left: -180px; top: 340px; width: 170px; height: 108px; opacity: 0; mix-blend-mode: multiply;
+[data-composition-id="07-vous-parlez"] #f07-sweep { position: absolute; left: -240px; top: 466px; width: 230px; height: 134px; opacity: 0; mix-blend-mode: multiply;
   background: linear-gradient(100deg, rgba(255,200,170,0) 0%, rgba(255,160,115,.45) 36%, rgba(242,78,30,.7) 50%, rgba(255,160,115,.45) 64%, rgba(255,200,170,0) 100%); }
-[data-composition-id="07-vous-parlez"] #f07-rim { position: absolute; inset: -2px; border-radius: 22px; opacity: 0; pointer-events: none;
+[data-composition-id="07-vous-parlez"] #f07-rim { position: absolute; inset: -2px; border-radius: 26px; opacity: 0; pointer-events: none;
   box-shadow: 0 0 0 2px rgba(242,78,30,.85), 0 0 40px 6px rgba(242,78,30,.45); }
-[data-composition-id="07-vous-parlez"] #f07-botfade { position: absolute; left: 0; right: 0; top: 1150px; height: 770px; z-index: 70; opacity: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(246,241,234,0) 0%, rgba(246,241,234,.86) 22%, rgba(246,241,234,.94) 100%); }
+[data-composition-id="07-vous-parlez"] #f07-streak2 { left: 70px; top: 880px; width: 860px; }
+[data-composition-id="07-vous-parlez"] #f07-botfade { position: absolute; left: 0; right: 0; top: 1180px; height: 740px; z-index: 70; opacity: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(246,241,234,0) 0%, rgba(246,241,234,.88) 25%, rgba(246,241,234,.95) 100%); }
   </style>
 
     <div id="f07-stage" class="fx-stage clip" data-start="0" data-duration="4.75" data-track-index="0">
@@ -106,40 +109,51 @@
         </div>
       </div>
 
-      <!-- Scene 2 : the real Synapze screen, floating in 3D, cropped on its useful column -->
+      <!-- Scene 2 : the real Synapze screen at macro scale, the camera follows the action -->
       <div class="f07-layer" id="f07-s2">
+        <div id="f07-bd"><img id="f07-bdimg" src="assets/ui/voice-note/vn-16.jpg" alt=""><div id="f07-bdwash"></div></div>
         <div class="fx-glow" id="f07-glow2"></div>
         <div class="f07-layer" id="f07-cam2">
-          <div id="f07-floor"></div>
-          <div class="fx-3d" id="f07-3d">
-            <div class="fx-card light" id="f07-card">
-              <div id="f07-scr">
-                <img id="f07-vn01" src="assets/ui/voice-note/vn-01.jpg" alt="">
-                <img id="f07-vn02" src="assets/ui/voice-note/vn-02.jpg" alt="">
-                <img id="f07-vn03" src="assets/ui/voice-note/vn-03.jpg" alt="">
-                <img id="f07-vn04" src="assets/ui/voice-note/vn-04.jpg" alt="">
-                <img id="f07-vn05" src="assets/ui/voice-note/vn-05.jpg" alt="">
-                <img id="f07-vn06" src="assets/ui/voice-note/vn-06.jpg" alt="">
-                <img id="f07-vn07" src="assets/ui/voice-note/vn-07.jpg" alt="">
-                <img id="f07-vn08" src="assets/ui/voice-note/vn-08.jpg" alt="">
-                <img id="f07-vn09" src="assets/ui/voice-note/vn-09.jpg" alt="">
-                <img id="f07-vn10" src="assets/ui/voice-note/vn-10.jpg" alt="">
-                <img id="f07-vn11" src="assets/ui/voice-note/vn-11.jpg" alt="">
-                <img id="f07-vn12" src="assets/ui/voice-note/vn-12.jpg" alt="">
-                <img id="f07-vn13" src="assets/ui/voice-note/vn-13.jpg" alt="">
-                <img id="f07-vn14" src="assets/ui/voice-note/vn-14.jpg" alt="">
-                <img id="f07-vn15" src="assets/ui/voice-note/vn-15.jpg" alt="">
-                <img id="f07-vn16" src="assets/ui/voice-note/vn-16.jpg" alt="">
-                <!-- invisible measuring markers (image px x 0.74028) : transcription block centre, Identité block centre -->
-                <i class="f07-mk" id="f07-mkT" style="left:487px;top:275px"></i>
-                <i class="f07-mk" id="f07-mkI" style="left:777px;top:395px"></i>
-                <div id="f07-sheen"></div>
-                <div id="f07-sweep"></div>
+          <div class="f07-layer" id="f07-pan2">
+            <div class="fx-3d" id="f07-3d">
+              <div class="fx-card light" id="f07-card">
+                <div id="f07-scr">
+                  <img id="f07-vn01" src="assets/ui/voice-note/vn-01.jpg" alt="">
+                  <img id="f07-vn02" src="assets/ui/voice-note/vn-02.jpg" alt="">
+                  <img id="f07-vn03" src="assets/ui/voice-note/vn-03.jpg" alt="">
+                  <img id="f07-vn04" src="assets/ui/voice-note/vn-04.jpg" alt="">
+                  <img id="f07-vn05" src="assets/ui/voice-note/vn-05.jpg" alt="">
+                  <img id="f07-vn06" src="assets/ui/voice-note/vn-06.jpg" alt="">
+                  <img id="f07-vn07" src="assets/ui/voice-note/vn-07.jpg" alt="">
+                  <img id="f07-vn08" src="assets/ui/voice-note/vn-08.jpg" alt="">
+                  <img id="f07-vn09" src="assets/ui/voice-note/vn-09.jpg" alt="">
+                  <img id="f07-vn10" src="assets/ui/voice-note/vn-10.jpg" alt="">
+                  <img id="f07-vn11" src="assets/ui/voice-note/vn-11.jpg" alt="">
+                  <img id="f07-vn12" src="assets/ui/voice-note/vn-12.jpg" alt="">
+                  <img id="f07-vn13" src="assets/ui/voice-note/vn-13.jpg" alt="">
+                  <img id="f07-vn14" src="assets/ui/voice-note/vn-14.jpg" alt="">
+                  <img id="f07-vn15" src="assets/ui/voice-note/vn-15.jpg" alt="">
+                  <img id="f07-vn16" src="assets/ui/voice-note/vn-16.jpg" alt="">
+                  <!-- invisible camera targets, image px -->
+                  <i class="f07-mk" id="f07-mkP" style="left:1318px;top:249px"></i>
+                  <i class="f07-mk" id="f07-mkA" style="left:492px;top:437px"></i>
+                  <i class="f07-mk" id="f07-mkT" style="left:450px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkC6" style="left:503px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkC7" style="left:635px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkC8" style="left:773px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkC9" style="left:899px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkC10" style="left:926px;top:372px"></i>
+                  <i class="f07-mk" id="f07-mkL" style="left:720px;top:544px"></i>
+                  <i class="f07-mk" id="f07-mkR" style="left:1232px;top:540px"></i>
+                  <div id="f07-sheen"></div>
+                  <div id="f07-sweep"></div>
+                </div>
+                <div id="f07-rim"></div>
               </div>
-              <div id="f07-rim"></div>
             </div>
           </div>
         </div>
+        <div class="fx-streak" id="f07-streak2"></div>
       </div>
 
       <div id="f07-botfade"></div>
@@ -298,36 +312,63 @@ const FX = {
         if (n > 0) tl.set($("f07-vn" + SW[n - 1][0]), { opacity: 0 }, s[1]);
       });
 
-      /* the glass card arrives tilted and straightens (−16° → −6° in 0.6 s), then keeps drifting */
-      var card = $("f07-card");
-      tl.fromTo(card, { rotationY: -16, rotationX: 6, z: -120, y: 40 },
-        { rotationY: -6, rotationX: 4, z: 0, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 1.86);
-      tl.fromTo(card, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.16, ease: "power2.out", immediateRender: false }, 1.86);
-      tl.to(card, { rotationY: -5, rotationX: 3.4, duration: DUR - 2.46, ease: "none" }, 2.46);
+      /* backdrop : a blurred, scaled-up copy of the screen fills the vertical behind the card (soft depth) */
+      tl.fromTo($("f07-bd"), { opacity: 0 }, { opacity: 0.5, duration: 0.3, ease: "power2.out", immediateRender: false }, 1.86);
+      tl.fromTo($("f07-bdwash"), { opacity: 1 }, { opacity: 1, duration: 0.01, immediateRender: false }, 1.86);
+      tl.fromTo($("f07-bdimg"), { x: 0, y: 0, scale: 1 }, { x: -260, y: -40, scale: 1.08, duration: DUR - 1.86, ease: "none", immediateRender: false }, 1.86);
 
-      tl.fromTo($("f07-glow2"), { opacity: 0, scaleX: 0.8, scaleY: 0.3 }, { opacity: 0.9, scaleX: 1.0, scaleY: 0.42, duration: 0.6, ease: "power2.out", immediateRender: false }, 1.86);
-      tl.fromTo($("f07-floor"), { opacity: 0, scaleX: 0.7 }, { opacity: 1, scaleX: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, 1.86);
+      /* the glass card arrives tilted and settles to a small tilt, then keeps drifting */
+      var card = $("f07-card");
+      tl.fromTo(card, { rotationY: -12, rotationX: 6, z: -80 },
+        { rotationY: -5, rotationX: 3, z: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 1.86);
+      tl.to(card, { rotationY: -4, rotationX: 2.4, duration: DUR - 2.46, ease: "none" }, 2.46);
+      tl.fromTo($("f07-s2"), { filter: "blur(12px)" }, { filter: "blur(0px)", duration: 0.16, ease: "power2.out", immediateRender: false }, 1.86);
+
+      tl.fromTo($("f07-glow2"), { opacity: 0, scale: 0.7 }, { opacity: 0.75, scale: 1.1, duration: 0.6, ease: "power2.out", immediateRender: false }, 1.86);
       tl.fromTo($("f07-botfade"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out", immediateRender: false }, 1.86);
       /* white light sheen across the glass on arrival */
-      tl.fromTo($("f07-sheen"), { x: 0, rotation: 18, opacity: 0.85 }, { x: 1800, rotation: 18, opacity: 0.85, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 1.9);
+      tl.fromTo($("f07-sheen"), { x: 0, rotation: 18, opacity: 0.85 }, { x: 2400, rotation: 18, opacity: 0.85, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 1.9);
       tl.set($("f07-sheen"), { opacity: 0 }, 2.46);
 
-      /* camera : creep, punch on the transcription (2.45, lands at y 800 so the card clears the caption band), punch moved to Identité (3.48, lands on the visual centre), drift.
-         Target offsets from the camera origin (500, 880), measured in the settled pose (card rotY −6, rotX 4), baked. */
-      var cam = $("f07-cam2");
-      var T_OFF = { x: -109, y: -104 }, I_OFF = { x: 181, y: 17 };
-      var S1 = 1.405, S2 = 1.69;
-      tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.03, duration: 0.59, ease: "none", immediateRender: false }, 1.86);
-      FX.punch(tl, cam, 2.45, { s: S1, x: -T_OFF.x * S1, y: -80 - T_OFF.y * S1, d: 0.2, drift: 0.03, hold: 0.83 });
-      FX.punch(tl, cam, 3.48, { s: S2, x: -I_OFF.x * S2, y: -I_OFF.y * S2, d: 0.2, drift: 0.02, hold: DUR - 3.68 });
+      /* ---- macro camera : outer = scale about (500, 880), inner = translate (coordinate-target-zoom, T = O + (c − O) / S − L).
+         L = layout position of each target in the settled pose (measured in Chromium, baked). ---- */
+      var cam = $("f07-cam2"), pan = $("f07-pan2");
+      var L = {"P":[1112,723],"A":[276,912],"T":[236,847],"C6":[287,848],"C7":[417,848],"C8":[554,848],"C9":[681,848],"C10":[708,848],"L":[500,1021],"R":[1025,1022]};
+      function at(k, s, cx, cy) { return { s: s, x: 500 + (cx - 500) / s - L[k][0], y: 880 + (cy - 880) / s - L[k][1] }; }
+      function shot(f, t, d, ease) {
+        if (d === 0) { tl.set(cam, { scale: f.s }, t); tl.set(pan, { x: f.x, y: f.y }, t); return; }
+        tl.to(cam, { scale: f.s, duration: d, ease: ease }, t); tl.to(pan, { x: f.x, y: f.y, duration: d, ease: ease }, t);
+      }
+      /* 1.86 match cut : the real « Enregistrement… » pill lands where the scene-1 pill was (×2.3) */
+      var F0 = at("P", 2.3, 620, 390);
+      tl.fromTo(cam, { scale: F0.s * 1.06 }, { scale: F0.s, duration: 0.5, ease: "expo.out", immediateRender: false }, 1.86);
+      tl.fromTo(pan, { x: F0.x, y: F0.y }, { x: F0.x, y: F0.y, duration: 0.01, immediateRender: false }, 1.86);
+      /* 1.98 → 2.38 pull and pan to the patient : « Louis Lebrun », the waveform row, the fields (×1.5) */
+      shot(at("A", 1.5, 500, 720), 1.98, 0.40, "power3.inOut");
+      /* 2.45 punch on the transcription (×1.95), then the camera follows the caret, synced to the swaps */
+      shot(at("T", 1.95, 500, 780), 2.45, 0.2, "expo.out");
+      var CAR = [["C6", 2.90], ["C7", 3.025], ["C8", 3.15], ["C9", 3.275], ["C10", 3.40]];
+      CAR.forEach(function (c, n) {
+        var s = 1.95 + 0.012 * (n + 1);
+        shot(at(c[0], s, 500, 780), c[1], n === CAR.length - 1 ? 0.08 : 0.125, "power1.inOut");
+      });
+      /* 3.48 whip down onto the Identité block, left column : Monsieur, IA Lebrun, IA 75015 (×2.6) */
+      shot(at("L", 2.6, 500, 980), 3.48, 0.16, "expo.out");
+      tl.fromTo($("f07-s2"), { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.14, ease: "power2.out", immediateRender: false }, 3.48);
+      tl.fromTo($("f07-streak2"), { opacity: 0, scaleX: 0.3 }, { opacity: 0.7, scaleX: 1.1, duration: 0.08, ease: "expo.out", immediateRender: false }, 3.48);
+      tl.to($("f07-streak2"), { opacity: 0, scaleX: 1.3, duration: 0.2, ease: "power2.out" }, 3.56);
+      shot(at("L", 2.65, 500, 980), 3.64, 0.34, "none");
+      /* 3.98 short pan right : IA Louis, IA 10/10/1978, IA Paris + « REMPLIE AUTOMATIQUEMENT » */
+      shot(at("R", 2.6, 500, 980), 3.98, 0.22, "power3.inOut");
+      shot(at("R", 2.66, 500, 980), 4.20, DUR - 4.20, "none");
 
       /* 4.18 « REMPLIE AUTOMATIQUEMENT » : a short orange glint runs over the Identité block + rim light on the frame */
-      tl.fromTo($("f07-sweep"), { x: 0, opacity: 1 }, { x: 1420, opacity: 1, duration: 0.42, ease: "power2.inOut", immediateRender: false }, 4.16);
+      tl.fromTo($("f07-sweep"), { x: 0, opacity: 1 }, { x: 1700, opacity: 1, duration: 0.42, ease: "power2.inOut", immediateRender: false }, 4.16);
       tl.set($("f07-sweep"), { opacity: 0 }, 4.58);
       tl.fromTo($("f07-rim"), { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out", immediateRender: false }, 4.16);
-      tl.to($("f07-rim"), { opacity: 0.35, duration: 0.45, ease: "power2.out" }, 4.26);
-      tl.to($("f07-glow2"), { opacity: 1, scaleX: 1.15, duration: 0.12, ease: "expo.out" }, 4.16);
-      tl.to($("f07-glow2"), { opacity: 0.85, scaleX: 1.08, duration: 0.4, ease: "power2.out" }, 4.3);
+      tl.to($("f07-rim"), { opacity: 0.4, duration: 0.45, ease: "power2.out" }, 4.26);
+      tl.to($("f07-glow2"), { opacity: 1, scale: 1.25, duration: 0.12, ease: "expo.out" }, 4.16);
+      tl.to($("f07-glow2"), { opacity: 0.85, scale: 1.18, duration: 0.4, ease: "power2.out" }, 4.3);
 
       /* captions scene 2 : two groups of 2 lines max, word by word, key box on « s’écrit. » */
       cueWords($("f07-cap2"));
