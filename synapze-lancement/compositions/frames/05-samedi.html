@@ -1,0 +1,347 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f05-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
+    #f05-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f05-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f05-wrap .fil-ground.dark { background: #0E1624; }
+  #f05-wrap .fil-ground.light { background: #F1EBDE; }
+  #f05-wrap .fil-ground.black { background: #0A0F1A; }
+  #f05-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f05-wrap .light .fil-dots, #f05-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f05-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f05-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f05-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f05-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f05-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f05-wrap .fil-line.grey { background: #5B6578; }
+  #f05-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f05-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f05-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f05-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f05-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f05-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f05-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f05-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f05-wrap .on-light .fil-clock { color: #0E1624; }
+  #f05-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f05-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f05-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
+    #f05-wrap #f05-thread { opacity: 0; }
+
+    /* hanging iPhone (frame.md iphone-lock; styleframes sf.css .phone / .lock / .notif), world scale 0.57 */
+    #f05-phw { width: 228px; height: 467.4px; opacity: 0; }
+    #root .f05-phs { position: absolute; left: 0; top: 0; width: 400px; height: 820px; transform: scale(0.57); transform-origin: 0 0; }
+    #root .f05-phs * { box-sizing: border-box; margin: 0; padding: 0; }
+    #root .f05-phone { position: absolute; left: 0; top: 0; width: 400px; height: 820px; box-sizing: border-box; border-radius: 62px;
+      background: #05080F; padding: 14px; box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
+    #root .f05-phs .f05-scr { width: 100%; height: 100%; border-radius: 50px; overflow: hidden; position: relative; }
+    #root .f05-lock { height: 100%; background: linear-gradient(160deg, #1B2840, #0B111D); color: #fff; text-align: center; }
+    #root .f05-phs .f05-dcol { margin-top: 84px; height: 29px; overflow: hidden; opacity: .85; font: 500 22px/29px "DM Sans", sans-serif; }
+    #root .f05-dit { display: block; height: 29px; }
+    #root .f05-dst { display: block; }
+    #root .f05-phs .f05-t { margin-top: 3px; height: 116px; font: 600 110px/116px "DM Sans", sans-serif; letter-spacing: -3px; }
+    #root .f05-tcol { display: inline-block; height: 116px; overflow: hidden; vertical-align: top; }
+    #root .f05-tit { display: block; height: 116px; text-align: center; }
+    #root .f05-tst { display: block; }
+    #root .f05-nw { position: absolute; left: 14px; right: 14px; top: 300px; opacity: 0; }
+    #root .f05-phs .f05-notif { position: relative; background: rgba(241,235,222,.92); color: #0E1624; border-radius: 22px;
+      padding: 14px 16px; text-align: left; font: 400 17px/1.3 "DM Sans", sans-serif; }
+    #root .f05-notif b { font-weight: 700; }
+    #root .f05-phs .f05-app { display: flex; align-items: center; gap: 8px; font: 600 14px "DM Sans", sans-serif; color: #5B6578; margin-bottom: 4px; }
+    #root .f05-app i { width: 20px; height: 20px; border-radius: 5px; background: #25D366; display: inline-block; }
+    #root .f05-phs .f05-notif.f05-grey { position: absolute; left: 0; top: 0; right: 0; background: rgba(91,101,120,.55); color: #C9CED8; opacity: 0; }
+    #root .f05-bhalo { position: absolute; left: -114px; top: -114px; width: 857px; height: 1048px; pointer-events: none;
+      background: radial-gradient(closest-side, rgba(120,160,230,.18), transparent); }
+
+    /* warm lamp of the dark stage (styleframes .dark.lamp) */
+    #f05-lamp { position: absolute; left: -300px; top: -400px; width: 1500px; height: 1200px; pointer-events: none; opacity: 0;
+      background: radial-gradient(closest-side, rgba(255,196,120,.20), transparent); }
+
+    /* the days, DM Mono, right of the phone (styleframes P09 / P10) */
+    #f05-days { position: absolute; left: 1290px; top: 260px; font: 500 26px/57.2px "DM Mono", monospace; letter-spacing: 4px;
+      color: #5B6578; white-space: nowrap; }
+    #root .f05-day { position: relative; display: block; height: 57.2px; opacity: 0; }
+    #root .f05-dayc { position: absolute; left: 0; top: 0; color: #F1EBDE; opacity: 0; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box, peak-stroke) */
+    #f05-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(transparent, rgba(14,22,36,.92) 45%, #0E1624); }
+    #root .f05-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #F1EBDE; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+    #root .f05-w { display: inline-block; opacity: 0; }
+    #root .f05-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f05-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f05-kbox .f05-w { position: relative; }
+    #root .f05-trait { position: relative; display: inline-block; }
+    #root .f05-tmask { position: absolute; left: -4%; right: -6%; bottom: -6px; height: 12px; overflow: hidden; opacity: 0; }
+    #root .f05-tstroke { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #F24E1E;
+      border-radius: 50% 40% 60% 30% / 60% 50% 50% 40%; clip-path: polygon(0 60%, 8% 30%, 100% 0, 97% 70%, 10% 100%); }
+  </style>
+
+  <div id="root" data-composition-id="05-samedi" data-width="1920" data-height="1080" data-duration="3.3">
+    <div id="f05-bg" class="clip" data-start="0" data-duration="3.3" data-track-index="0"></div>
+    <div id="f05-wrap"></div>
+
+    <!-- the iPhone (moved under the line by filHang) -->
+    <div id="f05-phw">
+      <div class="f05-phs">
+        <div class="f05-phone"><div class="f05-scr"><div class="f05-lock">
+          <div class="f05-dcol"><span class="f05-dst" id="f05-ds1"><span class="f05-dst" id="f05-ds2">
+            <span class="f05-dit">samedi 16</span><span class="f05-dit">dimanche 17</span><span class="f05-dit">lundi 18</span>
+          </span></span></div>
+          <div class="f05-t"><span class="f05-tcol"><span class="f05-tst" id="f05-ts1">
+            <span class="f05-tit">21:14</span><span class="f05-tit">08:30</span>
+          </span></span></div>
+          <div class="f05-nw" id="f05-nw">
+            <div class="f05-notif" id="f05-nl"><div class="f05-app"><i></i>WHATSAPP · 21:14</div><b>Camille R.</b><br>Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis ?</div>
+            <div class="f05-notif f05-grey" id="f05-ng"><div class="f05-app"><i></i>WHATSAPP · lun.</div><b>Camille R.</b><br>Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis ?</div>
+          </div>
+        </div></div></div>
+        <div class="f05-bhalo"></div>
+      </div>
+    </div>
+
+    <div id="f05-lamp"></div>
+
+    <div id="f05-days">
+      <span class="f05-day" id="f05-dsam">SAM. 21:14</span>
+      <span class="f05-day" id="f05-ddim">DIM. —</span>
+      <span class="f05-day" id="f05-dlun">LUN. 08:30<span class="f05-dayc" id="f05-dlunc">LUN. 08:30</span></span>
+    </div>
+
+    <div id="f05-scrim"></div>
+
+    <div class="f05-sub" id="f05-s1"><span class="f05-w" data-cue="0.09">Et</span> <span class="f05-w" data-cue="0.20">le</span> <span class="f05-w" data-cue="0.30">prospect</span> <span class="f05-w" data-cue="0.73">qui</span> <span class="f05-w" data-cue="0.89">vous</span> <span class="f05-w" data-cue="1.10">écrit</span> <span class="f05-kbox"><i class="f05-kbg" id="f05-k1"></i><span class="f05-w" data-cue="1.36">samedi</span> <span class="f05-w" data-cue="1.68">soir…</span></span></div>
+    <div class="f05-sub" id="f05-s2"><span class="f05-w" data-cue="2.44">attend</span> <span class="f05-trait"><span class="f05-w" data-cue="2.75">lundi.</span><i class="f05-tmask" id="f05-tm"><i class="f05-tstroke" id="f05-ts"></i></i></span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "05-samedi";
+      var DUR = 3.3;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world ---------------- */
+      var XSAM = FIL.DAYS.sam, XDIM = FIL.DAYS.dim, XLUN = FIL.DAYS.lun, X2247 = FIL.hx(22, 47);
+      // past 19:00 the line is grey; the point and « 22:47 » are leaving on the left (handoff_in)
+      var h = filBuild($("f05-wrap"), {
+        ground: "dark", x0: FIL.hx(19), x1: 13000, orangeTo: FIL.hx(19), point: X2247, clock: "22:47",
+        ticks: [[XSAM, "SAM. 21:14"], [XDIM, "DIM."], [XLUN, "LUN. 08:30"]],
+      });
+      // the dot grid (trame 7 %) on the stage, just under the cam (pilot pattern), same pattern phase as the pilot
+      // (box offset and translation constant shifted by whole 48 px pitches), box trimmed to this frame's travel
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "-80px", top: "-752px", width: "9600px", height: "1872px" });
+
+      // the iPhone hangs at SAM. 21:14 by a short thread, just above the line
+      var PH_LEN = 14;
+      var ph = filHang(h.world, XSAM, $("f05-phw"), { len: PH_LEN });
+      ph.thread.id = "f05-thread";
+
+      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
+      // the line sits at screen y 750 from 0.30 on (py = 540 - 210 / s): the phone stands above it, the band stays free
+      var C0 = [7900, 540, 1.0];                          // handoff_in
+      var S1 = 1.35, S2 = 1.35 + 0.0425 * 2.0;              // push ≈ +3 %/s on the notification
+      var C1 = [XSAM, 540 - 210 / S1, S1];
+      var C2 = [XSAM, 540 - 210 / S2, S2];
+      var C4 = [XLUN, 400, 1.5];                          // handoff_out
+      var C3 = [XLUN, (C2[1] + C4[1]) / 2, (C2[2] + C4[2]) / 2];
+      filCamSet(h, C0[0], C0[1], C0[2]);
+      gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
+      gsap.set(h.cam, { scale: C0[2], filter: "blur(14px)" });
+
+      var hudScale = [h.point, h.clock].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudY = [h.orange, h.grey];
+      var hudX = [ph.thread];
+      gsap.set(h.clock, { transformOrigin: "50% 230px" });
+      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      function dotsAt(c) { return { x: 6320 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt(C0));
+      gsap.set(hudScale, { scale: 1 / C0[2] });
+      gsap.set(hudY, { scaleY: 1 / C0[2] });
+      gsap.set(hudX, { scaleX: 1 / C0[2] });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        // a, b: [px, py, s]
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        if (a[0] !== b[0]) ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
+        }
+      }
+      // 0.00 → 0.30 end of the whip: x keeps the handoff speed (+6000 px/s at t = 0: f'(0) = 3.6, 500 px in 0.30 s)
+      // and brakes onto SAM.; y and scale start at zero speed (no visible kink at the seam); blur 14 → 0
+      var whipOut = function (p) { return 1 - Math.pow(1 - p, 3.6); };
+      camMove(0, 0.30, C0, C1, whipOut, "power2.inOut", "power2.inOut");
+      ft(h.cam, { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.22, ease: "power2.out" }, 0);
+      // 0.30 → 2.30 slow push on the notification
+      camMove(0.30, 2.00, C1, C2, "none");
+      // 2.30 → 2.80 travelling right along the line to LUN. (the phone follows); push +6 %/s until 3.30
+      camMove(2.30, 0.50, C2, C3, "power3.out", "none", "none");
+      camMove(2.80, 0.50, C3, C4, "none");
+
+      /* ---------------- Scene 1 (0.00 – 2.30) ---------------- */
+      // 0.10 the iPhone falls (×1.15, blur 8) and catches at SAM. 21:14, swings 2° once, then drifts 1°
+      ft($("f05-phw"), { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.10);
+      ft(ph.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, 0.10);
+      ft(ph.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.25);
+      ft(ph.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.25);
+      ft(ph.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.37);
+      ft(ph.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.57);
+      ft(ph.hang, { rotation: 0 }, { rotation: 1, duration: 0.6, ease: "sine.inOut" }, 1.20);
+      ft(ph.hang, { rotation: 1 }, { rotation: 0, duration: 0.5, ease: "sine.inOut" }, 1.80);
+      // warm lamp of the stage lights up
+      ft($("f05-lamp"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.10);
+      // 0.95 the WhatsApp notification slides down from the top of the screen (×1.08 blurred → sharp in 0.12 s)
+      var nw = $("f05-nw");
+      ft(nw, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.95);
+      ft(nw, { y: -70, scale: 1.08, filter: "blur(8px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.95);
+      // depth of field: the line and its SAM. graduation recede while the notification is the subject
+      var ctx = [h.grey, h.ticks[0][0], h.ticks[0][1]];
+      ft(ctx, { filter: "blur(0px)", opacity: 1 }, { filter: "blur(3px)", opacity: 0.5, duration: 0.6, ease: "power2.inOut" }, 1.00);
+      ft(ctx, { filter: "blur(3px)", opacity: 0.5 }, { filter: "blur(0px)", opacity: 1, duration: 0.2, ease: "power2.out" }, 2.10);
+      // 1.30 on the right, in DM Mono: « SAM. 21:14 » lights up, « DIM. — » and « LUN. 08:30 » wait in grey
+      ft($("f05-dsam"), { opacity: 0, y: 10, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out" }, 1.30);
+      ft($("f05-ddim"), { opacity: 0, y: 10 }, { opacity: 0.6, y: 0, duration: 0.2, ease: "power3.out" }, 1.36);
+      ft($("f05-dlun"), { opacity: 0, y: 10 }, { opacity: 0.35, y: 0, duration: 0.2, ease: "power3.out" }, 1.42);
+      // 1.70 the notification breathes (±2 px, finite)
+      ft(nw, { y: 0 }, { y: -2, duration: 0.35, ease: "sine.inOut" }, 1.70);
+      ft(nw, { y: -2 }, { y: 2, duration: 0.7, ease: "sine.inOut" }, 2.05);
+      ft(nw, { y: 2 }, { y: -1, duration: 0.55, ease: "sine.inOut" }, 2.75);
+
+      /* ---------------- Scene 2 (2.30 – 3.30) ---------------- */
+      // 2.30 the phone hangs from the moving point of the line: it travels with the camera and leans, then settles
+      ft(ph.hang, { x: 0 }, { x: XLUN - XSAM, duration: 0.50, ease: "power3.out" }, 2.30);
+      ft(ph.thread, { x: 0 }, { x: XLUN - XSAM, duration: 0.50, ease: "power3.out" }, 2.30);
+      ft(ph.hang, { rotation: 0 }, { rotation: -3, duration: 0.15, ease: "power2.out" }, 2.30);
+      ft(ph.hang, { rotation: -3 }, { rotation: 1.2, duration: 0.5, ease: "sine.inOut" }, 2.45);
+      ft(ph.hang, { rotation: 1.2 }, { rotation: 0.4, duration: 0.35, ease: "sine.inOut" }, 2.95);
+      // the passing graduations and the dot grid soften while the line runs under the phone
+      var marks = [];
+      h.ticks.forEach(function (t) { marks.push(t[0], t[1]); });
+      ft(marks, { filter: "blur(0px)" }, { filter: "blur(10px)", duration: 0.06, ease: "power1.out" }, 2.30);
+      ft(marks, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 2.50);
+      ft(dots, { opacity: 1 }, { opacity: 0.45, duration: 0.12, ease: "power2.out" }, 2.30);
+      ft(dots, { opacity: 0.45 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 2.65);
+      // 2.40 the date rolls to « dimanche 17 » (vertical spring ticker, additive nested steps)
+      ft($("f05-ds1"), { y: 0 }, { y: -29, duration: 0.14, ease: "back.out(1.4)" }, 2.40);
+      ft($("f05-dsam"), { opacity: 1 }, { opacity: 0.35, duration: 0.15, ease: "power2.out" }, 2.40);
+      ft($("f05-ddim"), { opacity: 0.6 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, 2.40);
+      // 2.70 « lundi 18 · 08:30 », LUN. 08:30 at the center of the line and lit in the list
+      ft($("f05-ds2"), { y: 0 }, { y: -29, duration: 0.14, ease: "back.out(1.4)" }, 2.70);
+      ft($("f05-ts1"), { y: 0 }, { y: -116, duration: 0.18, ease: "back.out(1.4)" }, 2.70);
+      ft($("f05-ddim"), { opacity: 1 }, { opacity: 0.5, duration: 0.15, ease: "power2.out" }, 2.70);
+      ft($("f05-dlun"), { opacity: 0.35 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, 2.70);
+      ft($("f05-dlunc"), { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.out" }, 2.70);
+      // 2.85 the notification turns grey, still unanswered
+      ft($("f05-ng"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.85);
+      ft($("f05-nl"), { opacity: 1 }, { opacity: 0, duration: 0.2, ease: "power2.out" }, 2.85);
+
+      /* ---------------- subtitles: word by word, one key-word box, one peak stroke ---------------- */
+      ["f05-s1", "f05-s2"].forEach(function (s) {
+        Array.prototype.forEach.call($(s).querySelectorAll(".f05-w"), function (w) {
+          var cue = parseFloat(w.getAttribute("data-cue"));
+          ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+        });
+      });
+      ft($("f05-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 1.31);
+      ft($("f05-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 2.25);
+      // [trait : lundi.] drawn from the left in 0.25 s (sliding mask window: mask and stroke move in opposite ways)
+      ft($("f05-tm"), { opacity: 1, xPercent: -100 }, { xPercent: 0, duration: 0.25, ease: "power2.out" }, 2.72);
+      ft($("f05-ts"), { xPercent: 100 }, { xPercent: 0, duration: 0.25, ease: "power2.out" }, 2.72);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

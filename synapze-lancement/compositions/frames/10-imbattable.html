@@ -1,0 +1,461 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); font-weight: 500; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f10-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #F1EBDE; }
+    #f10-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f10-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f10-wrap .fil-ground.dark { background: #0E1624; }
+  #f10-wrap .fil-ground.light { background: #F1EBDE; }
+  #f10-wrap .fil-ground.black { background: #0A0F1A; }
+  #f10-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f10-wrap .light .fil-dots, #f10-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f10-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f10-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f10-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f10-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f10-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f10-wrap .fil-line.grey { background: #5B6578; }
+  #f10-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f10-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f10-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f10-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f10-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f10-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f10-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f10-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f10-wrap .on-light .fil-clock { color: #0E1624; }
+  #f10-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f10-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f10-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
+    #f10-wrap #f10-point, #f10-wrap #f10-clock, #f10-wrap #f10-seg, #f10-wrap #f10-navy, #f10-wrap #f10-dotsd,
+    #f10-wrap #f10-tk18, #f10-wrap #f10-lb18, #f10-wrap #f10-tk19, #f10-wrap #f10-lb19, #f10-wrap #f10-tk20, #f10-wrap #f10-lb20,
+    #f10-wrap #f10-h-ag, #f10-wrap #f10-t-ag, #f10-wrap #f10-h-cn, #f10-wrap #f10-t-cn,
+    #f10-wrap #f10-h-fm, #f10-wrap #f10-t-fm, #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp { opacity: 0; }
+    #f10-wrap #f10-navy { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
+
+    /* clock « 19:05 » (P16: 110 px, under the line): digit columns that roll (vertical ticker) */
+    #f10-wrap #f10-clock { font-size: 110px; line-height: 118px; }
+    #f10-wrap .f10-col { display: inline-block; height: 118px; overflow: hidden; vertical-align: top; }
+    #f10-wrap .f10-step { display: block; }
+    #f10-wrap .f10-dg { display: block; height: 118px; line-height: 118px; }
+    #f10-wrap .f10-colon { display: inline-block; height: 118px; line-height: 118px; vertical-align: top; }
+
+    /* shadow of objects on the cream world (sf.css .light .sh) */
+    #f10-wrap .f10-sh { box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+
+    /* agenda « Mardi » (sf.css .agenda), world scale 0.833 */
+    #f10-agw { width: 683.3px; height: 866.7px; }
+    #f10-wrap .f10-agenda { position: absolute; left: 0; top: 0; width: 820px; height: 1040px; box-sizing: border-box;
+      transform: scale(0.8333); transform-origin: 0 0; background: #FBF7EE; border-radius: 10px; padding: 56px 64px; color: #0E1624; }
+    #f10-wrap .f10-agenda h1 { margin: 0 0 6px; font: 400 72px "DM Serif Display", serif; }
+    #f10-wrap .f10-date { font: 500 22px "DM Mono", monospace; color: #5B6578; letter-spacing: 2px; margin-bottom: 34px; }
+    #f10-wrap .f10-row { display: flex; align-items: center; gap: 24px; height: 74px; border-top: 1px solid #D9D0BF; font: 400 26px "DM Sans", sans-serif; }
+    #f10-wrap .f10-h { font: 500 22px "DM Mono", monospace; color: #5B6578; width: 90px; }
+    #f10-wrap .f10-ck { width: 30px; height: 30px; box-sizing: border-box; border: 2px solid #B9AF9C; border-radius: 6px; position: relative; flex: none; }
+    #f10-wrap .f10-ck.on { border-color: #F24E1E; }
+    #f10-wrap .f10-ck.on::after { content: ""; position: absolute; left: 7px; top: 1px; width: 9px; height: 17px; box-sizing: content-box;
+      border: solid #F24E1E; border-width: 0 4px 4px 0; transform: rotate(42deg); }
+    #f10-wrap .f10-tab { background: #F6E7C9; border-left: 6px solid #F24E1E; padding: 10px 18px; font: 600 24px "DM Sans", sans-serif;
+      color: #0E1624; border-radius: 4px; white-space: nowrap; }
+
+    /* broker's notebook (sf.css .carnet), world scale 1, rotated -2° */
+    #f10-cnw { width: 780px; height: 960px; }
+    #f10-wrap .f10-carnet { position: absolute; left: 0; top: 0; width: 780px; height: 960px; box-sizing: border-box; transform: rotate(-2deg);
+      transform-origin: 50% 100%; background: #F4EEDC; border-radius: 8px; padding: 70px 70px 0 100px;
+      background-image: repeating-linear-gradient(transparent 0 63px, #CFC6B0 63px 64px); background-position: 0 40px;
+      color: #1C2B4A; font: 500 50px/64px "Caveat", cursive; }
+    #f10-wrap .f10-carnet::before { content: ""; position: absolute; left: 68px; top: 0; bottom: 0; width: 2px; background: rgba(242,78,30,.35); }
+    #f10-wrap .f10-arrow { color: #F24E1E; }
+
+    /* advice form, filled (sf.css .doc, light variant with IA chips, completeness and stamp), world scale 0.5 */
+    #f10-fmw { width: 550px; height: 350px; }
+    #f10-wrap .f10-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 700px; box-sizing: border-box; transform: scale(0.5);
+      transform-origin: 0 0; background: #fff; border-radius: 6px; padding: 60px 80px; color: #222; font: 400 26px "DM Sans", sans-serif; }
+    #f10-wrap .f10-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #f10-wrap .f10-doc .f10-s { font: 400 20px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
+    #f10-wrap .f10-ln { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; }
+    #f10-wrap .f10-ln .f10-ck { width: 34px; height: 34px; border-radius: 4px; }
+    #f10-wrap .f10-chip { font: 500 14px "DM Mono", monospace; color: #F24E1E; background: #FBE3D9; padding: 3px 8px; border-radius: 4px; margin-left: auto; }
+    #f10-wrap .f10-cpl { margin-top: 28px; font: 500 16px "DM Mono", monospace; letter-spacing: 2px; color: #5B6578; }
+    #f10-wrap .f10-bar { height: 14px; border-radius: 7px; background: #F24E1E; margin-top: 10px; }
+    #f10-wrap .f10-stamp { position: absolute; right: 60px; top: 150px; transform: rotate(-6deg); border: 3px solid #F24E1E; color: #F24E1E;
+      font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85); }
+
+    /* the filled Synapze screen in its laptop (sf.css .laptop), world scale 0.722 */
+    #f10-lpw { width: 938.9px; height: 592.2px; }
+    #f10-wrap .f10-laptop { position: absolute; left: 0; top: 0; width: 1300px; height: 820px; box-sizing: border-box; transform: scale(0.7222);
+      transform-origin: 0 0; background: #1A1F2A; border-radius: 24px; padding: 22px; }
+    #f10-wrap .f10-scr { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; position: relative; background: #000; }
+    #f10-wrap .f10-scr img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* WhatsApp phone (sf.css .phone + .wa2), world scale 0.95 */
+    #f10-phw { width: 380px; height: 779px; }
+    #f10-wrap .f10-phone { position: absolute; left: 0; top: 0; width: 400px; height: 820px; box-sizing: border-box; transform: scale(0.95);
+      transform-origin: 0 0; border-radius: 62px; background: #05080F; padding: 14px; }
+    #f10-wrap .f10-phone .f10-scr { border-radius: 50px; }
+    #f10-wrap .f10-wa2 { height: 100%; display: flex; flex-direction: column; background: #EFEAE2; font-family: "DM Sans", sans-serif; color: #111; }
+    #f10-wrap .f10-st { height: 48px; flex: none; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 4px; font: 600 16px "DM Sans", sans-serif; background: #F6F5F3; }
+    #f10-wrap .f10-hd { background: #F6F5F3; border-bottom: 1px solid #DEDCD7; padding: 8px 14px 10px; display: flex; align-items: center; gap: 10px; }
+    #f10-wrap .f10-back { color: #1DAB61; font: 400 30px/1 "DM Sans", sans-serif; margin-right: 2px; }
+    #f10-wrap .f10-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg,#C9B79C,#A88F6E); display: grid; place-items: center; color: #fff; font: 600 15px "DM Sans", sans-serif; }
+    #f10-wrap .f10-nm { font: 600 17px "DM Sans", sans-serif; line-height: 1.1; }
+    #f10-wrap .f10-nm small { display: block; font: 400 12px "DM Sans", sans-serif; color: #667781; }
+    #f10-wrap .f10-ic { margin-left: auto; display: flex; gap: 18px; }
+    #f10-wrap .f10-ic i { width: 22px; height: 16px; box-sizing: border-box; border: 2px solid #1DAB61; border-radius: 4px; display: block; }
+    #f10-wrap .f10-body { flex: 1; padding: 8px 0; background-color: #EFEAE2; overflow: hidden;
+      background-image: radial-gradient(rgba(0,0,0,.035) 2px, transparent 2.5px), radial-gradient(rgba(0,0,0,.03) 1.5px, transparent 2px);
+      background-size: 34px 34px, 22px 22px; background-position: 0 0, 11px 17px; }
+    #f10-wrap .f10-pill { margin: 8px auto; width: max-content; background: #fff; border-radius: 8px; padding: 4px 10px; font: 500 12px "DM Sans", sans-serif; color: #54656F; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
+    #f10-wrap .f10-b { position: relative; max-width: 78%; box-sizing: border-box; margin: 3px 12px; padding: 6px 9px 18px; border-radius: 9px; font: 400 15.5px/1.32 "DM Sans", sans-serif; background: #fff; box-shadow: 0 1px .5px rgba(11,20,26,.13); width: max-content; }
+    #f10-wrap .f10-b.f10-in { border-top-left-radius: 0; }
+    #f10-wrap .f10-b.f10-out { background: #D9FDD3; margin-left: auto; border-top-right-radius: 0; }
+    #f10-wrap .f10-t { position: absolute; right: 8px; bottom: 3px; font: 400 11px "DM Sans", sans-serif; color: #667781; }
+    #f10-wrap .f10-k { color: #53BDEB; letter-spacing: -3px; margin-left: 4px; }
+    #f10-wrap .f10-bar2 { background: #F6F5F3; padding: 8px 12px 26px; display: flex; align-items: center; gap: 12px; color: #1DAB61; font: 400 26px "DM Sans", sans-serif; }
+    #f10-wrap .f10-bar2 .f10-f { flex: 1; height: 34px; border-radius: 17px; background: #fff; border: 1px solid #E1DED8; }
+    #f10-wrap .f10-bar2 .f10-m { width: 18px; height: 26px; box-sizing: border-box; border: 2.5px solid #1DAB61; border-radius: 9px; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box, peak-stroke), light world */
+    #f10-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(rgba(241,235,222,0), rgba(241,235,222,.92) 45%, #F1EBDE); }
+    #root .f10-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #0E1624; text-shadow: 0 2px 10px rgba(241,235,222,.9); }
+    #root .f10-w { display: inline-block; opacity: 0; }
+    #root .f10-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f10-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f10-kbox .f10-w { position: relative; }
+    #root .f10-trait { position: relative; display: inline-block; }
+    #root .f10-tr { position: absolute; left: -4%; right: -6%; bottom: -6px; height: 12px; background: #F24E1E;
+      border-radius: 50% 40% 60% 30% / 60% 50% 50% 40%; clip-path: polygon(0 60%, 8% 30%, 100% 0, 97% 70%, 10% 100%);
+      transform-origin: 0 50%; opacity: 0; }
+  </style>
+
+  <div id="root" data-composition-id="10-imbattable" data-width="1920" data-height="1080" data-duration="3.5">
+    <div id="f10-bg" class="clip" data-start="0" data-duration="3.5" data-track-index="0"></div>
+    <div id="f10-wrap"></div>
+
+    <!-- hanging objects (moved under the line by filHang) -->
+    <div id="f10-agw">
+      <div class="f10-agenda f10-sh">
+        <h1>Mardi</h1>
+        <div class="f10-date">MARDI 12 · SEMAINE 42</div>
+        <div class="f10-row"><div class="f10-h">14:00</div><div class="f10-ck on" style="opacity:.45"></div><span style="opacity:.55">Point portefeuille</span></div>
+        <div class="f10-row"><div class="f10-h">15:30</div><div class="f10-ck on" style="opacity:.45"></div><span style="opacity:.55">Signature Martin · auto</span></div>
+        <div class="f10-row"><div class="f10-h">16:30</div><div class="f10-ck on" style="opacity:.45"></div><span style="opacity:.55">Appel assureur</span></div>
+        <div class="f10-row"><div class="f10-h">18:00</div><div class="f10-ck"></div><div class="f10-tab">RDV M. Lebrun · mutuelle famille</div></div>
+      </div>
+    </div>
+    <div id="f10-cnw">
+      <div class="f10-carnet f10-sh">Louis Lebrun · 18:00<br>né le 10/10/1978,<br>Paris 15e<br>mutuelle santé famille<br><span class="f10-arrow">→ conseil : garanties renforcées</span></div>
+    </div>
+    <div id="f10-fmw">
+      <div class="f10-doc f10-sh">
+        <h3>Fiche de conseil · Santé Individuel</h3>
+        <div class="f10-s">Louis Lebrun · remplie automatiquement</div>
+        <div class="f10-ln"><div class="f10-ck on"></div>Besoins exprimés<span class="f10-chip">IA</span></div>
+        <div class="f10-ln"><div class="f10-ck on"></div>Situation familiale<span class="f10-chip">IA</span></div>
+        <div class="f10-ln"><div class="f10-ck on"></div>Budget<span class="f10-chip">IA</span></div>
+        <div class="f10-ln"><div class="f10-ck on"></div>Garanties proposées<span class="f10-chip">IA</span></div>
+        <div class="f10-ln"><div class="f10-ck on"></div>Justification du conseil<span class="f10-chip">IA</span></div>
+        <div class="f10-cpl">COMPLÉTUDE</div><div class="f10-bar"></div>
+        <div class="f10-stamp">PISTE D'AUDIT · HORODATÉE</div>
+      </div>
+    </div>
+    <div id="f10-lpw">
+      <div class="f10-laptop f10-sh"><div class="f10-scr"><img src="assets/ui/voice-note/vn-22.jpg" alt=""></div></div>
+    </div>
+    <div id="f10-phw">
+      <div class="f10-phone f10-sh"><div class="f10-scr"><div class="f10-wa2">
+        <div class="f10-st"><span>03:12</span><span>●●● ▮</span></div>
+        <div class="f10-hd"><span class="f10-back">‹</span><div class="f10-av">CR</div><div class="f10-nm">Camille R.<small>en ligne</small></div><div class="f10-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
+        <div class="f10-body">
+          <div class="f10-pill">Samedi</div>
+          <div class="f10-b f10-in">Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis ?<span class="f10-t">21:14</span></div>
+          <div class="f10-b f10-out">Bonjour Camille, je suis l'assistant IA du cabinet. Pour préparer votre devis : combien de personnes à couvrir ?<span class="f10-t">21:14<span class="f10-k">✓✓</span></span></div>
+          <div class="f10-pill">Aujourd'hui</div>
+          <div class="f10-b f10-in">Nous sommes quatre, deux adultes et deux enfants.<span class="f10-t">03:12</span></div>
+          <div class="f10-b f10-out">Parfait. Je prépare trois offres adaptées à votre famille.<span class="f10-t">03:12<span class="f10-k">✓✓</span></span></div>
+        </div>
+        <div class="f10-bar2">+<div class="f10-f"></div>◎<div class="f10-m"></div></div>
+      </div></div></div>
+    </div>
+
+    <div id="f10-scrim"></div>
+
+    <div class="f10-sub" id="f10-s1"><span class="f10-w" data-cue="0.13">L'IA</span> <span class="f10-w" data-cue="0.37">ne</span> <span class="f10-w" data-cue="0.48">remplace</span> <span class="f10-w" data-cue="0.96">pas</span> <span class="f10-kbox"><i class="f10-kbg" id="f10-k1"></i><span class="f10-w" data-cue="1.13">le</span> <span class="f10-w" data-cue="1.25">courtier.</span></span></div>
+    <div class="f10-sub" id="f10-s2"><span class="f10-w" data-cue="2.06">Elle</span> <span class="f10-w" data-cue="2.25">le</span> <span class="f10-w" data-cue="2.35">rend</span> <span class="f10-trait"><i class="f10-tr" id="f10-tr"></i><span class="f10-w" data-cue="2.71">imbattable.</span></span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "10-imbattable";
+      var DUR = 3.5;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world: the evening of the solution, seen from afar ----------------
+         The WhatsApp phone of frame 9 hangs at « SAM. 21:14 » (world x 8400). Pulled back, the same thread is the
+         last object of the evening: 1 hour = 2222 world px, so that at the key image (P16, cam ×0.36) one hour is
+         800 px on screen: 18:00 at x 160, 19:00 at 960, 20:00 at 1760, the phone at 1670, the point at 19:05. */
+      var HR = 800 / 0.36;
+      var X19 = 6428, hX = function (h, m) { return X19 + ((h - 19) * 60 + (m || 0)) / 60 * HR; };
+      var X18 = hX(18), X20 = hX(20), X1905 = hX(19, 5), XSAM = FIL.DAYS.sam;
+      var h = filBuild($("f10-wrap"), {
+        ground: "light", x0: 3000, x1: 11000, point: X1905, clock: "",
+        ticks: [[XSAM, "SAM. 21:14"], [X18, "18:00"], [X19, "19:00"], [X20, "20:00"]],
+      });
+      // the dot grid (trame 9 %) is re-hosted on the stage, as in the pilot, in a trimmed box (same 48 px phase)
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "3888px", height: "1872px" });
+      // the night-blue ground and its dark trame wait under the cam for the contraction
+      var navy = filEl(h.stage, "", {}); navy.id = "f10-navy"; h.stage.insertBefore(navy, dots);
+      var dotsD = filEl(h.stage, "fil-dots", { left: "-560px", top: "-752px", width: "3888px", height: "1872px" });
+      dotsD.id = "f10-dotsd"; h.stage.insertBefore(dotsD, h.cam);
+      h.point.id = "f10-point"; h.clock.id = "f10-clock";
+      var tkSam = h.ticks[0];
+      [["18", 1], ["19", 2], ["20", 3]].forEach(function (p) { h.ticks[p[1]][0].id = "f10-tk" + p[0]; h.ticks[p[1]][1].id = "f10-lb" + p[0]; });
+
+      // clock « 19:05 » under the point (P16), rolling digit columns (vertical ticker, nested wrappers, additive steps)
+      var CLK_OFF = 51;                                      // screen px between the line and the top of the clock
+      h.clock.style.top = (FIL.Y + CLK_OFF) + "px";
+      var ITEM = 118;
+      var COLS = [["0", "1"], ["7", "8", "9"], null, ["4", "5", "0"], ["3", "4", "5"]];
+      var steps = [];
+      COLS.forEach(function (items, ci) {
+        if (!items) { var c = document.createElement("span"); c.className = "f10-colon"; c.textContent = ":"; h.clock.appendChild(c); return; }
+        var col = document.createElement("span"); col.className = "f10-col";
+        var inner = col;
+        for (var s = 0; s < items.length - 1; s++) {
+          var w = document.createElement("span"); w.className = "f10-step"; inner.appendChild(w); inner = w;
+          steps.push({ el: w, col: ci, k: s });
+        }
+        items.forEach(function (d) { var e = document.createElement("span"); e.className = "f10-dg"; e.textContent = d; inner.appendChild(e); });
+        h.clock.appendChild(col);
+      });
+
+      // the objects of the evening, filled, hanging from the line (world positions from P16)
+      var OBJ = [
+        { k: "ag", el: "f10-agw", x: X19 + (190 - 960) / 0.36, len: 361 },
+        { k: "cn", el: "f10-cnw", x: X19 + (610 - 960) / 0.36, len: 333 },
+        { k: "fm", el: "f10-fmw", x: X19 + (875 - 960) / 0.36, len: 222 },
+        { k: "lp", el: "f10-lpw", x: X19 + (1350 - 960) / 0.36, len: 250 },
+        { k: "ph", el: "f10-phw", x: XSAM, len: 90 },
+      ];
+      var H = {};
+      OBJ.forEach(function (o) {
+        var r = filHang(h.world, o.x, $(o.el), { len: o.len });
+        r.hang.id = "f10-h-" + o.k; r.thread.id = "f10-t-" + o.k; H[o.k] = r;
+      });
+      // the contracting segment: exactly the screen width at 3.00, swapped for the long line at that instant
+      var S3 = 0.35568, K = 360 / 1924, SE = S3 * K;
+      var seg = filEl(h.world, "fil-line", { left: X19 - 962 / S3, top: FIL.Y, width: 2 * 962 / S3 }); seg.id = "f10-seg";
+      h.world.appendChild(h.point); h.world.appendChild(h.clock);
+
+      /* ---------------- camera (world x/y, cam scale) ---------------- */
+      var C0 = [8600, 540, 0.6];                 // handoff_in: mid pull, on the phone at SAM. 21:14
+      var C1 = [X19, 373, 0.3726];               // end of the pull: the whole evening, line at screen y 600
+      var C2 = [X19, 373, S3];                   // pull drift -2 %/s (×0.36 at the key image 2.40)
+      var C3 = [X19, 540, SE];                   // contraction: the line becomes a 360 px stroke at (960, 540)
+      filCamSet(h, C0[0], C0[1], C0[2]);
+      gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
+      gsap.set(h.cam, { scale: C0[2] });
+
+      var hudScale = [h.point, h.clock].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudY = [h.orange, seg];
+      var hudX = OBJ.map(function (o) { return H[o.k].thread; });
+      gsap.set(h.clock, { transformOrigin: "50% " + (-CLK_OFF) + "px" });
+      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      gsap.set(hudScale, { scale: 1 / C0[2] });
+      gsap.set(hudY, { scaleY: 1 / C0[2] });
+      gsap.set(hudX, { scaleX: 1 / C0[2] });
+      // trame phase of the pilot's convention at cam(8600, 540, 0.6): 32 + 0.6 (1600 - 8600) = -4168 ≡ -424 (mod 48)
+      var DX0 = -4168 + 48 * 78;
+      gsap.set([dots, dotsD], { x: DX0, y: 0 });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      // the camera: world x (px), world y (py) and cam scale (s), each with its own ease; the counter-scaled marks of
+      // the line follow through eases derived from the scale ease, so they stay exact at every frame (no callbacks)
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        if (a[0] !== b[0]) ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
+        }
+        return { Ex: Ex, Ey: Ey, Es: Es };
+      }
+      // 0.00 → 0.65 end of the pull (power3.out on the scale) while the frame slides onto the whole evening:
+      // the phone drifts from the center to its slot at 19:53 (zoom-out workspace reveal)
+      var A = camMove(0, 0.65, C0, C1, "sine.inOut", "sine.inOut", "power3.out");
+      // the trame travels with the line (screen displacement of the world under the camera)
+      (function () {
+        var at = function (p) {
+          var s = C0[2] + (C1[2] - C0[2]) * A.Es(p);
+          return { x: DX0 + s * (A.Ex(p) * (C0[0] - C1[0])), y: s * (A.Ey(p) * (C0[1] - C1[1])) };
+        };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          var fv = {}, tv = { duration: 0.65, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft([dots, dotsD], fv, tv, 0);
+        });
+      })();
+      // 0.65 → 3.00 slow pull drift (-2 %/s)
+      camMove(0.65, 2.35, C1, C2, "none");
+      // 3.00 → 3.50 the line and its objects contract to the center (power3.in)
+      camMove(3.00, 0.50, C2, C3, "power3.in");
+
+      /* ---------------- Scene 1 (0.00 – 3.50) ---------------- */
+      // 0.07 → 0.25 the « SAM. 21:14 » graduation gives way to the hours of the evening
+      ft(tkSam, { opacity: 1 }, { opacity: 0, duration: 0.16, ease: "power2.in" }, 0.07);
+      [[h.ticks[1], 0.40], [h.ticks[2], 0.44], [h.ticks[3], 0.48]].forEach(function (p) {
+        ft(p[0][0], { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power3.out" }, p[1]);
+        ft(p[0][1], { opacity: 0, y: 14, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.16, ease: "power3.out" }, p[1]);
+      });
+      // 0.08 → 0.55 the filled objects drop on the line, right to left as the frame opens (×1.15 blurred → caught,
+      // swing 2° once); the phone is already there
+      [["lp", 0.08], ["fm", 0.16], ["cn", 0.24], ["ag", 0.32]].forEach(function (p) {
+        var r = H[p[0]], t = p[1];
+        ft(r.hang, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, t);
+        ft(r.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, t);
+        ft(r.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, t + 0.15);
+        ft(r.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, t + 0.15);
+        ft(r.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, t + 0.27);
+        ft(r.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, t + 0.47);
+      });
+      // living hold: the other objects drift 1° (finite)
+      ["ag", "fm", "lp", "ph"].forEach(function (k, i) {
+        var t = 1.05 + i * 0.12;
+        ft(H[k].hang, { rotation: 0 }, { rotation: 1, duration: 0.7, ease: "sine.inOut" }, t);
+        ft(H[k].hang, { rotation: 1 }, { rotation: -0.6, duration: 0.8, ease: "sine.inOut" }, t + 0.7);
+        ft(H[k].hang, { rotation: -0.6 }, { rotation: 0, duration: 0.6, ease: "sine.inOut" }, t + 1.5);
+      });
+      // 0.60 the notebook lights up (the tool of advice, the broker's own); the others step back
+      var others = [H.ag.hang, H.fm.hang, H.lp.hang, H.ph.hang];
+      ft(others, { opacity: 1 }, { opacity: 0.38, duration: 0.3, ease: "power2.out" }, 0.60);
+      ft(H.cn.hang, { y: 0, scale: 1 }, { y: -24, scale: 1.1, duration: 0.3, ease: "power3.out" }, 0.60);
+      // 1.25 on « courtier » the notebook swings
+      ft(H.cn.hang, { rotation: 0 }, { rotation: 3, duration: 0.22, ease: "sine.out" }, 1.22);
+      ft(H.cn.hang, { rotation: 3 }, { rotation: -1.6, duration: 0.3, ease: "sine.inOut" }, 1.44);
+      ft(H.cn.hang, { rotation: -1.6 }, { rotation: 0, duration: 0.3, ease: "sine.inOut" }, 1.74);
+      // 1.95 the whole evening is back in light for the point
+      ft(others, { opacity: 0.38 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 1.95);
+      ft(H.cn.hang, { y: -24, scale: 1.1 }, { y: 0, scale: 1, duration: 0.25, ease: "power3.out" }, 1.95);
+      // 2.06 the orange point slides from 18:00 and stops at 19:05 (0.4 s power3.out), no hatched segment behind it
+      ft(h.point, { x: X18 - X1905 }, { x: 0, duration: 0.4, ease: "power3.out" }, 2.06);
+      ft(h.point, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 2.06);
+      // 2.20 « 19:05 » rolls under the point, digit by digit (rhyme of 19:00 and 22:47)
+      ft(h.clock, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out" }, 2.20);
+      steps.forEach(function (st) {
+        ft(st.el, { y: 0 }, { y: -ITEM, duration: 0.2, ease: "expo.out" }, 2.20 + st.col * 0.012 + st.k * 0.035);
+      });
+
+      // 3.00 → 3.50 contraction: the long line hands over to the exact-width segment, the point runs to its left end,
+      // the marks and objects go first (exits faster), the cream turns night blue
+      tl.set(seg, { opacity: 1 }, 3.00);
+      tl.set(h.orange, { opacity: 0 }, 3.00);
+      ft(h.point, { x: 0 }, { x: (X19 - 180 / SE) - X1905, duration: 0.5, ease: "power3.in" }, 3.00);
+      ft([h.clock].concat(h.ticks.slice(1).map(function (t) { return t[0]; }), h.ticks.slice(1).map(function (t) { return t[1]; })),
+        { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.2, ease: "power2.in" }, 3.00);
+      ft(OBJ.map(function (o) { return H[o.k].hang; }).concat(hudX), { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in" }, 3.10);
+      ft($("f10-scrim"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in" }, 3.05);
+      ft([navy, dotsD], { opacity: 0 }, { opacity: 1, duration: 0.37, ease: "power2.inOut" }, 3.05);
+      ft(dots, { opacity: 1 }, { opacity: 0, duration: 0.37, ease: "power2.inOut" }, 3.05);
+
+      /* ---------------- subtitles: word by word, one key-word box, the peak stroke ---------------- */
+      ["f10-s1", "f10-s2"].forEach(function (s) {
+        Array.prototype.forEach.call($(s).querySelectorAll(".f10-w"), function (w) {
+          var cue = parseFloat(w.getAttribute("data-cue"));
+          ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+        });
+      });
+      ft($("f10-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 1.08);
+      ft($("f10-tr"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 2.71 - 1 / 30);
+      ft($("f10-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 1.84);
+      ft($("f10-s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 3.22);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

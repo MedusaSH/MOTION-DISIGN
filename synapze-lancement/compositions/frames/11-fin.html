@@ -1,0 +1,330 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    /* the end of the film: black under the iris */
+    #f11-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #000; }
+    #f11-iris { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    #f11-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f11-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f11-wrap .fil-ground.dark { background: #0E1624; }
+  #f11-wrap .fil-ground.light { background: #F1EBDE; }
+  #f11-wrap .fil-ground.black { background: #0A0F1A; }
+  #f11-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f11-wrap .light .fil-dots, #f11-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f11-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f11-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f11-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f11-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f11-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f11-wrap .fil-line.grey { background: #5B6578; }
+  #f11-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f11-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f11-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f11-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f11-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f11-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f11-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f11-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f11-wrap .on-light .fil-clock { color: #0E1624; }
+  #f11-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f11-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f11-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 */
+    #f11-wrap #f11-halo { opacity: 0; }
+
+    /* end-card layers: full-frame boxes laid out in screen px of the key images, placed in the world */
+    #root .f11-layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 0px; pointer-events: none; }
+
+    /* « • Synapze • » (styleframes P17: .logo, 140 px, top 430) */
+    #root .f11-logotext { position: absolute; left: 0; right: 0; top: 430px; text-align: center; white-space: nowrap;
+      font: 400 140px "DM Serif Display", serif; color: #F1EBDE; }
+    #root .f11-dot { display: inline-block; color: #F24E1E; margin: 0 26px; opacity: 0; }
+    #root .f11-ch { display: inline-block; opacity: 0; transform-origin: 50% 100%; }
+    #f11-ul { position: absolute; left: 736px; top: 619px; width: 448px; height: 3px; background: #F24E1E; border-radius: 3px; opacity: 0; }
+
+    /* the promise (styleframes P18: .typo, 84 px, top 440) */
+    #root .f11-typo { position: absolute; left: 0; right: 0; top: 440px; text-align: center; white-space: nowrap;
+      font: 400 84px/1.15 "DM Serif Display", serif; color: #F1EBDE; transform-origin: 960px 97px; }
+    #root .f11-typo .f11-or { color: #F24E1E; }
+    #root .f11-w { display: inline-block; opacity: 0; }
+
+    /* the button, the URL, the cursor, the wave (styleframes P19) */
+    #root .f11-cta { position: absolute; left: 0; right: 0; top: 600px; text-align: center; }
+    #f11-btnw { display: inline-block; position: relative; opacity: 0; }
+    #f11-btn { display: inline-block; background: #F24E1E; color: #fff; font: 600 38px "DM Sans", sans-serif;
+      padding: 26px 56px; border-radius: 8px; box-shadow: 0 0 0 0px rgba(242,78,30,0); }
+    #root .f11-url { margin-top: 30px; font: 500 26px "DM Mono", monospace; letter-spacing: 3px; color: #9AA3B4; }
+    #root .f11-uc { display: inline-block; opacity: 0; }
+    #root .f11-rip { position: absolute; left: 1050px; top: 630px; width: 60px; height: 60px; border-radius: 50%;
+      box-sizing: border-box; border: 3px solid #F24E1E; opacity: 0; }
+    #f11-cur { position: absolute; left: 1080px; top: 660px; width: 44px; height: 60px; opacity: 0; transform-origin: 0 0;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,.45)); }
+    #f11-cur::before { content: ""; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: #fff;
+      clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f11-cur::after { content: ""; position: absolute; left: 3px; top: 4px; right: 6px; bottom: 6px; background: #111;
+      clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f11-wave { position: absolute; left: 666px; top: 850px; height: 60px; display: flex; align-items: center; gap: 6px; opacity: .6; }
+    #f11-wave i { display: block; width: 5px; border-radius: 4px; background: #F24E1E; opacity: 0; }
+  </style>
+
+  <div id="root" data-composition-id="11-fin" data-width="1920" data-height="1080" data-duration="7.35">
+    <div id="f11-bg" class="clip" data-start="0" data-duration="7.35" data-track-index="0"></div>
+    <div id="f11-iris"><div id="f11-wrap"></div></div>
+
+    <!-- logo (moved into the world by the script) -->
+    <div class="f11-layer" id="f11-logo">
+      <div class="f11-logotext"><span class="f11-dot" id="f11-dl">•</span><span class="f11-ch">S</span><span class="f11-ch">y</span><span class="f11-ch">n</span><span class="f11-ch">a</span><span class="f11-ch">p</span><span class="f11-ch">z</span><span class="f11-ch">e</span><span class="f11-dot" id="f11-dr">•</span></div>
+      <div id="f11-ul"></div>
+    </div>
+
+    <!-- the promise -->
+    <div class="f11-layer" id="f11-prom">
+      <div class="f11-typo" id="f11-typo"><span class="f11-w" data-cue="0.92">Le</span> <span class="f11-w" data-cue="1.03">courtier</span> <span class="f11-w" data-cue="1.47">parle.</span><br><span class="f11-or"><span class="f11-w" data-cue="2.00">L'IA</span> <span class="f11-w" data-cue="2.21">fait</span> <span class="f11-w" data-cue="2.42">tout</span> <span class="f11-w" data-cue="2.64">le</span> <span class="f11-w" data-cue="2.74">reste.</span></span></div>
+    </div>
+
+    <!-- the button, the URL, the wave, the cursor -->
+    <div class="f11-layer" id="f11-act">
+      <div class="f11-cta">
+        <div id="f11-btnw"><div id="f11-btn">Demander une démo</div></div>
+        <div class="f11-url" id="f11-url"><span class="f11-uc">s</span><span class="f11-uc">y</span><span class="f11-uc">n</span><span class="f11-uc">a</span><span class="f11-uc">p</span><span class="f11-uc">z</span><span class="f11-uc">e</span><span class="f11-uc">.</span><span class="f11-uc">e</span><span class="f11-uc">u</span></div>
+      </div>
+      <div id="f11-wave"></div>
+      <div class="f11-rip" id="f11-rip1" style="border-color:#FFB79C"></div>
+      <div class="f11-rip" id="f11-rip2" style="border-color:#FFFFFF"></div>
+      <div class="f11-rip" id="f11-rip3" style="border-color:#F24E1E"></div>
+      <div id="f11-cur"></div>
+    </div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "11-fin";
+      var DUR = 7.35;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world: handoff_in = a 360 px orange stroke centered on (960, 540), the point at its left end ---------------- */
+      var LX0 = 780, LX1 = 1140;
+      var h = filBuild($("f11-wrap"), { ground: "dark", x0: LX0, x1: LX1, point: LX0 });
+      h.point.id = "f11-point"; h.orange.id = "f11-line"; h.halo.id = "f11-halo";
+      // the warm halo of the end card sits where the styleframes put their lamp (sf.css .dark.lamp)
+      Object.assign(h.halo.style, { left: "450px", top: "200px", width: "1500px", height: "1200px", margin: "-600px 0 0 -750px",
+        background: "radial-gradient(closest-side, rgba(255,196,120,.20), transparent)" });
+      // dot grid re-hosted on the stage (pilot pattern), box trimmed to this frame's pull (same phase: -704 / -32 = 16 mod 48)
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "-704px", top: "-32px", width: "2112px", height: "1152px" });
+      // end-card layers live in the world, over the line
+      ["f11-logo", "f11-prom", "f11-act"].forEach(function (id) { h.world.appendChild($(id)); });
+      h.world.appendChild(h.point);
+
+      /* ---------------- camera: pull -1.5 %/s from 0.60 (the grid resumes its drift) ---------------- */
+      var PX = 960, PY = 540, CAM0 = 0.60;
+      var S_END = 1 - 0.015 * (DUR - CAM0);
+      var sAt = function (t) { return t <= CAM0 ? 1 : 1 - 0.015 * (t - CAM0); };
+      filCamSet(h, PX, PY, 1);
+      gsap.set(h.world, { x: 960 - PX, y: 540 - PY });
+      gsap.set(h.cam, { scale: 1, filter: "blur(0px)" });
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt([PX, PY, 1]));
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      // pilot camera kit (world x/y, cam scale; the dot grid follows through derived eases). No line marks are on
+      // screen during the pull (the stroke became the logo's own underline at 0.60), so no counter-scaled marks here.
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        if (a[0] !== b[0]) ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
+        if (a[2] !== b[2]) ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+      }
+      camMove(CAM0, DUR - CAM0, [PX, PY, 1], [PX, PY, S_END], "none");
+
+      // a layer drawn in screen px (key image) is placed in the world so that, at time t, it maps to the screen as
+      // y_screen = ty + k * y_layer (origin 960, 0): world scale k / s, world y 540 + (ty - 540) / s
+      function place(ty, k, t) { var s = sAt(t); return { y: 540 + (ty - 540) / s, scale: k / s }; }
+      var LOGO17 = place(0, 1, 0.60);                               // P17: 140 px, centered
+      var LOGO18 = place(-145.18, 307 / 448, 2.90);                 // P18: 96 px at top 150
+      var LOGO19 = place(-155.71, 256 / 448, 4.30);                 // P19: 80 px at top 90
+      var PROM18 = place(0, 1, 2.90);                               // P18: 84 px at top 440
+      var PROM19 = place(300 - (68 / 84) * 440, 68 / 84, 4.30);     // P19: 68 px at top 300
+      var ACT19 = place(0, 1, 4.30);                                // P19: button, url, wave, cursor
+      gsap.set($("f11-logo"), LOGO17);
+      gsap.set($("f11-prom"), PROM18);
+      gsap.set($("f11-act"), ACT19);
+
+      /* ---------------- Scene 1 (0.00 – 0.90): the logo assembles on the stroke ---------------- */
+      // 0.00 the point becomes the left orange dot (P17: center 655, 528.5, ~36 px)
+      ft(h.point, { x: 0, y: 0, scale: 1, boxShadow: "0 0 0 12px rgba(242,78,30,0.2)" },
+        { x: 655 - LX0, y: -11.5, scale: 1.2, boxShadow: "0 0 0 0px rgba(242,78,30,0)", duration: 0.28, ease: "power3.inOut" }, 0);
+      // the stroke settles under the letters (they fall onto it): center 540 -> 579 (baseline)
+      ft(h.orange, { y: 0 }, { y: 39, duration: 0.22, ease: "power3.inOut" }, 0.02);
+      // 0.05 – 0.35 the letters fall one by one (x1.4 and blurred -> crisp in 0.12 s, 0.04 s apart)
+      Array.prototype.forEach.call(root.querySelectorAll(".f11-ch"), function (c, i) {
+        ft(c, { opacity: 0, y: -90, scale: 1.4, filter: "blur(8px)" },
+          { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.05 + i * 0.04);
+      });
+      // 0.30 the point hands over to the left dot of the wordmark (same place, same size)
+      tl.set($("f11-dl"), { opacity: 1 }, 0.30);
+      tl.set(h.point, { opacity: 0 }, 0.30);
+      // 0.40 the right orange dot lands
+      ft($("f11-dr"), { opacity: 0, y: -60, scale: 1.4, filter: "blur(6px)" },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.40);
+      // 0.50 the stroke thins and becomes the underline (P17: x 736, y 619, 448 x 3), then hands over to the logo's own
+      ft(h.orange, { x: 0, y: 39, scaleX: 1, scaleY: 1 },
+        { x: 736 - LX0, y: 80.5, scaleX: 448 / 360, scaleY: 0.75, duration: 0.10, ease: "power3.out" }, 0.50);
+      tl.set($("f11-ul"), { opacity: 1 }, 0.60);
+      tl.set(h.orange, { opacity: 0 }, 0.60);
+      // the soft warm halo comes up behind the logo
+      ft(h.halo, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0.10);
+      // 0.62 -> 0.90 the logo rises to the top of the frame to leave room for the promise
+      ft($("f11-logo"), LOGO17, { y: LOGO18.y, scale: LOGO18.scale, duration: 0.28, ease: "power3.inOut" }, 0.62);
+
+      /* ---------------- Scene 2 (0.90 – 3.30): the promise, word by word ---------------- */
+      Array.prototype.forEach.call(root.querySelectorAll(".f11-w"), function (w) {
+        var cue = parseFloat(w.getAttribute("data-cue"));
+        ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+      });
+      // 2.95 the two lines breathe
+      ft($("f11-typo"), { scale: 1 }, { scale: 1.025, duration: 0.18, ease: "sine.out" }, 2.95);
+      ft($("f11-typo"), { scale: 1.025 }, { scale: 1, duration: 0.30, ease: "sine.inOut" }, 3.13);
+      // 3.02 -> 3.30 logo and promise move up, the button is born under them
+      ft($("f11-logo"), { y: LOGO18.y, scale: LOGO18.scale }, { y: LOGO19.y, scale: LOGO19.scale, duration: 0.28, ease: "power3.inOut" }, 3.02);
+      ft($("f11-prom"), PROM18, { y: PROM19.y, scale: PROM19.scale, duration: 0.28, ease: "power3.inOut" }, 3.02);
+
+      /* ---------------- Scene 3 (3.30 – 7.35): the click and the living hold ---------------- */
+      // 3.27 -> 3.35 the orange button lands (x1.1 blurred -> set), 0.06 s before « Demandez »
+      ft($("f11-btnw"), { opacity: 0, scale: 1.1, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, 3.27);
+      // 3.60 « synapze.eu » prints, character by character
+      Array.prototype.forEach.call(root.querySelectorAll(".f11-uc"), function (c, i) {
+        ft(c, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.06, ease: "power3.out" }, 3.60 + i * 0.022);
+      });
+      // 3.70 -> 4.15 the cursor arrives from the bottom right in one curved move (x and y on different eases)
+      var cur = $("f11-cur");
+      tl.set(cur, { opacity: 1 }, 3.70);
+      ft(cur, { x: 640 }, { x: 0, duration: 0.45, ease: "power3.out" }, 3.70);
+      ft(cur, { y: 520 }, { y: 0, duration: 0.45, ease: "power2.out" }, 3.70);
+      gsap.set(cur, { x: 640, y: 520 });
+      // 4.15 it clicks directly: cursor press (x0.85, 0.06 s), button x0.92 then spring back
+      ft(cur, { scale: 1 }, { scale: 0.85, duration: 0.06, ease: "power2.in" }, 4.15);
+      ft(cur, { scale: 0.85 }, { scale: 1, duration: 0.10, ease: "power2.out" }, 4.21);
+      var btn = $("f11-btn");
+      ft(btn, { scale: 1 }, { scale: 0.92, duration: 0.08, ease: "power1.in" }, 4.15);
+      ft(btn, { scale: 0.92 }, { scale: 1, duration: 0.70, ease: "back.out(1.6)" }, 4.23);
+      // pressed state in three colours: pale orange fill, white and orange ripples, the orange halo ring
+      ft(btn, { backgroundColor: "#F24E1E" }, { backgroundColor: "#F57A50", duration: 0.06, ease: "power2.in" }, 4.15);
+      ft(btn, { backgroundColor: "#F57A50" }, { backgroundColor: "#F24E1E", duration: 0.30, ease: "power2.out" }, 4.23);
+      ft(btn, { boxShadow: "0 0 0 0px rgba(242,78,30,0)" }, { boxShadow: "0 0 0 18px rgba(242,78,30,0.18)", duration: 0.12, ease: "power3.out" }, 4.15);
+      ["f11-rip1", "f11-rip2", "f11-rip3"].forEach(function (id, i) {
+        ft($(id), { scale: 0, opacity: 0.95 }, { scale: 4.5, opacity: 0, duration: 0.7, ease: "power2.out" }, 4.15 + i * 0.08);
+      });
+      // 4.12 -> 4.30 under the button a thin orange waveform is born from a line (centre outward), then breathes
+      var H = [8,37,26,15,44,33,22,11,40,29,18,47,36,25,14,43,32,21,10,39,28,17,46,35,24,13,42,31,20,9,38,27,16,45,34,23,12,41,30,19,8,37,26,15,44,33,22,11,40,29,18,47,36,25];
+      var wave = $("f11-wave"), N = H.length;
+      H.forEach(function (hh, i) {
+        var b = document.createElement("i"); b.style.height = hh + "px"; wave.appendChild(b);
+        var d = Math.abs(i - (N - 1) / 2) / ((N - 1) / 2);
+        var t0 = 4.12 + d * 0.08;
+        ft(b, { opacity: 0, scaleY: 0.08 }, { opacity: 1, scaleY: 1, duration: 0.10, ease: "power3.out" }, t0);
+        // living hold: finite breathing segments, each bar on its own period (deterministic), until the end
+        var per = 0.34 + 0.06 * ((i * 7) % 5), lo = 0.45 + 0.08 * ((i * 3) % 4), t = 4.30, up = true;
+        while (t < DUR) {
+          var dd = Math.min(per, DUR - t);
+          ft(b, { scaleY: up ? 1 : lo }, { scaleY: up ? lo : 1, duration: per, ease: "sine.inOut" }, t);
+          t += per; up = !up;
+        }
+      });
+      // the halo ring of the button breathes with the wave
+      [[4.40, 24, 0.14], [5.20, 18, 0.18], [6.00, 24, 0.14], [6.80, 18, 0.18]].forEach(function (k, i, arr) {
+        var prev = i === 0 ? [0, 18, 0.18] : arr[i - 1];
+        ft(btn, { boxShadow: "0 0 0 " + prev[1] + "px rgba(242,78,30," + prev[2] + ")" },
+          { boxShadow: "0 0 0 " + k[1] + "px rgba(242,78,30," + k[2] + ")", duration: 0.8, ease: "sine.inOut" }, k[0]);
+      });
+
+      // 6.90 -> 7.30 iris to black, closing on the button (its screen centre while the camera pulls)
+      var sI = sAt(7.1), BY = 540 + sI * (ACT19.y + ACT19.scale * 651 - 540), BX = 960;
+      var IR = Math.ceil(Math.sqrt(Math.pow(960, 2) + Math.pow(Math.max(BY, 1080 - BY), 2))) + 20;
+      ft($("f11-iris"), { clipPath: "circle(" + IR + "px at " + BX + "px " + BY.toFixed(1) + "px)" },
+        { clipPath: "circle(0px at " + BX + "px " + BY.toFixed(1) + "px)", duration: 0.40, ease: "power2.inOut" }, 6.90);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

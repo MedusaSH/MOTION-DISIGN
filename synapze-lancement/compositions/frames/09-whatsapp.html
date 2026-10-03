@@ -1,0 +1,406 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f09-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #F1EBDE; }
+    #f09-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f09-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f09-wrap .fil-ground.dark { background: #0E1624; }
+  #f09-wrap .fil-ground.light { background: #F1EBDE; }
+  #f09-wrap .fil-ground.black { background: #0A0F1A; }
+  #f09-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f09-wrap .light .fil-dots, #f09-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f09-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f09-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f09-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f09-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f09-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f09-wrap .fil-line.grey { background: #5B6578; }
+  #f09-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f09-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f09-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f09-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f09-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f09-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f09-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f09-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f09-wrap .on-light .fil-clock { color: #0E1624; }
+  #f09-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f09-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f09-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 (built by the kit, ids given right after filBuild / filHang) */
+    #f09-wrap #f09-phhang, #f09-wrap #f09-phthread { opacity: 0; }
+
+    /* the complete advice form of frame 8, leaving on the left at t = 0 (styleframe P14, sf.css .doc) */
+    #f09-formw { width: 1100px; height: 690px; }
+    #root .f09-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 690px; box-sizing: border-box; background: #fff; border-radius: 6px;
+      padding: 60px 80px; color: #222; font: 400 26px "DM Sans", sans-serif;
+      box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #root .f09-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #root .f09-doc .f09-s { font: 400 20px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
+    #root .f09-doc .f09-ln { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; }
+    #root .f09-doc .f09-ck { width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; position: relative; }
+    #root .f09-doc .f09-ck::after { content: ""; position: absolute; left: 9px; top: 2px; width: 9px; height: 17px; box-sizing: content-box;
+      border: solid #F24E1E; border-width: 0 4px 4px 0; transform: rotate(42deg); }
+    #root .f09-doc .f09-ia { font: 500 14px "DM Mono", monospace; color: #F24E1E; background: #FBE3D9; padding: 3px 8px; border-radius: 4px; margin-left: auto; }
+    #root .f09-doc .f09-cl { margin-top: 28px; font: 500 16px "DM Mono", monospace; letter-spacing: 2px; color: #5B6578; }
+    #root .f09-doc .f09-bar { height: 14px; border-radius: 7px; background: #F24E1E; margin-top: 10px; }
+    #root .f09-doc .f09-stamp { position: absolute; right: 60px; top: 150px; transform: rotate(-6deg); border: 3px solid #F24E1E; color: #F24E1E;
+      font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85); }
+
+    /* the iPhone (sf.css .phone) with WhatsApp iOS (frame.md whatsapp-ios, sf.css .wa2, styleframe C3) */
+    #f09-phw { width: 400px; height: 820px; }
+    #root .f09-phone { position: absolute; left: 0; top: 0; width: 400px; height: 820px; box-sizing: border-box; border-radius: 62px;
+      background: #05080F; padding: 14px; box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #root .f09-scr { width: 100%; height: 100%; border-radius: 50px; overflow: hidden; position: relative; background: #05080F; }
+    #root .f09-wa2 { height: 100%; display: flex; flex-direction: column; background: #EFEAE2; font-family: "DM Sans", sans-serif; color: #111; opacity: 0; }
+    #root .f09-st { height: 48px; flex: none; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 4px;
+      font: 600 16px "DM Sans", sans-serif; background: #F6F5F3; }
+    #root .f09-hd { background: #F6F5F3; border-bottom: 1px solid #DEDCD7; padding: 8px 14px 10px; display: flex; align-items: center; gap: 10px; flex: none; }
+    #root .f09-back { color: #1DAB61; font: 400 30px/1 "DM Sans", sans-serif; margin-right: 2px; }
+    #root .f09-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #C9B79C, #A88F6E); display: grid; place-items: center;
+      color: #fff; font: 600 15px "DM Sans", sans-serif; }
+    #root .f09-nm { font: 600 17px "DM Sans", sans-serif; line-height: 1.1; }
+    #root .f09-nm small { display: block; font: 400 12px "DM Sans", sans-serif; color: #667781; }
+    #root .f09-ic { margin-left: auto; display: flex; gap: 18px; }
+    #root .f09-ic i { width: 22px; height: 16px; box-sizing: border-box; border: 2px solid #1DAB61; border-radius: 4px; display: block; }
+    #root .f09-body { flex: 1; position: relative; padding: 8px 0; background-color: #EFEAE2;
+      background-image: radial-gradient(rgba(0,0,0,.035) 2px, transparent 2.5px), radial-gradient(rgba(0,0,0,.03) 1.5px, transparent 2px);
+      background-size: 34px 34px, 22px 22px; background-position: 0 0, 11px 17px; overflow: hidden; }
+    #root .f09-pill { margin: 8px auto; width: max-content; background: #fff; border-radius: 8px; padding: 4px 10px; font: 500 12px "DM Sans", sans-serif;
+      color: #54656F; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
+    #root .f09-b { position: relative; box-sizing: border-box; max-width: 78%; margin: 3px 12px; padding: 6px 9px 18px; border-radius: 9px;
+      font: 400 15.5px/1.32 "DM Sans", sans-serif; background: #fff; box-shadow: 0 1px .5px rgba(11,20,26,.13); width: max-content; }
+    #root .f09-b.f09-in { border-top-left-radius: 0; transform-origin: 0 0; }
+    #root .f09-b.f09-out { background: #D9FDD3; margin-left: auto; border-top-right-radius: 0; transform-origin: 100% 0; }
+    #root .f09-t { position: absolute; right: 8px; bottom: 3px; font: 400 11px "DM Sans", sans-serif; color: #667781; }
+    #root .f09-k { position: relative; display: inline-block; color: #53BDEB; letter-spacing: -3px; margin-left: 4px; }
+    #root .f09-k .f09-kg { position: absolute; left: 0; top: 0; color: #8696A0; }
+    #root .f09-typing { margin: 3px 12px; background: #fff; border-radius: 9px; border-top-left-radius: 0; padding: 10px 14px; width: max-content;
+      display: flex; gap: 5px; transform-origin: 0 0; }
+    #root .f09-typing i { width: 7px; height: 7px; border-radius: 50%; background: #8696A0; display: block; }
+    #root .f09-in-bar { background: #F6F5F3; padding: 8px 12px 26px; display: flex; align-items: center; gap: 12px; color: #1DAB61;
+      font: 400 26px "DM Sans", sans-serif; flex: none; }
+    #root .f09-in-bar .f09-f { flex: 1; height: 34px; box-sizing: border-box; border-radius: 17px; background: #fff; border: 1px solid #E1DED8; }
+    #root .f09-in-bar .f09-m { width: 18px; height: 26px; box-sizing: border-box; border: 2.5px solid #1DAB61; border-radius: 9px; }
+    /* revealed on their cues */
+    #root .f09-rv { opacity: 0; }
+    /* typing dots that stand where the first reply will land */
+    #root #f09-ty1 { position: absolute; left: 0; top: 0; margin: 0 12px; }
+    /* the second reply: arrives from outside the phone, lands in its slot (child of the phone, outside the screen clip) */
+    #root #f09-fly { position: absolute; right: 26px; top: 0; max-width: 290px; margin: 0; opacity: 0; transform-origin: 50% 50%;
+      box-shadow: 0 1px .5px rgba(11,20,26,.13), 0 18px 36px rgba(14,22,36,.14); }
+
+    /* status bar clock: digit columns that roll (vertical ticker, one nested wrapper per step) */
+    #root .f09-clk { display: inline-flex; font-variant-numeric: tabular-nums; }
+    #root .f09-col { display: inline-block; height: 20px; overflow: hidden; vertical-align: top; }
+    #root .f09-step { display: block; }
+    #root .f09-dg { display: block; height: 20px; line-height: 20px; }
+    #root .f09-colon { display: inline-block; height: 20px; line-height: 20px; vertical-align: top; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box), light world */
+    #f09-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(transparent, rgba(241,235,222,.92) 45%, #F1EBDE); }
+    #root .f09-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #0E1624; text-shadow: 0 2px 10px rgba(241,235,222,.9); }
+    #root .f09-w { display: inline-block; opacity: 0; }
+    #root .f09-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f09-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f09-kbox .f09-w { position: relative; }
+  </style>
+
+  <div id="root" data-composition-id="09-whatsapp" data-width="1920" data-height="1080" data-duration="3.3">
+    <div id="f09-bg" class="clip" data-start="0" data-duration="3.3" data-track-index="0"></div>
+    <div id="f09-wrap"></div>
+
+    <!-- the advice form of frame 8 (moved under the line by filHang), leaving on the left -->
+    <div id="f09-formw">
+      <div class="f09-doc">
+        <h3>Fiche de conseil · Santé Individuel</h3>
+        <div class="f09-s">Louis Lebrun · remplie automatiquement</div>
+        <div class="f09-ln"><div class="f09-ck"></div>Besoins exprimés<span class="f09-ia">IA</span></div>
+        <div class="f09-ln"><div class="f09-ck"></div>Situation familiale<span class="f09-ia">IA</span></div>
+        <div class="f09-ln"><div class="f09-ck"></div>Budget<span class="f09-ia">IA</span></div>
+        <div class="f09-ln"><div class="f09-ck"></div>Garanties proposées<span class="f09-ia">IA</span></div>
+        <div class="f09-ln"><div class="f09-ck"></div>Justification du conseil<span class="f09-ia">IA</span></div>
+        <div class="f09-cl">COMPLÉTUDE</div>
+        <div class="f09-bar"></div>
+        <div class="f09-stamp">PISTE D'AUDIT · HORODATÉE</div>
+      </div>
+    </div>
+
+    <!-- the iPhone, WhatsApp open (moved under the line by filHang) -->
+    <div id="f09-phw">
+      <div class="f09-phone"><div class="f09-scr"><div class="f09-wa2" id="f09-wa">
+        <div class="f09-st"><span class="f09-clk" id="f09-clk"></span><span>●●● ▮</span></div>
+        <div class="f09-hd"><span class="f09-back">‹</span><div class="f09-av">CR</div><div class="f09-nm">Camille R.<small>en ligne</small></div>
+          <div class="f09-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
+        <div class="f09-body" id="f09-body">
+          <div class="f09-pill f09-rv" id="f09-p1">Samedi</div>
+          <div class="f09-b f09-in f09-rv" id="f09-b1">Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis ?<span class="f09-t">21:14</span></div>
+          <div class="f09-b f09-out f09-rv" id="f09-b2">Bonjour Camille, je suis l'assistant IA du cabinet. Pour préparer votre devis : combien de personnes à couvrir ?<span class="f09-t">21:14<span class="f09-k">✓✓<span class="f09-kg" id="f09-kg">✓✓</span></span></span></div>
+          <div class="f09-pill f09-rv" id="f09-p2">Aujourd'hui</div>
+          <div class="f09-b f09-in f09-rv" id="f09-b3">Nous sommes quatre, deux adultes et deux enfants.<span class="f09-t">03:12</span></div>
+          <div class="f09-typing f09-rv" id="f09-ty2"><i></i><i></i><i></i></div>
+          <div class="f09-typing f09-rv" id="f09-ty1"><i></i><i></i><i></i></div>
+        </div>
+        <div class="f09-in-bar">+<div class="f09-f"></div>◎<div class="f09-m"></div></div>
+      </div></div></div>
+      <div class="f09-b f09-out" id="f09-fly">Parfait. Je prépare trois offres adaptées à votre famille.<span class="f09-t">03:12<span class="f09-k">✓✓</span></span></div>
+    </div>
+
+    <div id="f09-scrim"></div>
+
+    <div class="f09-sub" id="f09-s1"><span class="f09-w" data-cue="0.09">Sur</span> <span class="f09-w" data-cue="0.25">WhatsApp,</span> <span class="f09-w" data-cue="0.72">votre</span> <span class="f09-w" data-cue="0.99">assistant</span> <span class="f09-w" data-cue="1.46">répond</span> <span class="f09-w" data-cue="1.78">à</span> <span class="f09-w" data-cue="1.83">vos</span> <span class="f09-w" data-cue="1.99">clients,</span> <span class="f09-kbox"><i class="f09-kbg" id="f09-k1"></i><span class="f09-w" data-cue="2.57">jour</span> <span class="f09-w" data-cue="2.78">et</span> <span class="f09-w" data-cue="2.89">nuit.</span></span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "09-whatsapp";
+      var DUR = 3.3;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world ---------------- */
+      var XSAM = FIL.DAYS.sam;                 // SAM. 21:14 at x 8400
+      var h = filBuild($("f09-wrap"), {
+        ground: "light", x0: 3000, x1: 14400,
+        ticks: [[XSAM, "SAM. 21:14"]],
+      });
+      // the dot grid (trame 9 %) keeps its 48 px pitch on screen at every camera scale: re-hosted on the stage, just
+      // under the cam (pilot pattern, same phase formula, so the seams with frames 8 and 10 match)
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      // box trimmed to what this frame's travel needs (same pattern, same phase as the pilot: left ≡ -560, top ≡ -752 mod 48)
+      Object.assign(dots.style, { left: "4144px", top: "-368px", width: "4992px", height: "1488px" });
+
+      // the complete advice form of frame 8, already leaving on the left at t = 0
+      var fm = filHang(h.world, 5690, $("f09-formw"), { len: 130 });
+      // the iPhone hangs at « SAM. 21:14 »
+      var PH_LEN = 20;
+      var ph = filHang(h.world, XSAM, $("f09-phw"), { len: PH_LEN });
+      ph.hang.id = "f09-phhang"; ph.thread.id = "f09-phthread";
+
+      // status bar clock « 21:14 » → « 03:12 » as rolling digit columns (vertical ticker, one nested wrapper per step)
+      var clk = $("f09-clk");
+      var COLS = [["2", "0"], ["1", "3"], null, ["1"], ["4", "2"]];
+      var steps = [];
+      COLS.forEach(function (items, ci) {
+        if (!items) { var c = document.createElement("span"); c.className = "f09-colon"; c.textContent = ":"; clk.appendChild(c); return; }
+        var col = document.createElement("span"); col.className = "f09-col";
+        var inner = col;
+        for (var s = 0; s < items.length - 1; s++) {
+          var w = document.createElement("span"); w.className = "f09-step"; inner.appendChild(w); inner = w;
+          steps.push({ el: w, col: ci, k: s });
+        }
+        items.forEach(function (d) { var e = document.createElement("span"); e.className = "f09-dg"; e.textContent = d; inner.appendChild(e); });
+        clk.appendChild(col);
+      });
+
+      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
+      var C0 = [7000, 540, 1.0];                // handoff_in: top of the whip, +5000 px/s
+      var WD = 0.57;                            // whip end: quad out, start speed 2·Δx/WD = 5000 px/s
+      var C1 = [7000 + 5000 * WD / 2, 225, 1.0];
+      var T2 = 2.95;
+      var C2 = [8447.6, 212.4, 1.05];           // key image P15 at 2.95: phone 420 × 861 at (700, 2), push +2 %/s
+      var C3 = [8600, 540, 0.6];                // handoff_out at 3.30, in the middle of a power3.out pull
+      filCamSet(h, C0[0], C0[1], C0[2]);
+      gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
+      gsap.set(h.cam, { scale: C0[2], filter: "blur(12px)" });
+
+      // marks of the line keep their screen size whatever the camera scale: counter scale 1 / s through an ease derived
+      // from the camera ease (no callbacks, seek-safe)
+      var hudScale = [].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudY = [h.orange];
+      var hudX = [ph.thread, fm.thread];
+      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt(C0));
+      gsap.set(hudScale, { scale: 1 / C0[2] });
+      gsap.set(hudY, { scaleY: 1 / C0[2] });
+      gsap.set(hudX, { scaleX: 1 / C0[2] });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        // a, b: [px, py, s]
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
+        }
+      }
+      // 0.00 → 0.57 end of the whip: x decelerates from +5000 px/s (quad out), y rises to the phone (starts at zero
+      // speed: the seam only carries the horizontal whip); blur 12 → 0
+      camMove(0, WD, C0, C1, "power1.out", "power2.inOut", "none");
+      ft(h.cam, { filter: "blur(12px)" }, { filter: "blur(0px)", duration: 0.28, ease: "power2.out" }, 0);
+      // 0.57 → 2.95 slow push on the phone (+2 %/s)
+      camMove(WD, T2 - WD, C1, C2, "none");
+      // 2.95 → 3.30 the pull: a power3.out phrase of 0.75 s (it ends in frame 10) of which this frame plays the first
+      // 0.35 s, rescaled so that 3.30 lands exactly on handoff_out, still moving
+      var P3 = gsap.parseEase("power3.out"), PF = 0.35 / 0.75, P3F = P3(PF);
+      var pullE = function (p) { return P3(p * PF) / P3F; };
+      camMove(T2, DUR - T2, C2, C3, pullE);
+
+      /* ---------------- the advice form leaves on the left (no own motion, the whip carries it) ---------------- */
+
+      /* ---------------- the iPhone ---------------- */
+      // 0.10 → 0.37 falls (×1.15, blur 8) and catches at « SAM. 21:14 », swings 2° once, then drifts 1°, upright for P15
+      ft(ph.hang, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, 0.10);
+      ft(ph.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, 0.10);
+      ft(ph.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.25);
+      ft(ph.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.25);
+      ft(ph.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.37);
+      ft(ph.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.57);
+      ft(ph.hang, { rotation: 0 }, { rotation: 0.8, duration: 0.7, ease: "sine.inOut" }, 0.77);
+      ft(ph.hang, { rotation: 0.8 }, { rotation: -0.5, duration: 0.8, ease: "sine.inOut" }, 1.47);
+      ft(ph.hang, { rotation: -0.5 }, { rotation: 0, duration: 0.68, ease: "sine.inOut" }, 2.27);
+
+      // 0.25 WhatsApp opens
+      ft($("f09-wa"), { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power3.out" }, 0.25);
+      // 0.40 « Samedi », Camille's message 21:14
+      function pop(el, t, from) {
+        ft(el, Object.assign({ opacity: 0, scale: 0.9, filter: "blur(4px)" }, from || {}), { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.16, ease: "power3.out" }, t);
+      }
+      pop($("f09-p1"), 0.40);
+      pop($("f09-b1"), 0.46);
+      // typing dots: three dots on a shared phase, finite steps (no repeat)
+      function dotsLoop(el, t0, t1) {
+        var ds = el.querySelectorAll("i"), P = 0.36;
+        Array.prototype.forEach.call(ds, function (d, i) {
+          for (var t = t0 + i * 0.09; t + P <= t1 + 0.001; t += P) {
+            ft(d, { y: 0, opacity: 0.5 }, { y: -3, opacity: 1, duration: P / 2, ease: "sine.out" }, t);
+            ft(d, { y: -3, opacity: 1 }, { y: 0, opacity: 0.5, duration: P / 2, ease: "sine.in" }, t + P / 2);
+          }
+        });
+      }
+      // 0.95 the assistant is typing (the dots stand where the reply lands)
+      pop($("f09-ty1"), 0.95);
+      dotsLoop($("f09-ty1"), 1.0, 1.40);
+      ft($("f09-ty1"), { opacity: 1 }, { opacity: 0, duration: 0.05, ease: "power2.in" }, 1.36);
+      // 1.40 the reply lands (green bubble ×1.08 blurred → sharp in 0.12 s, 0.06 s before « répond »)
+      ft($("f09-b2"), { opacity: 0, scale: 1.08, filter: "blur(6px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 1.40);
+      // 1.80 the ticks turn blue (read)
+      ft($("f09-kg"), { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power2.out" }, 1.80);
+      // 2.20 the status bar time rolls 21:14 → 03:12 (springs, one per step)
+      steps.forEach(function (st) {
+        ft(st.el, { y: 0 }, { y: -20, duration: 0.4, ease: "back.out(1.7)" }, 2.20 + st.col * 0.05 + st.k * 0.1);
+      });
+      // 2.50 « Aujourd'hui », Camille's answer 03:12
+      pop($("f09-p2"), 2.50);
+      pop($("f09-b3"), 2.58);
+      // 2.80 typing again
+      pop($("f09-ty2"), 2.80);
+      dotsLoop($("f09-ty2"), 2.84, 3.12);
+      ft($("f09-ty2"), { opacity: 1 }, { opacity: 0, duration: 0.05, ease: "power2.in" }, 3.10);
+
+      // 2.78 → 3.22 the next reply comes from the right, in the foreground, ×1.25 and blurred (P15 at 2.95),
+      // then racks into focus as it lands in its slot (depth of field: foreground blurred, the phone sharp)
+      var fly = $("f09-fly");
+      var FLY_TOP = 470, FLY_W = 262, FLY_H = 56;       // landing slot (phone-local), measured on the layout
+      var LX = 374 - FLY_W / 2, LY = FLY_TOP + FLY_H / 2; // landing center
+      var KX = 676, KY = 479;                            // P15 center at 2.95, phone-local
+      gsap.set(fly, { top: FLY_TOP });
+      ft(fly, { x: KX - LX + 900, y: KY - LY + 40, scale: 1.46, rotation: -2, filter: "blur(8px)" },
+        { x: KX - LX, y: KY - LY, filter: "blur(1.5px)", duration: 0.17, ease: "power3.out" }, 2.78);
+      ft(fly, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 2.78);
+      ft(fly, { x: KX - LX, y: KY - LY, scale: 1.46, rotation: -2, filter: "blur(1.5px)" },
+        { x: 0, y: 0, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.22, ease: "power3.out" }, 3.0);
+
+      /* ---------------- subtitle: word by word, one key-word box ---------------- */
+      Array.prototype.forEach.call($("f09-s1").querySelectorAll(".f09-w"), function (w) {
+        var cue = parseFloat(w.getAttribute("data-cue"));
+        ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+      });
+      ft($("f09-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 2.52);
+      // the subtitle leaves before the seam (handoff_out: subtitle out, gone 2 images before 3.30)
+      ft($("f09-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 3.06);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

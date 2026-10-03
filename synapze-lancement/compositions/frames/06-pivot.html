@@ -1,0 +1,220 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Serif Display", serif; -webkit-font-smoothing: antialiased; }
+    #f06-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0A0F1A; }
+    #f06-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f06-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f06-wrap .fil-ground.dark { background: #0E1624; }
+  #f06-wrap .fil-ground.light { background: #F1EBDE; }
+  #f06-wrap .fil-ground.black { background: #0A0F1A; }
+  #f06-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f06-wrap .light .fil-dots, #f06-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f06-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f06-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f06-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f06-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f06-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f06-wrap .fil-line.grey { background: #5B6578; }
+  #f06-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f06-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f06-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f06-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f06-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f06-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f06-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f06-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f06-wrap .on-light .fil-clock { color: #0E1624; }
+  #f06-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f06-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f06-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* the flat line (handoff_in: 2 px orange at 50 %, y 620, edge to edge), cut in segments so it can ripple */
+    #root .f06-line { position: absolute; left: 0; top: 620px; width: 1px; height: 1px; opacity: .5; }
+    #root .f06-seg { position: absolute; top: -1px; width: 26px; height: 2px; background: #F24E1E; }
+
+    /* light point (frame.md light-point): white-hot radial on the caret at (960, 540) */
+    #f06-glow { position: absolute; left: 780px; top: 360px; width: 360px; height: 360px; border-radius: 50%; opacity: 0;
+      background: radial-gradient(circle closest-side, #FFFFFF 0%, #FFFFFF 10%, #FFB79C 26%, rgba(255,183,156,.38) 52%, rgba(255,183,156,0) 100%); }
+
+    /* the typographic moment (styleframe P11: sf.css .typo + .caret) */
+    #f06-row { position: absolute; left: 441.41px; top: 460px; width: 1040px; height: 97px; white-space: pre;
+      font: 400 84px/1.15 "DM Serif Display", serif; color: #F1EBDE; }
+    #root .f06-w { display: inline-block; opacity: 0; }
+    #root .f06-w i { font-style: normal; }
+    #f06-caret { position: absolute; left: 10px; top: 16px; width: 6px; height: 84px; background: #F24E1E; transform-origin: 50% 50%; }
+  </style>
+
+  <div id="root" data-composition-id="06-pivot" data-width="1920" data-height="1080" data-duration="2.45">
+    <div id="f06-bg" class="clip" data-start="0" data-duration="2.45" data-track-index="0"></div>
+    <div id="f06-wrap"></div>
+
+    <div class="f06-line" id="f06-line"></div>
+    <div id="f06-glow"></div>
+    <div id="f06-row"><span class="f06-w" data-cue="0.09">Et</span> <span class="f06-w" data-cue="0.20">si</span> <span class="f06-w" data-cue="0.30">vous</span> <span class="f06-w" data-cue="0.51">arrêtiez</span> <span class="f06-w" data-cue="0.93">d'écrire ?</span><div id="f06-caret"></div></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "06-pivot";
+      var DUR = 2.45;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world: black pivot stage, 2 % dot grid, no time line marks ---------------- */
+      // the kit's 4 px time line is not in this shot (x0 = x1: zero width); the flat 2 px line below replaces it
+      var h = filBuild($("f06-wrap"), { ground: "black", x0: 0, x1: 0 });
+      h.orange.style.display = "none";
+      // dot grid re-hosted on the stage (pilot pattern), trimmed box, same phase (-2000 modulo 48); trame 2 % (P11)
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "3888px", height: "1872px",
+        backgroundImage: "radial-gradient(rgba(241,235,222,.025) 1.6px, transparent 1.8px)" });
+      filCamSet(h, 960, 540, 1);
+      gsap.set(h.world, { x: 0, y: 0 });
+      gsap.set(h.cam, { scale: 1 });
+      var line = $("f06-line"), glow = $("f06-glow"), row = $("f06-row"), caret = $("f06-caret");
+      h.world.appendChild(line); h.world.appendChild(glow); h.world.appendChild(row);
+
+      // line segments (26 px, 2 px overlap, under one 50 % parent so the overlaps do not show)
+      var SEG = 24, X0 = -240, N = 100, segs = [];
+      for (var i = 0; i < N; i++) segs.push(filEl(line, "f06-seg", { left: X0 + i * SEG }));
+
+      /* ---------------- text geometry (measured in Chromium, DM Serif Display 84 px) ---------------- */
+      // right edge of each character from the row's left (spaces included), in reading order
+      var CH = [45.7, 76.03, 94.34, 130.72, 154.25, 172.56, 214.91, 260.36, 308.5, 345.13, 363.44, 406.8, 443.84, 479.55,
+        522.14, 552.47, 576, 618.59, 657.66, 675.97, 722.52, 737.39, 779.98, 821.48, 858.53, 882.06, 917.77, 960.36, 978.67, 1021.19];
+      var WEND = [76.03, 154.25, 345.13, 657.66, 1021.19];      // end of each word
+      var L = 441.41;                                           // row left: text + 10 + 6 centered (P11)
+      var shiftFor = function (p) { return p === 0 ? 957 - (L + 10) : 960 - (p + 16) / 2 - L; };
+      // letters as spans (inside the word spans) so the caret can erase them one by one
+      var words = Array.prototype.slice.call(row.querySelectorAll(".f06-w"));
+      var letters = [];   // per character index (null for spaces)
+      words.forEach(function (w, wi) {
+        var txt = w.textContent; w.textContent = "";
+        for (var c = 0; c < txt.length; c++) {
+          if (txt[c] === " ") { w.appendChild(document.createTextNode(" ")); letters.push(null); continue; }
+          var l = document.createElement("i"); l.textContent = txt[c]; w.appendChild(l); letters.push(l);
+        }
+        if (wi < words.length - 1) letters.push(null);   // the space between words
+      });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+
+      /* ---------------- camera: push +1.5 %/s, linear, the whole shot ---------------- */
+      var SEND = 1 + 0.015 * DUR;
+      ft(h.cam, { scale: 1 }, { scale: SEND, duration: DUR, ease: "none" }, 0);
+
+      /* ---------------- 0.09 → 0.93 the sentence types word by word, the caret leads ---------------- */
+      gsap.set(row, { x: shiftFor(0) });
+      gsap.set(caret, { x: 0, y: 0, scaleX: 1, scaleY: 1, opacity: 1 });
+      var prevShift = shiftFor(0);
+      words.forEach(function (w, k) {
+        var t = Math.max(0.001, parseFloat(w.getAttribute("data-cue")) - 1 / 30);
+        ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, t);
+        tl.set(caret, { x: WEND[k] }, t);
+        var s = shiftFor(WEND[k]);
+        ft(row, { x: prevShift }, { x: s, duration: 0.12, ease: "power3.out" }, t);
+        prevShift = s;
+      });
+      // caret blink: lit at 0 (handoff_in), one off step, then solid from « arrêtiez » (0.51)
+      tl.set(caret, { opacity: 0 }, 0.25);
+      tl.set(caret, { opacity: 1 }, 0.47);
+
+      /* ---------------- 1.45 → 1.86 the caret erases the sentence right to left (one char / 0.014 s) ---------------- */
+      for (var j = CH.length - 1, k2 = 0; j >= 0; j--, k2++) {
+        var te = 1.45 + k2 * 0.014;
+        if (letters[j]) tl.set(letters[j], { opacity: 0 }, te);
+        tl.set(caret, { x: j > 0 ? CH[j - 1] : 0 }, te);
+      }
+
+      /* ---------------- 1.88 → 2.12 the line rises to the axis, the lone caret glides onto it, to the center ---------------- */
+      ft(line, { y: 0 }, { y: -80, duration: 0.24, ease: "power3.inOut" }, 1.88);
+      var CX = 960 - 3 - (L + 10);          // caret x that puts its center on x 960 (row shift is 0 at the end)
+      var CY = 540 - (460 + 16 + 42);       // caret y that puts its center on y 540
+      ft(caret, { x: 0 }, { x: CX, duration: 0.24, ease: "power3.inOut" }, 1.90);
+      ft(caret, { y: 0 }, { y: CY, duration: 0.22, ease: "power3.inOut" }, 1.90);
+
+      /* ---------------- 2.05 → 2.25 the line quivers edge to edge (6 px wave) ---------------- */
+      var bump = function (p) { return Math.sin(Math.PI * p); };
+      segs.forEach(function (sg, i) {
+        var cx = X0 + i * SEG + 13;
+        var tq = 2.05 + Math.max(0, Math.min(1, cx / 1920)) * 0.2 - 0.03;
+        ft(sg, { y: 0 }, { y: -6, duration: 0.08, ease: bump }, tq);
+      });
+
+      /* ---------------- 2.15 the caret stretches into the first sound bar, 8 × 120 on screen at 2.45 ---------------- */
+      ft(caret, { scaleX: 1, scaleY: 1 }, { scaleX: (8 / 6) / SEND, scaleY: (120 / 84) / SEND, duration: 0.12, ease: "expo.out" }, 2.15);
+      // light point lights on the bar, then swells toward the flash (2.30 → 2.45)
+      ft(glow, { opacity: 0, scale: 0.35 }, { opacity: 1, scale: 1, duration: 0.12, ease: "expo.out" }, 2.15);
+      ft(glow, { scale: 1 }, { scale: 1.5, duration: DUR - 2.27, ease: "power2.in" }, 2.27);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

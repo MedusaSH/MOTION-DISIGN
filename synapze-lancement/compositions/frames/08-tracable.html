@@ -1,0 +1,289 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-700.woff2") format("woff2"); font-weight: 700; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f08-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #F1EBDE; }
+    #f08-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f08-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f08-wrap .fil-ground.dark { background: #0E1624; }
+  #f08-wrap .fil-ground.light { background: #F1EBDE; }
+  #f08-wrap .fil-ground.black { background: #0A0F1A; }
+  #f08-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f08-wrap .light .fil-dots, #f08-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f08-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f08-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f08-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f08-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f08-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f08-wrap .fil-line.grey { background: #5B6578; }
+  #f08-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f08-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f08-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f08-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f08-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f08-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f08-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f08-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f08-wrap .on-light .fil-clock { color: #0E1624; }
+  #f08-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f08-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f08-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
+    #f08-wrap #f08-hang, #f08-wrap #f08-thread { opacity: 0; }
+
+    /* advice form, solution version (styleframe P14: build.py dda(light=True, stamp=True), sf.css .doc) */
+    #f08-wrap .f08-doc { width: 1100px; box-sizing: border-box; background: #fff; border-radius: 6px; padding: 60px 80px; color: #222;
+      font: 400 26px "DM Sans", sans-serif; box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #f08-wrap .f08-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #f08-wrap .f08-s { margin: 0 0 30px; font: 400 20px "DM Sans", sans-serif; color: #888; }
+    #f08-wrap .f08-ln { display: flex; align-items: center; gap: 22px; height: 78px; box-sizing: border-box; border-bottom: 1px solid #eee; opacity: 0; }
+    #f08-wrap .f08-ck { width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; position: relative; flex: none; }
+    #f08-wrap .f08-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
+      border: 2px solid #F24E1E; border-radius: 4px; opacity: 0; }
+    #f08-wrap .f08-ckm { position: absolute; left: 9px; top: 3px; width: 11px; height: 19px; transform: rotate(42deg); transform-origin: 50% 50%; }
+    #f08-wrap .f08-leg1 { position: absolute; left: 0; bottom: 0; width: 11px; height: 4px; background: #F24E1E; transform-origin: 0 50%; opacity: 0; }
+    #f08-wrap .f08-leg2 { position: absolute; right: 0; bottom: 0; width: 4px; height: 19px; background: #F24E1E; transform-origin: 50% 100%; opacity: 0; }
+    #f08-wrap .f08-ia { margin-left: auto; font: 500 14px "DM Mono", monospace; color: #F24E1E; background: #FBE3D9; padding: 3px 8px;
+      border-radius: 4px; opacity: 0; transform-origin: 100% 50%; }
+    #f08-wrap .f08-cl { margin-top: 28px; font: 500 16px "DM Mono", monospace; letter-spacing: 2px; color: #5B6578; opacity: 0; }
+    #f08-wrap .f08-track { height: 14px; border-radius: 7px; background: #E8E0D0; margin-top: 10px; overflow: hidden; opacity: 0; }
+    #f08-wrap .f08-fill { width: 100%; height: 100%; border-radius: 7px; background: #F24E1E; transform-origin: 0 50%; }
+    #f08-wrap .f08-stamp { position: absolute; right: 60px; top: 150px; border: 3px solid #F24E1E; color: #F24E1E;
+      font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85);
+      white-space: nowrap; transform-origin: 50% 50%; opacity: 0; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box), light world */
+    #f08-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(transparent, rgba(241,235,222,.92) 45%, #F1EBDE); }
+    #root .f08-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #0E1624; text-shadow: 0 2px 10px rgba(241,235,222,.9); }
+    #root .f08-w { display: inline-block; opacity: 0; }
+    #root .f08-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f08-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f08-kbox .f08-w { position: relative; }
+  </style>
+
+  <div id="root" data-composition-id="08-tracable" data-width="1920" data-height="1080" data-duration="2.95">
+    <div id="f08-bg" class="clip" data-start="0" data-duration="2.95" data-track-index="0"></div>
+    <div id="f08-wrap"></div>
+
+    <!-- the advice form (moved under the line by filHang) -->
+    <div class="f08-doc" id="f08-doc">
+      <h3>Fiche de conseil · Santé Individuel</h3>
+      <div class="f08-s">Louis Lebrun · remplie automatiquement</div>
+      <div class="f08-ln"><div class="f08-ck"><div class="f08-ckb"></div><div class="f08-ckm"><i class="f08-leg1"></i><i class="f08-leg2"></i></div></div>Besoins exprimés<span class="f08-ia">IA</span></div>
+      <div class="f08-ln"><div class="f08-ck"><div class="f08-ckb"></div><div class="f08-ckm"><i class="f08-leg1"></i><i class="f08-leg2"></i></div></div>Situation familiale<span class="f08-ia">IA</span></div>
+      <div class="f08-ln"><div class="f08-ck"><div class="f08-ckb"></div><div class="f08-ckm"><i class="f08-leg1"></i><i class="f08-leg2"></i></div></div>Budget<span class="f08-ia">IA</span></div>
+      <div class="f08-ln"><div class="f08-ck"><div class="f08-ckb"></div><div class="f08-ckm"><i class="f08-leg1"></i><i class="f08-leg2"></i></div></div>Garanties proposées<span class="f08-ia">IA</span></div>
+      <div class="f08-ln"><div class="f08-ck"><div class="f08-ckb"></div><div class="f08-ckm"><i class="f08-leg1"></i><i class="f08-leg2"></i></div></div>Justification du conseil<span class="f08-ia">IA</span></div>
+      <div class="f08-cl" id="f08-cl">COMPLÉTUDE</div>
+      <div class="f08-track" id="f08-track"><div class="f08-fill" id="f08-fill"></div></div>
+      <div class="f08-stamp" id="f08-stamp">PISTE D'AUDIT · HORODATÉE</div>
+    </div>
+
+    <div id="f08-scrim"></div>
+
+    <div class="f08-sub" id="f08-s1"><span class="f08-w" data-cue="0.06">Le</span> <span class="f08-w" data-cue="0.17">devoir</span> <span class="f08-w" data-cue="0.49">de</span> <span class="f08-w" data-cue="0.60">conseil</span> <span class="f08-w" data-cue="0.97">se</span> <span class="f08-w" data-cue="1.08">remplit</span> <span class="f08-kbox"><i class="f08-kbg" id="f08-k1"></i><span class="f08-w" data-cue="1.46">tout</span> <span class="f08-w" data-cue="1.67">seul,</span></span> <span class="f08-w" data-cue="2.17">traçable.</span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "08-tracable";
+      var DUR = 2.95;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world ---------------- */
+      var FX = 5700;                        // the advice form hangs here (world x), between handoff_in 4900 and handoff_out 7000
+      var XSAM = FIL.DAYS.sam;              // « SAM. 21:14 », entering from the right at the end (frame 9)
+      var h = filBuild($("f08-wrap"), {
+        ground: "light", x0: 3000, x1: 12000,
+        ticks: [[XSAM, "SAM. 21:14"]],
+      });
+      // dot grid (trame 9 %) re-hosted on the stage under the cam, as in the pilot (48 px pitch on screen at every scale);
+      // box trimmed to this frame's travel (cam 4900 → 7000), same pattern phase (left ≡ -2000, top ≡ -2000 modulo 48)
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "3232px", top: "-320px", width: "4128px", height: "1440px" });
+
+      // the advice form hangs at FX by a 130 px thread (its bottom 130 px above the line, as in P14)
+      var fi = filHang(h.world, FX, $("f08-doc"), { len: 130 });
+      fi.hang.id = "f08-hang"; fi.thread.id = "f08-thread";
+
+      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
+      var PX0 = 4900, PY0 = 540, S0 = 1;         // handoff_in: cam(4900, 540, 1), whip right +5000 px/s, blur 12
+      var PY = 235, SA = 0.965, SB = 1.03;       // P14: the form centered, the line at y ≈ 850; push +3 %/s
+      var PXW = 7000, PYW = 540, SW = 1;         // handoff_out: cam(7000, 540, 1), whip right +5000 px/s, blur 12
+      filCamSet(h, PX0, PY0, S0);
+      gsap.set(h.world, { x: 960 - PX0, y: 540 - PY0 });
+      gsap.set(h.cam, { scale: S0, filter: "blur(12px)" });
+
+      // marks of the line keep their screen size whatever the camera scale (counter scale 1 / s, seek-safe)
+      var hudScale = [].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudY = [h.orange];
+      var hudX = [fi.thread];
+      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt([PX0, PY0, S0]));
+      gsap.set(hudScale, { scale: 1 / S0 });
+      gsap.set(hudY, { scaleY: 1 / S0 });
+      gsap.set(hudX, { scaleX: 1 / S0 });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        // a, b: [px, py, s]
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
+        }
+      }
+      // 0.00 → 0.45 the whip lands on the form: x leaves at the handoff's +5000 px/s and settles with zero speed
+      // (mirror of the pilot's whip ease: g(p) = 1 - f(1 - p), f(p) = a p² + b p³, f'(1) = 5000 · 0.45 / dx);
+      // y and scale leave the line (540, ×1) with zero speed
+      var IV = 5000 * 0.45 / (FX - PX0), IA = 3 - IV, IB = IV - 2;
+      var whipIn = function (p) { var q = 1 - p; return 1 - (IA * q * q + IB * q * q * q); };
+      camMove(0, 0.45, [PX0, PY0, S0], [FX, PY, SA], whipIn, "power2.inOut", "power2.inOut");
+      ft(h.cam, { filter: "blur(12px)" }, { filter: "blur(0px)", duration: 0.30, ease: "power2.out" }, 0);
+      // 0.45 → 2.65 push +3 %/s on the form
+      camMove(0.45, 2.20, [FX, PY, SA], [FX, PY, SB], "none");
+      // 2.65 → 2.95 whip right along the line into handoff_out (speed +5000 px/s at 2.95, blur 0 → 12)
+      var WV = 5000 * 0.30 / (PXW - FX), WA = 3 - WV, WB = WV - 2;
+      var whipX = function (p) { return WA * p * p + WB * p * p * p; };
+      camMove(2.65, 0.30, [FX, PY, SB], [PXW, PYW, SW], whipX, "power2.inOut", "power2.inOut");
+      ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(12px)", duration: 0.30, ease: "power2.in" }, 2.65);
+
+      /* ---------------- the form drops and hangs (0.05) ---------------- */
+      ft(fi.hang, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, 0.05);
+      ft(fi.hang, { y: -520, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, 0.05);
+      ft(fi.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.20);
+      ft(fi.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.20);
+      ft(fi.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.32);
+      ft(fi.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.52);
+      // living hold: 1° drift, level again at the key image (2.30)
+      ft(fi.hang, { rotation: 0 }, { rotation: 1, duration: 0.6, ease: "sine.inOut" }, 1.00);
+      ft(fi.hang, { rotation: 1 }, { rotation: 0, duration: 0.7, ease: "sine.inOut" }, 1.60);
+      ft(fi.hang, { rotation: 0 }, { rotation: -0.6, duration: 0.65, ease: "sine.inOut" }, 2.30);
+
+      /* ---------------- 0.30 the five lines print, boxes empty ---------------- */
+      var rows = root.querySelectorAll(".f08-ln");
+      Array.prototype.forEach.call(rows, function (r, i) {
+        ft(r, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, 0.30 + i * 0.05);
+      });
+      ft($("f08-cl"), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, 0.55);
+      ft($("f08-track"), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, 0.58);
+      gsap.set($("f08-fill"), { scaleX: 0 });
+
+      /* ---------------- 1.08 the boxes tick themselves, top to bottom, each with the « IA » chip ---------------- */
+      Array.prototype.forEach.call(rows, function (r, i) {
+        var t = 1.08 + i * 0.12;
+        ft(r.querySelector(".f08-ckb"), { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, t);
+        ft(r.querySelector(".f08-leg1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.06, ease: "power2.in" }, t);
+        ft(r.querySelector(".f08-leg2"), { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.09, ease: "power3.out" }, t + 0.06);
+        ft(r.querySelector(".f08-ia"), { opacity: 0, scale: 0.6, x: 10 }, { opacity: 1, scale: 1, x: 0, duration: 0.14, ease: "expo.out" }, t + 0.04);
+      });
+      // 1.10 completeness fills (0.5 s power2.out)
+      ft($("f08-fill"), { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, 1.10);
+
+      /* ---------------- 2.10 the stamp rushes from the camera, contact at 2.17 ---------------- */
+      var stamp = $("f08-stamp");
+      ft(stamp, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, 2.10);
+      ft(stamp, { scale: 3.4, rotation: -9, filter: "blur(12px)" }, { scale: 1, rotation: -6, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 2.10);
+
+      /* ---------------- subtitle: word by word, one key-word box ---------------- */
+      Array.prototype.forEach.call($("f08-s1").querySelectorAll(".f08-w"), function (w) {
+        var cue = parseFloat(w.getAttribute("data-cue"));
+        ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+      });
+      ft($("f08-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 1.41);
+      ft($("f08-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 2.65);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

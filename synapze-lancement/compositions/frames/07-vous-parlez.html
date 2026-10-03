@@ -1,0 +1,334 @@
+<template>
+  <style>
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
+    @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    #f07-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #F1EBDE; }
+    #f07-wrap { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+
+  /* ===================== FIL : début du bloc CSS à copier ===================== */
+  #f07-wrap .fil-ground { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  #f07-wrap .fil-ground.dark { background: #0E1624; }
+  #f07-wrap .fil-ground.light { background: #F1EBDE; }
+  #f07-wrap .fil-ground.black { background: #0A0F1A; }
+  #f07-wrap .fil-dots { position: absolute; left: -2000px; top: -2000px; width: 20000px; height: 6000px; pointer-events: none;
+    background-image: radial-gradient(rgba(241,235,222,.07) 1.6px, transparent 1.8px); background-size: 48px 48px; }
+  #f07-wrap .light .fil-dots, #f07-wrap .fil-dots.on-light { background-image: radial-gradient(rgba(14,22,36,.09) 1.6px, transparent 1.8px); }
+  #f07-wrap .fil-halo { position: absolute; width: 1400px; height: 1000px; margin: -500px 0 0 -700px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+  #f07-wrap .fil-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  #f07-wrap .fil-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; will-change: transform, filter; }
+  #f07-wrap .fil-world { position: absolute; left: 0; top: 0; width: 1px; height: 1px; will-change: transform; }
+  #f07-wrap .fil-line { position: absolute; height: 4px; margin-top: -2px; border-radius: 4px; background: #F24E1E; transform-origin: 0 50%; }
+  #f07-wrap .fil-line.grey { background: #5B6578; }
+  #f07-wrap .fil-tick { position: absolute; width: 2px; height: 28px; margin: -14px 0 0 -1px; background: rgba(241,235,222,.55); }
+  #f07-wrap .fil-label { position: absolute; width: 200px; margin-left: -100px; top: 0; text-align: center;
+    font: 500 22px/1 "DM Mono", monospace; letter-spacing: .05em; color: rgba(241,235,222,.55); }
+  #f07-wrap .on-light .fil-tick { background: rgba(14,22,36,.5); } #f07-wrap .on-light .fil-label { color: rgba(14,22,36,.5); }
+  #f07-wrap .fil-hatch { position: absolute; height: 40px; margin-top: -20px; transform-origin: 0 50%;
+    background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px);
+    border-top: 2px solid #5B6578; border-bottom: 2px solid #5B6578; box-sizing: border-box; }
+  #f07-wrap .fil-hatch-l { position: absolute; font: 500 22px/1 "DM Mono", monospace; letter-spacing: .14em; color: #5B6578; white-space: nowrap; }
+  #f07-wrap .fil-point { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+    background: #F24E1E; box-shadow: 0 0 0 12px rgba(242,78,30,.2); }
+  #f07-wrap .fil-clock { position: absolute; width: 520px; margin-left: -260px; text-align: center;
+    font: 600 150px/1 "DM Sans", sans-serif; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #F1EBDE; }
+  #f07-wrap .on-light .fil-clock { color: #0E1624; }
+  #f07-wrap .fil-thread { position: absolute; width: 2px; margin-left: -1px; background: rgba(241,235,222,.4); transform-origin: 50% 100%; }
+  #f07-wrap .on-light .fil-thread { background: rgba(14,22,36,.3); }
+  #f07-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
+  /* ===================== FIL : fin du bloc CSS à copier ===================== */
+
+    /* waveform (frame.md waveform; P12: 8 px bars, 9 px gap, radius 4), heights from the real voice */
+    #f07-wrap .f07-gain { position: absolute; left: 0; top: 0; width: 1px; height: 1px; transform-origin: 0 540px; }
+    #f07-wrap .f07-bar { position: absolute; width: 8px; border-radius: 4px; background: #F24E1E; opacity: 0; }
+    #f07-wrap .f07-bar.f07-c { opacity: 1; }
+
+    /* « Enregistrement… » button (P12) */
+    #f07-wrap .f07-rec { position: absolute; width: 0; height: 0; }
+    #f07-wrap .f07-recin { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 16px; white-space: nowrap;
+      background: #F24E1E; color: #fff; font: 600 32px/1 "DM Sans", sans-serif; padding: 26px 42px; border-radius: 6px;
+      box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); opacity: 0; }
+    #f07-wrap .f07-recin svg { display: block; width: 22px; height: 30px; }
+
+    /* product-mock: dark laptop frame + the real Synapze screen stills (P13) */
+    #f07-wrap .f07-laptop { position: absolute; left: 3550px; top: 195px; width: 1300px; height: 820px; box-sizing: border-box;
+      background: #1A1F2A; border-radius: 24px; padding: 22px; transform: scale(0.981818); transform-origin: 50% 50%; opacity: 0;
+      box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #f07-wrap .f07-scr { position: relative; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; background: #F1EBDE; }
+    #f07-wrap .f07-scr img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; }
+    #f07-wrap .f07-scr img.f07-on { opacity: 1; }
+
+    /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box, peak-stroke), light world */
+    #f07-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
+      background: linear-gradient(transparent, rgba(241,235,222,.92) 45%, #F1EBDE); }
+    #root .f07-sub { position: absolute; left: 0; top: 900px; width: 1920px; text-align: center; white-space: nowrap;
+      font: 600 60px/72px "DM Sans", sans-serif; letter-spacing: -0.01em; color: #0E1624; text-shadow: 0 2px 10px rgba(241,235,222,.9); }
+    #root .f07-w { display: inline-block; opacity: 0; }
+    #root .f07-kbox { position: relative; display: inline-block; padding: 0 14px; color: #fff; text-shadow: none; }
+    #root .f07-kbg { position: absolute; left: 0; right: 0; top: -4px; bottom: -3px; background: #F24E1E; border-radius: 6px;
+      transform-origin: 0 50%; opacity: 0; }
+    #root .f07-kbox .f07-w { position: relative; }
+    #root .f07-trait { position: relative; display: inline-block; }
+    #root .f07-tr { position: absolute; left: -4%; right: -6%; bottom: -6px; height: 12px; background: #F24E1E;
+      border-radius: 50% 40% 60% 30% / 60% 50% 50% 40%; clip-path: polygon(0 60%, 8% 30%, 100% 0, 97% 70%, 10% 100%);
+      transform-origin: 0 50%; opacity: 0; }
+  </style>
+
+  <div id="root" data-composition-id="07-vous-parlez" data-width="1920" data-height="1080" data-duration="4.75">
+    <div id="f07-bg" class="clip" data-start="0" data-duration="4.75" data-track-index="0"></div>
+    <div id="f07-wrap"></div>
+
+    <!-- the « Enregistrement… » button (moved into the world by the script) -->
+    <div class="f07-rec" id="f07-rec"><div class="f07-recin" id="f07-recin"><svg viewBox="0 0 22 30" aria-hidden="true"><rect x="6" y="1" width="10" height="17" rx="5" fill="#fff"/><path d="M2.5 13.5a8.5 8.5 0 0 0 17 0" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><path d="M11 22v6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>Enregistrement…</div></div>
+
+    <!-- the real Synapze screen, stills of the site video, stepped (moved into the world by the script) -->
+    <div class="f07-laptop" id="f07-laptop"><div class="f07-scr" id="f07-scr">
+      <img id="f07-vn01" class="f07-on" src="assets/ui/voice-note/vn-01.jpg" alt="">
+      <img id="f07-vn02" src="assets/ui/voice-note/vn-02.jpg" alt="">
+      <img id="f07-vn03" src="assets/ui/voice-note/vn-03.jpg" alt="">
+      <img id="f07-vn04" src="assets/ui/voice-note/vn-04.jpg" alt="">
+      <img id="f07-vn05" src="assets/ui/voice-note/vn-05.jpg" alt="">
+      <img id="f07-vn06" src="assets/ui/voice-note/vn-06.jpg" alt="">
+      <img id="f07-vn07" src="assets/ui/voice-note/vn-07.jpg" alt="">
+      <img id="f07-vn08" src="assets/ui/voice-note/vn-08.jpg" alt="">
+      <img id="f07-vn09" src="assets/ui/voice-note/vn-09.jpg" alt="">
+      <img id="f07-vn10" src="assets/ui/voice-note/vn-10.jpg" alt="">
+      <img id="f07-vn11" src="assets/ui/voice-note/vn-11.jpg" alt="">
+      <img id="f07-vn12" src="assets/ui/voice-note/vn-12.jpg" alt="">
+      <img id="f07-vn13" src="assets/ui/voice-note/vn-13.jpg" alt="">
+      <img id="f07-vn14" src="assets/ui/voice-note/vn-14.jpg" alt="">
+      <img id="f07-vn15" src="assets/ui/voice-note/vn-15.jpg" alt="">
+      <img id="f07-vn16" src="assets/ui/voice-note/vn-16.jpg" alt="">
+    </div></div>
+
+    <div id="f07-scrim"></div>
+
+    <div class="f07-sub" id="f07-s1"><span class="f07-w" data-cue="0.11">Avec</span> <span class="f07-kbox"><i class="f07-kbg" id="f07-k1"></i><span class="f07-w" data-cue="0.36">Synapze,</span></span> <span class="f07-w" data-cue="0.87">vous</span> <span class="f07-trait"><i class="f07-tr" id="f07-tr1"></i><span class="f07-w" data-cue="1.12">parlez.</span></span></div>
+    <div class="f07-sub" id="f07-s2"><span class="f07-w" data-cue="1.86">Une</span> <span class="f07-w" data-cue="2.00">note</span> <span class="f07-w" data-cue="2.18">vocale</span> <span class="f07-w" data-cue="2.45">après</span> <span class="f07-w" data-cue="2.68">le</span> <span class="f07-w" data-cue="2.77">rendez-vous,</span> <span class="f07-w" data-cue="3.48">et</span> <span class="f07-w" data-cue="3.57">la</span> <span class="f07-w" data-cue="3.67">fiche</span> <span class="f07-w" data-cue="3.90">client</span> <span class="f07-kbox"><i class="f07-kbg" id="f07-k2"></i><span class="f07-w" data-cue="4.18">s'écrit.</span></span></div>
+  </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      var FID = "07-vous-parlez";
+      var DUR = 4.75;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+
+/* ===================== FIL : début du kit JS à copier ===================== */
+/* World geometry (frame.md, time-line): act 1, 1 hour = 1200 px, line at world y 540. */
+const FIL = {
+  Y: 540,
+  hx: (h, m = 0) => (h + m / 60 - 17) * 1200,          // 18:00 -> 1200, 19:00 -> 2400, 22:47 -> 6936
+  DAYS: { sam: 8400, dim: 9600, lun: 10800 },          // SAM. 21:14, DIM., LUN. 08:30
+};
+/* el(parent, cls, style, text): small DOM helper, deterministic, no measuring. */
+function filEl(parent, cls, style = {}, text) {
+  const e = document.createElement("div"); e.className = cls;
+  for (const k in style) e.style[k] = typeof style[k] === "number" ? style[k] + "px" : style[k];
+  if (text != null) e.textContent = text; parent.appendChild(e); return e;
+}
+/* filBuild(root, opts) builds stage > cam > world and the line. Returns handles the frame animates with GSAP.
+   opts: ground ("dark" | "light" | "black"), x0, x1 (world span of the line), orangeTo (world x where orange becomes grey,
+   Infinity = all orange), ticks ([[x, "19:00"], ...]), hatch ([x0, x1] or null), point (world x or null), clock (text or null). */
+function filBuild(root, o = {}) {
+  const ground = filEl(root, "fil-ground " + (o.ground || "dark"));
+  const stage = filEl(root, "fil-stage" + (o.ground === "light" ? " on-light" : ""));
+  const cam = filEl(stage, "fil-cam");
+  const world = filEl(cam, "fil-world");
+  filEl(world, "fil-dots" + (o.ground === "light" ? " on-light" : ""));
+  const halo = o.ground === "dark" ? filEl(world, "fil-halo", { left: o.point ?? 2400, top: FIL.Y - 120 }) : null;
+  const x0 = o.x0 ?? 0, x1 = o.x1 ?? 12000, cut = Math.min(o.orangeTo ?? Infinity, x1);
+  const orange = filEl(world, "fil-line", { left: x0, top: FIL.Y, width: Math.max(0, cut - x0) });
+  const grey = cut < x1 ? filEl(world, "fil-line grey", { left: cut, top: FIL.Y, width: x1 - cut }) : null;
+  const hatch = o.hatch ? filEl(world, "fil-hatch", { left: o.hatch[0], top: FIL.Y, width: o.hatch[1] - o.hatch[0] }) : null;
+  const hatchLabel = o.hatch ? filEl(world, "fil-hatch-l", { left: o.hatch[0] + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE · SAISIE") : null;
+  const ticks = (o.ticks || []).map(([x, t]) => [filEl(world, "fil-tick", { left: x, top: FIL.Y }), filEl(world, "fil-label", { left: x, top: FIL.Y + 30 }, t)]);
+  const point = o.point != null ? filEl(world, "fil-point", { left: o.point, top: FIL.Y }) : null;
+  const clock = o.clock != null ? filEl(world, "fil-clock", { left: o.point ?? 2400, top: FIL.Y - 230 }, o.clock) : null;
+  return { ground, stage, cam, world, halo, orange, grey, hatch, hatchLabel, ticks, point, clock };
+}
+/* filHang(world, x, el, {len}) hangs a DOM object above the line at world x by a thread of length len (px).
+   Animate the returned hang (drop, swing) and thread, never el itself: el keeps its CSS centering transform. */
+function filHang(world, x, el, { len = 130 } = {}) {
+  const thread = filEl(world, "fil-thread", { left: x, top: FIL.Y - len, height: len });
+  const hang = filEl(world, "fil-hang", { left: x, top: FIL.Y - len }); hang.appendChild(el);
+  el.style.position = "absolute"; el.style.left = "0"; el.style.bottom = "0"; el.style.transform = "translateX(-50%)";
+  return { thread, hang };
+}
+/* Camera state: the world point (px, py) sits at the frame center, at scale s. Use with GSAP:
+   tl.to(h.world, { x: () => 960 - px, y: () => 540 - py, ... }) and tl.to(h.cam, { scale: s, ... }).
+   filCamSet(h, px, py, s) sets it at once (t = 0, handoff_in). */
+function filCamSet(h, px, py, s = 1) {
+  h.world.style.transform = `translate(${960 - px}px, ${540 - py}px)`; h.cam.style.transform = `scale(${s})`;
+}
+/* Clock digits: deterministic text for a minute count (minutes since 00:00). */
+const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
+/* ===================== FIL : fin du kit JS à copier ===================== */
+
+      /* ---------------- world (act 3: waveform 0 to 3000, Synapze screen station at x 4200) ---------------- */
+      var WC = 1190, PITCH = 17, NB = 70;        // centre bar at world x 1190, 70 bars on each side (0 .. 2380)
+      var LX = 4200, LY = 605;                   // laptop centre: the line (y 540) runs into the transcription card
+      var h = filBuild($("f07-wrap"), { ground: "light", x0: WC + 4, x1: 16000 });
+      var lineR = h.orange;                                                     // line right of the wave front
+      var lineL = filEl(h.world, "fil-line", { left: -4000, top: FIL.Y, width: WC - 4 + 4000 });  // left of it
+      lineL.style.transformOrigin = "100% 50%";
+      // dot grid re-hosted on the stage (pilot camera kit), box trimmed to this frame's travel, same phase
+      var dots = h.world.querySelector(".fil-dots");
+      h.stage.insertBefore(dots, h.cam);
+      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "5760px", height: "2016px" });
+
+      // waveform: real voice envelope (voix-montage.wav 21.95 → 26.70, 141 windows RMS), centred on the line
+      var PROF = [19,18,22,114,172,142,174,210,102,48,109,115,105,125,183,203,193,174,123,96,28,77,104,100,85,49,30,21,72,112,91,100,139,91,28,20,69,210,183,107,63,130,119,102,96,69,46,23,20,19,19,19,19,18,19,140,210,210,210,210,196,210,186,94,86,106,150,206,149,36,41,157,155,128,146,150,143,29,88,56,146,159,158,154,117,168,186,174,135,210,205,142,101,106,135,155,120,94,65,22,19,19,19,120,176,154,160,158,108,68,70,112,147,102,88,28,48,69,135,154,168,198,174,163,73,83,80,133,116,39,49,78,55,85,73,43,23,19,19,19,19];
+      var scroll = filEl(h.world, "f07-gain", {});   // the wave travels right (x) — wraps the gain layer
+      var gain = filEl(scroll, "f07-gain", {});      // live amplitude (scaleY around the line)
+      var bars = [];
+      for (var k = -NB; k <= NB; k++) {
+        var H = Math.max(18, PROF[k + NB]);
+        var b = filEl(gain, "f07-bar" + (k === 0 ? " f07-c" : ""), { left: WC + k * PITCH - 4, top: FIL.Y - H / 2, height: H });
+        bars.push({ el: b, k: k, H: H });
+      }
+
+      // the button above the wave (P12: centre at screen (972, 263) at 1.20)
+      var rec = $("f07-rec"); h.world.appendChild(rec);
+      Object.assign(rec.style, { left: "1274px", top: "263px" });
+      var recin = $("f07-recin");
+      gsap.set(recin, { xPercent: -50, yPercent: -50, transformOrigin: "50% 50%" });
+
+      // the laptop (station x 4200), above the line: the line passes under it and comes out on the right
+      var lap = $("f07-laptop"); h.world.appendChild(lap);
+
+      /* ---------------- camera (pilot kit: world x/y, cam scale + filter, dot grid, counter-scaled line) ---------------- */
+      var C0 = [1190, 540, 1];                 // handoff_in: centre bar at frame centre
+      var C1 = [1190 + 60 * 1.80, 540, 1];     // drift +60 px/s along the wave
+      var C2 = [3523, 580, 0.62];              // B3: wave left, Synapze screen right
+      var C3 = [4207.3, 675.5, 1.1];           // P13: the whole screen (laptop at 250, 20, ×1.08)
+      var C4 = [C3[0] - 10 * 1.85, 675.5, 1.1];// drift x -10 px/s
+      var CW = [4900, 540, 1];                 // handoff_out
+      filCamSet(h, C0[0], C0[1], C0[2]);
+      gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
+      gsap.set(h.cam, { scale: C0[2], filter: "blur(0px)" });
+
+      var hudScale = [];
+      var hudY = [lineR, lineL];
+      var hudX = [];
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set(dots, dotsAt(C0));
+      gsap.set(hudY, { scaleY: 1 / C0[2] });
+
+      var tl = gsap.timeline({ paused: true });
+      function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
+      function camMove(t0, dur, a, b, ex, ey, es) {
+        // a, b: [px, py, s]
+        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
+        ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
+        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
+        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+        ["x", "y"].forEach(function (k) {
+          var g0 = at(0)[k], g1 = at(1)[k];
+          if (Math.abs(g1 - g0) < 1e-6) return;
+          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
+        });
+        if (a[2] !== b[2]) {
+          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
+          var kA = 1 / a[2], kB = 1 / b[2];
+          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
+          if (hudScale.length) ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
+          if (hudY.length) ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
+          if (hudX.length) ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
+        }
+      }
+      // Scene 1: drift along the wave
+      camMove(0, 1.80, C0, C1, "none");
+      // Scene 2: travelling right (the wave and the screen together), push into the screen, slow drift, whip
+      camMove(1.80, 0.50, C1, C2, "power3.out");
+      camMove(2.30, 0.30, C2, C3, "power2.inOut");
+      camMove(2.60, 1.85, C3, C4, "none");
+      // whip: accelerating x whose speed at 4.75 is the handoff's +5000 px/s (f(p) = a p² + b p³, f'(1) = 5000 · 0.3 / dx);
+      // y and scale land on the line (540, ×1) with zero speed
+      var WV = 5000 * 0.30 / (CW[0] - C4[0]), WA = 3 - WV, WB = WV - 2;
+      var whipX = function (p) { return WA * p * p + WB * p * p * p; };
+      camMove(4.45, 0.30, C4, CW, whipX, "power2.inOut", "power2.inOut");
+      ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(12px)", duration: 0.30, ease: "expo.in" }, 4.45);
+
+      /* ---------------- Scene 1 (0.00 – 1.80) : vous parlez ---------------- */
+      // t = 0: only the centre bar, 8 × 120, on the line (handoff_in)
+      var c0 = bars[NB];
+      gsap.set(c0.el, { scaleY: 120 / c0.H, transformOrigin: "50% 50%" });
+      // 0.10 the bar multiplies along the line on both sides (0.015 s apart); the line front recedes with it
+      var T_SPREAD = 0.10, STEP = 0.015, T_VOICE = 0.40;
+      bars.forEach(function (b) {
+        if (b.k === 0) return;
+        var ak = Math.abs(b.k), t = T_SPREAD + ak * STEP;
+        gsap.set(b.el, { transformOrigin: "50% 50%" });
+        var pre = t < T_VOICE ? (120 * (1 - 0.5 * ak / 20)) / b.H : 1;  // before 0.40 a tapered seed, after it the real voice
+        ft(b.el, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: pre, duration: 0.08, ease: "expo.out" }, t);
+        if (pre !== 1) ft(b.el, { scaleY: pre }, { scaleY: 1, duration: 0.22, ease: "power3.out" }, Math.max(T_VOICE + ak * 0.006, t + 0.09));
+      });
+      // the centre bar follows the voice too
+      ft(c0.el, { scaleY: 120 / c0.H }, { scaleY: 1, duration: 0.22, ease: "power3.out" }, T_VOICE);
+      var T_END = T_SPREAD + NB * STEP;   // 1.15
+      ft(lineR, { x: 0 }, { x: NB * PITCH, duration: T_END - T_SPREAD, ease: "none" }, T_SPREAD);
+      ft(lineL, { x: 0 }, { x: -NB * PITCH, duration: T_END - T_SPREAD, ease: "none" }, T_SPREAD);
+      // 0.40 → 2.40 live amplitude of the real voice (RMS every 1/15 s), peak on « parlez » at 1.12
+      var G = [0.3,0.55,0.79,0.58,0.23,0.2,0.24,0.1,0.13,0.24,0.33,0.27,0.17,0.7,0.44,0.32,0.29,0.16,0.03,0.0,0.0,0.0,0.56,1.0,0.93,0.81,0.47,0.31,0.65,0.38,0.43];
+      var prevG = 1;
+      for (var i = 0; i < G.length; i++) {
+        var ta = (7 + i) / 15;                         // value reached at 0.467, 0.533, … (tween starts 1/15 s before)
+        var v = 0.8 + 0.3 * G[i];
+        if (Math.abs(ta - 1.0667) < 0.01) v = 1.06;
+        if (Math.abs(ta - 1.1333) < 0.01) v = 1.24;    // the peak, on « parlez »
+        if (Math.abs(ta - 1.2) < 0.01) v = 1.0;        // P12
+        ft(gain, { scaleY: prevG }, { scaleY: v, duration: 1 / 15, ease: "sine.inOut" }, ta - 1 / 15);
+        prevG = v;
+      }
+      ft(gain, { scaleY: prevG }, { scaleY: 1, duration: 0.2, ease: "sine.inOut" }, (7 + G.length) / 15 - 1 / 15);
+      // 0.80 the « Enregistrement… » button lands above the wave (×1.2 blurred → sharp, 0.08 s)
+      ft(recin, { opacity: 0, scale: 1.2, filter: "blur(8px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, 0.80);
+      // 1.50 → 2.30 the wave runs right toward the Synapze screen (the line ahead of it goes with it)
+      var RUN = 900;
+      ft(scroll, { x: 0 }, { x: RUN, duration: 0.80, ease: "power2.inOut" }, 1.50);
+      ft(lineR, { x: NB * PITCH }, { x: NB * PITCH + RUN, duration: 0.80, ease: "power2.inOut" }, 1.50);
+      ft(lineL, { x: -NB * PITCH }, { x: -NB * PITCH + RUN, duration: 0.80, ease: "power2.inOut" }, 1.50);
+
+      /* ---------------- Scene 2 (1.80 – 4.75) : la fiche s'écrit ---------------- */
+      tl.set(lap, { opacity: 1 }, 1.70);          // still off frame (screen x > 2200)
+      // the real screen, stepped: discrete swaps of the site-video stills, no crossfade
+      var SW = [
+        [2.40, 2], [2.50, 3], [2.63, 4], [2.76, 5], [2.89, 6], [3.02, 7], [3.15, 8], [3.28, 9], [3.40, 10],   // transcription types in
+        [3.48, 11], [3.60, 12], [3.72, 13], [3.84, 14], [3.96, 15], [4.18, 16],                             // Identité fills (IA chips)
+      ];
+      var vid = function (n) { return $("f07-vn" + (n < 10 ? "0" : "") + n); };
+      var cur = 1;
+      SW.forEach(function (s) {
+        tl.set(vid(s[1]), { opacity: 1 }, s[0]);
+        tl.set(vid(cur), { opacity: 0 }, s[0]);
+        cur = s[1];
+      });
+
+      /* ---------------- subtitles: word by word, one key-word box per sentence, peak stroke ---------------- */
+      ["f07-s1", "f07-s2"].forEach(function (s) {
+        Array.prototype.forEach.call($(s).querySelectorAll(".f07-w"), function (w) {
+          var cue = parseFloat(w.getAttribute("data-cue"));
+          ft(w, { opacity: 0, y: 12, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.08, ease: "expo.out" }, Math.max(0.001, cue - 1 / 30));
+        });
+      });
+      ft($("f07-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 0.31);
+      ft($("f07-tr1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 1.10);
+      ft($("f07-k2"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 4.13);
+      ft($("f07-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 1.70);
+      ft($("f07-s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 4.45);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>
