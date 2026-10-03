@@ -55,8 +55,8 @@
     [data-composition-id="05-samedi"] #f05-bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
     [data-composition-id="05-samedi"] #f05-shake, [data-composition-id="05-samedi"] #f05-cam, [data-composition-id="05-samedi"] #f05-tkcam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
     /* camera pivots on the phone / notification; the giant days ride their own parallax layer */
-    [data-composition-id="05-samedi"] #f05-cam { transform-origin: 500px 1000px; }
-    [data-composition-id="05-samedi"] #f05-tkcam { transform-origin: 500px 380px; }
+    [data-composition-id="05-samedi"] #f05-cam { transform-origin: 500px 1250px; }
+    [data-composition-id="05-samedi"] #f05-tkcam { transform-origin: 500px 372px; }
 
     /* parallax dust (behind everything) */
     [data-composition-id="05-samedi"] #f05-dust { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
@@ -68,14 +68,15 @@
       background: radial-gradient(closest-side, rgba(120,150,210,.22), rgba(120,150,210,.07) 55%, rgba(120,150,210,0)); }
 
     /* giant days, vertical spring ticker (outline 30 %), top of the hero zone, behind the phone */
-    [data-composition-id="05-samedi"] #f05-tkw { position: absolute; left: 0; top: 232px; width: 1000px; height: 300px; }
+    [data-composition-id="05-samedi"] #f05-tkw { position: absolute; left: 0; top: 222px; width: 1000px; height: 300px; }
     [data-composition-id="05-samedi"] .f05-tk { position: absolute; left: 0; top: 0; width: 1000px; height: 300px; overflow: hidden;
       -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 12%, #000 88%, rgba(0,0,0,0) 100%);
       mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 12%, #000 88%, rgba(0,0,0,0) 100%); }
     [data-composition-id="05-samedi"] .f05-tki { display: flex; flex-direction: column; }
     [data-composition-id="05-samedi"] .f05-it { height: 300px; display: flex; align-items: center; justify-content: center; white-space: nowrap;
-      font: 900 255px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: rgba(10,9,11,.9); -webkit-text-stroke: 4px rgba(246,241,234,.30); paint-order: stroke fill; }
-    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 182px; }
+      font: 900 224px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: rgba(10,9,11,.9); -webkit-text-stroke: 4px rgba(246,241,234,.30); paint-order: stroke fill; }
+    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 165px; }
+    [data-composition-id="05-samedi"] .f05-it.f05-short { font-size: 256px; }
     [data-composition-id="05-samedi"] .f05-lit .f05-it { -webkit-text-stroke: 4px #ffd2bd; }
     [data-composition-id="05-samedi"] #f05-tklit { opacity: 0; filter: drop-shadow(0 0 20px rgba(242,78,30,.65)); }
 
@@ -84,9 +85,9 @@
     [data-composition-id="05-samedi"] #f05-st2 { left: 300px; top: 372px; width: 700px; }
     [data-composition-id="05-samedi"] #f05-st3 { left: 60px; top: 1120px; width: 900px; }
 
-    /* the iPhone (frame.md iphone): own 3D stage, phone 1.12x (426 x 874), centred on x 500 */
-    [data-composition-id="05-samedi"] #f05-phst { position: absolute; left: 50px; top: 300px; width: 900px; height: 1060px; perspective: 1700px; perspective-origin: 50% 40%; }
-    [data-composition-id="05-samedi"] #f05-phs { position: absolute; left: 260px; top: 88px; width: 380px; height: 780px; transform: scale(1.12); transform-origin: 50% 0%; transform-style: preserve-3d; }
+    /* the iPhone (frame.md iphone): own 3D stage, phone 380 x 780 at y 470-1250, centred on x 500 */
+    [data-composition-id="05-samedi"] #f05-phst { position: absolute; left: 50px; top: 382px; width: 900px; height: 1060px; perspective: 1700px; perspective-origin: 50% 40%; }
+    [data-composition-id="05-samedi"] #f05-phs { position: absolute; left: 260px; top: 88px; width: 380px; height: 780px; transform: scale(1); transform-origin: 50% 0%; transform-style: preserve-3d; }
     [data-composition-id="05-samedi"] #f05-phf { position: absolute; left: 0; top: 0; width: 380px; height: 780px; transform-style: preserve-3d; }
     [data-composition-id="05-samedi"] #f05-ph { position: absolute; left: 0; top: 0; width: 380px; height: 780px; transform-style: preserve-3d; }
     [data-composition-id="05-samedi"] .f05-body { position: absolute; left: 0; top: 0; width: 380px; height: 780px; box-sizing: border-box; border-radius: 62px; padding: 14px;
@@ -149,10 +150,10 @@
           <div id="f05-tkcam">
             <div id="f05-tkw">
               <div class="f05-tk" id="f05-tkbase"><div id="f05-tka1"><div class="f05-tki" id="f05-tki1">
-                <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it">LUNDI</div>
+                <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it f05-short">LUNDI</div>
               </div></div></div>
               <div class="f05-tk f05-lit" id="f05-tklit"><div id="f05-tka2"><div class="f05-tki" id="f05-tki2">
-                <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it">LUNDI</div>
+                <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it f05-short">LUNDI</div>
               </div></div></div>
             </div>
             <div class="fx-streak" id="f05-st2"></div>
@@ -284,7 +285,7 @@ const FX = {
       /* ---------- camera: drift push ~3 %/s, punch x1.15 at 2.75 ---------- */
       var cam = $("f05-cam");
       tl.fromTo(cam, { scale: 1 }, { scale: 1.0825, duration: 2.75, ease: "none" }, 0);
-      FX.punch(tl, cam, 2.75, { s: 1.0825 * 1.15, y: -40, d: 0.16, drift: 0.025, hold: 0.39 });
+      FX.punch(tl, cam, 2.75, { s: 1.0825 * 1.15, y: 30, d: 0.16, drift: 0.025, hold: 0.39 });
       // the giant days layer: slower parallax push (further back)
       var tkcam = $("f05-tkcam");
       tl.fromTo(tkcam, { scale: 1 }, { scale: 1.04, duration: 2.75, ease: "none" }, 0);
@@ -332,8 +333,8 @@ const FX = {
       tl.fromTo($("f05-dst"), { y: 0 }, { y: -28, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 2.66);
       tl.fromTo($("f05-tst"), { y: 0 }, { y: -112, duration: 0.34, ease: "back.out(2)", immediateRender: false }, 2.65);
 
-      // 0.95 the glass notification drops from the top with an ember glow (lifted, enlarged x1.32 for the vertical read)
-      var nw = $("f05-nw"), NS = 1.32;
+      // 0.95 the glass notification drops from the top with an ember glow (lifted, enlarged x1.45 for the vertical read)
+      var nw = $("f05-nw"), NS = 1.45;
       tl.fromTo(nw, { y: -170, z: 40, scale: NS * 1.08, opacity: 0, filter: "blur(10px)" },
                     { y: 0, z: 46, scale: NS, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "back.out(1.5)", immediateRender: false }, 0.95);
       tl.fromTo($("f05-st1"), { x: -300, opacity: 0 }, { x: 420, opacity: 0.9, duration: 0.22, ease: "power2.out", immediateRender: false }, 0.98);
