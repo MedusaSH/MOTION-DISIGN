@@ -88,6 +88,12 @@ s = open(p, encoding="utf-8").read()
 total = float(env["TOTAL"])
 f = lambda key: float(env[key]) if env.get(key, "").strip() else None
 leak_at, iris_at = f("LEAK_AT"), f("IRIS_AT")
+import json as _json
+try:
+    _meta = _json.load(open("meta.json"))
+    W, H = int(_meta.get("width", 1920)), int(_meta.get("height", 1080))
+except Exception:
+    W, H = 1920, 1080
 
 def rgb(hex_color):
     h = hex_color.lstrip("#")
@@ -135,16 +141,16 @@ if leak_at is not None:
     x, y = int(float(env["LEAK_X"])), int(float(env["LEAK_Y"]))
     fx += f'''
       <div id="fxleak" class="clip" data-start="{leak_at}" data-duration="0.9" data-track-index="30" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:60">
-        <div id="fxleak-sweep" style="position:absolute;left:0;top:-200px;width:1400px;height:1480px;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 50% 50%,{rgba(glow, .85, .35)} 0%,{rgba(light, .5)} 35%,{rgba(accent, 0)} 70%)"></div>
+        <div id="fxleak-sweep" style="position:absolute;left:-200px;top:-200px;width:{W + 400}px;height:{H + 400}px;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 50% 50%,{rgba(glow, .85, .35)} 0%,{rgba(light, .5)} 35%,{rgba(accent, 0)} 70%)"></div>
         <div id="fxleak-core" style="position:absolute;left:{x}px;top:{y}px;width:600px;height:600px;margin:-300px 0 0 -300px;border-radius:50%;opacity:0;background:radial-gradient(circle,{rgba(paper, 1, .6)} 0%,{paper} 30%,{rgba(glow, .9, .25)} 50%,{rgba(accent, .5)} 64%,{rgba(accent, 0)} 76%)"></div>
-        <div id="fxleak-streak" style="position:absolute;left:-240px;top:{y - 3}px;width:2400px;height:6px;border-radius:3px;opacity:0;background:linear-gradient(90deg,{rgba(glow, 0, .6)},{rgba(glow, 1, .8)} 50%,{rgba(glow, 0, .6)});box-shadow:0 0 34px 12px {rgba(glow, .7)}"></div>
+        <div id="fxleak-streak" style="position:absolute;left:-240px;top:{y - 3}px;width:{W + 480}px;height:6px;border-radius:3px;opacity:0;background:linear-gradient(90deg,{rgba(glow, 0, .6)},{rgba(glow, 1, .8)} 50%,{rgba(glow, 0, .6)});box-shadow:0 0 34px 12px {rgba(glow, .7)}"></div>
         <div id="fxleak-flash" style="position:absolute;inset:0;opacity:0;background:{paper}"></div>
       </div>'''
 if iris_at is not None:
     ix, iy = int(float(env["IRIS_X"])), int(float(env["IRIS_Y"]))
     fx += f'''
       <div id="fxiris" class="clip" data-start="{iris_at}" data-duration="0.95" data-track-index="31" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:61">
-        <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;inset:0"><circle id="fxiris-ring" cx="{ix}" cy="{iy}" r="0" fill="none" stroke="{light}" stroke-width="6" style="filter:drop-shadow(0 0 16px {glow}) drop-shadow(0 0 40px {rgba(accent, .8)})"/></svg>
+        <svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" style="position:absolute;inset:0"><circle id="fxiris-ring" cx="{ix}" cy="{iy}" r="0" fill="none" stroke="{light}" stroke-width="6" style="filter:drop-shadow(0 0 16px {glow}) drop-shadow(0 0 40px {rgba(accent, .8)})"/></svg>
       </div>'''
 s = s[:close] + fx + s[close:]
 

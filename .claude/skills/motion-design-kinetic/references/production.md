@@ -1,4 +1,4 @@
-# Production notes: sourcing, audio, assembly, review (lessons of the Synapze v2 film)
+# Production notes: sourcing, audio, assembly, review, delivery
 
 ## Sourcing that works behind a restricted network
 
@@ -49,5 +49,11 @@ Python Playwright: pin `playwright==1.56.0` (matches the preinstalled Chromium);
    `n=0.001:d=1.0` (none outside the end card), loudness as above.
 5. Each fix goes to THAT frame's agent by SendMessage (agent IDs kept in `agents.txt`), with the time, what you see,
    what you want. Then re-assemble, re-render, re-read the sheets of that span.
-6. Deliver: the MP4 (re-encode `-crf 20` if over an upload limit), the music alternative, an honest list of what the
-   checks still flag.
+6. Deliver: `scripts/export.sh <render.mp4>` → `-web` (H.264 High 4.1 CRF 17), `-social` (High 4.0, CRF 18 ≤ 6 Mb/s,
+   2 s GOP: TikTok / Reels / Shorts / LinkedIn), `-whatsapp` (High 4.0, ref 3, 15 MB two-pass: shown as a video when
+   sent from the Gallery, not as a Document). Each printed with profile/level, size, loudness, decode check. Send the
+   right file (≤ 30 MB upload), the music alternative, an honest list of what the checks still flag.
+
+## Why a video becomes a « document » on WhatsApp (diagnosed on the reference film)
+Most often the sending path (Files / Document picker instead of Gallery); then size (> ~16 MB); then H.264 level 5.0
+caused by ref=5 at 1080p (HyperFrames' high render) — the `-whatsapp` export fixes the last two.

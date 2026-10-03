@@ -9,19 +9,26 @@ cinétique, coupes sur les mots, impacts, interfaces réelles en 3D, musique et 
 | `PROMPTS.md` | les prompts prêts à coller dans Claude Code, étape par étape |
 | `BRIEF-CLIENT.md` | le questionnaire à envoyer au client avant de commencer |
 | `BUSINESS.md` | en faire une activité : offres, prix, déroulé client, droits, prospection |
+| `INSTALLATION.md` | utiliser la méthode dans **n'importe quelle** session Claude Code (plugin `motion-studio`) |
 
-Côté Claude, la méthode est installée comme un skill : `.claude/skills/motion-design-kinetic/` (il s'appuie sur
-`.claude/skills/motion-design/`). Le film de référence qu'il imite est `synapze-v2/`.
+Côté Claude, la méthode est un skill générique, valable pour n'importe quelle marque : `.claude/skills/motion-design-kinetic/`
+(dans l'atelier) et le plugin `motion-studio` (partout ailleurs, voir `INSTALLATION.md`). Synapze (`synapze-v2/`,
+`synapze-v2-vertical/`) n'est qu'un exemple de référence.
+
+**Nouveau : il suffit de donner l'adresse du site du client.** Claude le lit avec un navigateur (textes, preuves
+chiffrées avec leur source, tarifs, boutons, ton, couleurs, polices, logo, captures desktop et mobile, vidéos de
+démo), écrit le dossier `brand/BRAND.md`, applique la charte de la marque au kit (couleur, fonds, polices) et part de
+là pour le script. Formats 16:9 et 9:16 natifs, exports web / réseaux sociaux / WhatsApp vérifiés.
 
 ---
 
 ## 1. Ce qu'il te faut
 
-- Ce dépôt ouvert dans **Claude Code** (sur claude.ai/code ou en local). Tout le reste s'installe tout seul au
-  démarrage de la session (HyperFrames, Chromium, ffmpeg, polices, GSAP, bibliothèque de musiques libres).
+- **Claude Code**, n'importe où, avec le plugin `motion-studio` (`INSTALLATION.md`), ou ce dépôt ouvert directement.
+  Tout le reste s'installe tout seul (HyperFrames, Chromium, ffmpeg, polices, GSAP, musiques libres).
 - Un compte **ElevenLabs** (offre payante pour l'usage commercial de la voix).
-- Du client : le brief (voir `BRIEF-CLIENT.md`), son logo, sa couleur, et surtout **des captures ou une vidéo
-  de démonstration de son vrai produit**. C'est ce qui rend le film crédible.
+- Du client : **l'adresse de son site** (le reste en est tiré), le brief (`BRIEF-CLIENT.md`) et, idéalement, **un
+  enregistrement d'écran de son vrai produit**. C'est ce qui rend le film crédible.
 
 ## 2. Le déroulé (7 étapes, 4 validations)
 
@@ -70,4 +77,10 @@ Détail technique complet : `.claude/skills/motion-design-kinetic/references/edi
 
 ## 5. Démarrer un nouveau film
 
-Ouvre une session Claude Code sur ce dépôt et colle le **prompt 0** de `PROMPTS.md` avec le brief du client.
+Dans n'importe quelle session Claude Code (plugin installé) :
+
+```
+Fais un motion design pour https://site-du-client.com : 40 s, en 16:9 et en 9:16, bouton « Réserver une démo ».
+```
+
+Variantes et prompts détaillés : `PROMPTS.md`.

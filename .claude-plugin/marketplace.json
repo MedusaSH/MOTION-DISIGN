@@ -1,0 +1,12 @@
+{
+  "name": "motion-studio",
+  "owner": { "name": "MedusaSH" },
+  "metadata": { "description": "Agency-grade launch motion design films for any brand, with Claude Code and HyperFrames." },
+  "plugins": [
+    {
+      "name": "motion-studio",
+      "source": "./plugins/motion-studio",
+      "description": "From a website URL to a kinetic launch film (16:9 and 9:16): brand dossier, script, storyboard, one agent per shot, music, SFX, render, exports."
+    }
+  ]
+}

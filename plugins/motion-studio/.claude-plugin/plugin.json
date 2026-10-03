@@ -1,0 +1,10 @@
+{
+  "name": "motion-studio",
+  "displayName": "Motion Studio",
+  "version": "1.0.0",
+  "description": "Kinetic launch motion design films for any brand: give a website URL, get a verified 16:9 / 9:16 film.",
+  "author": { "name": "MedusaSH" },
+  "repository": "https://github.com/MedusaSH/MOTION-DISIGN",
+  "license": "MIT",
+  "keywords": ["motion-design", "video", "hyperframes", "launch", "marketing"]
+}

@@ -1,34 +1,46 @@
 # Prompts prêts à coller (Claude Code, ce dépôt)
 
 Un prompt par étape. Remplace ce qui est entre `[crochets]`. Chaque prompt se termine par une validation : Claude
-s'arrête et attend ton « go ». Ce sont les prompts qui ont produit Synapze V2, rendus génériques.
+s'arrête et attend ton « go ». Ils marchent pour n'importe quelle marque (Synapze n'était que le premier film).
 
 ---
 
-## Prompt 0 — Lancer le projet
+## Prompt 0 — Lancer un film à partir d'un site (le plus court)
+
+```
+Fais un motion design pour [https://site-du-client.com].
+Format : [16:9 pour le site / 9:16 pour TikTok-Reels / les deux] · Durée : [30-45 s]
+Bouton final : « [Réserver une démo] » · Langue : [français] · Prononciation de la marque : [« … »]
+Matière en plus : [chemin d'un enregistrement d'écran du produit, logo SVG] (facultatif)
+```
+Claude lit le site (dossier `brand/BRAND.md` : promesse, fonctionnalités, preuves chiffrées avec leur source, tarifs,
+boutons, ton, palette, polices, logo, captures desktop et mobile, vidéos de démo), applique la charte de la marque au
+kit, puis te montre le brief en 8 lignes et les concepts de script.
+
+## Prompt 0 bis — Version détaillée (quand tu as un vrai brief client)
 
 ```
 <rôle>
-Tu es le réalisateur et l'orchestrateur d'un film de lancement en motion design. Tu suis le skill
-motion-design-kinetic (style Synapze V2) de bout en bout. Le niveau attendu : un film de lancement d'une startup
-de 2026 (Linear, Vercel, Arc), qui bluffe dès la première seconde.
+Tu es le réalisateur et l'orchestrateur d'un film de lancement en motion design. Tu suis le skill motion-studio
+(ou motion-design-kinetic dans l'atelier) de bout en bout. Le niveau attendu : un film de lancement d'une startup de
+2026 (Linear, Vercel, Arc), qui bluffe dès la première seconde.
 </rôle>
 
 <client>
-Marque : [nom] — prononciation : [ex. « Synapse », le z se dit s]
-Site : [url] · Produit en une phrase : [...]
+Site : [url] (lis-le avec site-intel avant tout)
+Marque : [nom] — prononciation : [« … »]
 Cible : [qui regarde] · Douleur n°1 : [...] · Promesse : [...]
 Diffusion : [landing page 16:9 / reel 9:16 / LinkedIn] · Durée visée : [30-45 s]
 Appel à l'action : [texte du bouton + url]
-Couleur de marque : [#hex] · Ton : [sérieux / complice / premium]
-Matière réelle : [chemins des captures / vidéo de démo déposées dans le dépôt]
+Ton : [sérieux / complice / premium] · Couleur imposée : [#hex ou « celle du site »]
+Matière réelle : [captures / vidéo de démo déposées dans le dépôt]
 Interdits : [chiffres non validés, concurrents, etc.]
 </client>
 
 <consignes>
-- Installe tout ce qui manque sans me demander. Crée le projet [nom-en-kebab] avec new-project.sh puis
-  setup-kinetic.sh --music, et applique la couleur de marque au kit FX.
-- Lis synapze-v2/ (frame.md, STORYBOARD.md, reference/fx.html) : c'est la barre de qualité.
+- Installe tout ce qui manque sans me demander.
+- Montre-moi d'abord le BRIEF.md tiré du site (8 lignes) et les preuves chiffrées trouvées, pour que je valide ce qui
+  peut être cité.
 - Puis passe à l'étape 1 (script) et arrête-toi à sa validation.
 </consignes>
 ```

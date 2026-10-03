@@ -24,18 +24,18 @@ colors:
   chroma-r: "#FF2D55"         # chromatic split copies, only during a slam (≤ 0.3 s)
   chroma-b: "#2DE1FF"
 
-fonts:
-  Geist: { files: ["assets/fonts/Geist-Variable.woff2", "assets/fonts/Geist-Italic-Variable.woff2"], use: "kinetic type 800-900, tracking -0.045em; captions 600; UI 500" }
-  Instrument Serif: { files: ["assets/fonts/InstrumentSerif-Italic.woff2", "assets/fonts/InstrumentSerif-Regular.woff2"], use: "ONE emotional word per beat in italic ({{EMOTION_WORDS}})" }
-  Geist Mono: { files: ["assets/fonts/GeistMono-Variable.woff2"], use: "labels, hours, dates, UI micro-copy, uppercase tracking .14em" }
-  Caveat: { files: ["assets/fonts/Caveat-500.woff2"], use: "only handwritten notes, if any" }
+fonts:   # set by scripts/theme.py (theme.json); the kit reads them as var(--fx-font-display / -serif / -mono)
+  display: { family: "{{DISPLAY_FONT}} (default Geist)", use: "kinetic type 800-900, tracking -0.045em; captions 600; UI 500" }
+  serif: { family: "{{SERIF_FONT}} (default Instrument Serif)", use: "ONE emotional word per beat in italic ({{EMOTION_WORDS}})" }
+  mono: { family: "{{MONO_FONT}} (default Geist Mono)", use: "labels, hours, dates, UI micro-copy, uppercase tracking .14em" }
+  hand: { family: "Caveat", use: "only handwritten notes, if any" }
 
 typography:
-  kinetic-xl: { family: Geist, px: "260-420", weight: 900, tracking: "-0.045em", note: "one or two words, the sentence IS the image; slams in (FX.slam) or rises (FX.rise)" }
-  kinetic-serif: { family: Instrument Serif italic, px: "180-320", note: "the emotional word, often next to or over a Geist word" }
-  caption: { family: Geist, px: 46, weight: 600, note: "the voice, word by word on its cue, bottom center y 905 (band 890-980), ONE keyword in the accent box (.fx-key). Present in every shot where the kinetic type does not already say the sentence word for word." }
-  clock: { family: Geist, px: "300-460", weight: 800, tabular: true, note: "numbers roll digit by digit (FX.roll), never faded" }
-  label: { family: Geist Mono, px: "16-22", weight: 500, upper: true, tracking: ".14em" }
+  kinetic-xl: { family: display, px: "260-420", weight: 900, tracking: "-0.045em", note: "one or two words, the sentence IS the image; slams in (FX.slam) or rises (FX.rise)" }
+  kinetic-serif: { family: serif italic, px: "180-320", note: "the emotional word, often next to or over a Geist word" }
+  caption: { family: display, px: 46, weight: 600, note: "the voice, word by word on its cue, bottom center y 905 (band 890-980), ONE keyword in the accent box (.fx-key). Present in every shot where the kinetic type does not already say the sentence word for word." }
+  clock: { family: display, px: "300-460", weight: 800, tabular: true, note: "numbers roll digit by digit (FX.roll), never faded" }
+  label: { family: mono, px: "16-22", weight: 500, upper: true, tracking: ".14em" }
 
 components:
   kit: "reference/fx.html — CSS block + FX helpers (slam, rise, cue, shake, flash, whipOut/whipIn, punch, key, shimmer, roll, chroma, words). Copy verbatim between the « FX : début / fin » markers."

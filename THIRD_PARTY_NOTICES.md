@@ -37,7 +37,9 @@ La copie n'est pas identique à l'amont : elle a été durcie pendant l'audit du
 - **GSAP 3.14.2** (`assets/vendor/gsap.min.js`) : licence « Standard No Charge » de GreenSock/Webflow, gratuite y compris pour un usage commercial.
 - **Musique** : morceaux CC0 1.0 du miroir https://github.com/SoundSafari/CC0-1.0-Music (non inclus, fichiers audio ignorés par git).
 - **Interfaces Synapze** (`assets/ui/`) : images tirées de la vidéo publique du site synapze.eu, propriété de Synapze ; à ne diffuser qu'avec leur accord.
-- Le skill `.claude/skills/motion-design-kinetic/` et le dossier `methode/` font partie de ce dépôt (MIT).
+- Le skill `.claude/skills/motion-design-kinetic/`, le plugin `plugins/motion-studio/` et le dossier `methode/` font partie de ce dépôt (MIT).
+- Polices de marque récupérées par `theme.py` dans chaque projet : familles publiées sur npm par Fontsource (Google Fonts, SIL Open Font License 1.1 ou Apache 2.0 selon la famille), non incluses.
+- `site-intel.py` copie dans le projet des textes, captures, logos et vidéos du site du client : ils restent la propriété du client, à n'utiliser qu'avec son accord.
 
 ## Éléments que tu récupères toi-même (non inclus)
 

@@ -10,9 +10,13 @@ patterns du motion design (ce qui ressort après avoir regardé pas mal de vidé
 storyboard, les scripts de minutage, de projet et de contrôle, le film phare avec toutes ses séquences, d'autres films
 d'exemple, et les skills officiels HeyGen, audités et figés.
 
-> **Style cinétique (« Synapze V2 »)** : typographie héroïne, coupes sur les mots, impacts, interfaces réelles en 3D.
-> Guide complet, prompts prêts à coller, brief client et partie business : [`methode/`](methode/README.md).
-> Skill Claude : `.claude/skills/motion-design-kinetic/` · film de référence : `synapze-v2/`.
+> **Motion Studio — pour n'importe quelle marque** : donne l'adresse d'un site, Claude en tire le dossier de marque
+> (textes, preuves, couleurs, polices, logo, captures, vidéos), applique la charte et fabrique un film cinétique
+> vérifié en 16:9 et/ou 9:16, exporté pour le web, les réseaux et WhatsApp.
+> Utilisable dans **n'importe quelle session Claude Code** : `/plugin marketplace add MedusaSH/MOTION-DISIGN` puis
+> `/plugin install motion-studio@motion-studio` ([`methode/INSTALLATION.md`](methode/INSTALLATION.md)).
+> Guide, prompts, brief client, business : [`methode/`](methode/README.md) · skill : `.claude/skills/motion-design-kinetic/`
+> · exemples : `synapze-v2/` (16:9), `synapze-v2-vertical/` (9:16).
 
 **Le film phare** : [`examples/ligne-du-temps-v8/`](examples/ligne-du-temps-v8/), « La ligne du temps » (49,5 s), le
 résultat final de la méthode, celui qui tourne en haut de [entrepreneurs2-0.com](https://entrepreneurs2-0.com). Charte,
