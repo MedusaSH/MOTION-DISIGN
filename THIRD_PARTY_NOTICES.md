@@ -31,6 +31,14 @@ La copie n'est pas identique à l'amont : elle a été durcie pendant l'audit du
 - `media-use/audio/assets/sfx/*.mp3` : bruitages de [Pixabay](https://pixabay.com/sound-effects/), [Pixabay Content License](https://pixabay.com/service/license-summary/) (détail dans `CREDITS.md` du même dossier). Ce sont les bruitages utilisés par le mixage de la méthode.
 - `hyperframes-creative/frame-presets/code-editorial/fonts/` : EB Garamond, Inter, JetBrains Mono, SIL Open Font License 1.1 (textes de licence dans le même dossier).
 
+## Films de démonstration Synapze (`synapze-lancement/`, `synapze-v2/`)
+
+- **Polices** embarquées dans `synapze-v2/assets/fonts/` : Geist et Geist Mono (Vercel), Instrument Serif, Caveat, toutes sous SIL Open Font License 1.1 (récupérées depuis les paquets npm `geist` et `@fontsource/*`).
+- **GSAP 3.14.2** (`assets/vendor/gsap.min.js`) : licence « Standard No Charge » de GreenSock/Webflow, gratuite y compris pour un usage commercial.
+- **Musique** : morceaux CC0 1.0 du miroir https://github.com/SoundSafari/CC0-1.0-Music (non inclus, fichiers audio ignorés par git).
+- **Interfaces Synapze** (`assets/ui/`) : images tirées de la vidéo publique du site synapze.eu, propriété de Synapze ; à ne diffuser qu'avec leur accord.
+- Le skill `.claude/skills/motion-design-kinetic/` et le dossier `methode/` font partie de ce dépôt (MIT).
+
 ## Éléments que tu récupères toi-même (non inclus)
 
 - **Polices** : Instrument Sans, Space Mono et Big Shoulders, [Google Fonts](https://fonts.google.com), SIL Open Font License 1.1. Téléchargées dans chaque projet (commandes dans `.claude/skills/motion-design/references/method.md`).

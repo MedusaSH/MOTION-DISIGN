@@ -74,6 +74,8 @@ if missing:
     print("frames not built yet (skipped):", ", ".join(missing))
 EOF
 node $S/assemble-index.mjs --storyboard ./STORYBOARD.md --hyperframes . | tail -3
+# offline-safe: when assets/vendor/gsap.min.js exists (setup-kinetic.sh), the root loads it instead of the CDN tag
+[ -f assets/vendor/gsap.min.js ] && sed -i 's#<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"[^>]*></script>#<script src="assets/vendor/gsap.min.js"></script>#' index.html
 node $S/transitions.mjs inject --storyboard ./STORYBOARD.md --hyperframes . | tail -2
 node $S/transitions.mjs verify --storyboard ./STORYBOARD.md --index ./index.html | tail -1
 
@@ -178,9 +180,15 @@ if iris_at is not None:
         tl.to("#fxiris-ring", {{ opacity: 0, duration: 0.15 }}, {t(0.70)});
 '''
 anchor = re.search(r"(?m)^[ \t]*tl\.to\(\{\}, \{ duration: [0-9.]+ \}, 0\);", s)
-if not anchor:
-    raise SystemExit("assemble: full-span anchor tl.to({}, { duration: N }, 0); not found in index.html")
-s = s[:anchor.start()] + tl + s[anchor.start():]
+if anchor:
+    s = s[:anchor.start()] + tl + s[anchor.start():]
+else:
+    # newer assembler: the main timeline is a bare registration; wrap it so the orchestrator tweens can run on it
+    reg = 'window.__timelines["main"] = gsap.timeline({ paused: true });'
+    if reg not in s:
+        raise SystemExit("assemble: main timeline registration not found in index.html")
+    s = s.replace(reg, 'const tl = gsap.timeline({ paused: true });\n' + tl +
+                  f'        tl.to({{}}, {{ duration: {env["TOTAL"]} }}, 0);\n        window.__timelines["main"] = tl;', 1)
 open(p, "w", encoding="utf-8").write(s)
 print("orchestrator layer patched:", ", ".join(k for k, v in (("audio", env.get("AUDIO")), ("flash", leak_at is not None),
       ("iris", iris_at is not None), ("paper bed", "paperbed" in s)) if v) or "nothing")

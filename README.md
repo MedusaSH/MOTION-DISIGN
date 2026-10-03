@@ -10,6 +10,10 @@ patterns du motion design (ce qui ressort après avoir regardé pas mal de vidé
 storyboard, les scripts de minutage, de projet et de contrôle, le film phare avec toutes ses séquences, d'autres films
 d'exemple, et les skills officiels HeyGen, audités et figés.
 
+> **Style cinétique (« Synapze V2 »)** : typographie héroïne, coupes sur les mots, impacts, interfaces réelles en 3D.
+> Guide complet, prompts prêts à coller, brief client et partie business : [`methode/`](methode/README.md).
+> Skill Claude : `.claude/skills/motion-design-kinetic/` · film de référence : `synapze-v2/`.
+
 **Le film phare** : [`examples/ligne-du-temps-v8/`](examples/ligne-du-temps-v8/), « La ligne du temps » (49,5 s), le
 résultat final de la méthode, celui qui tourne en haut de [entrepreneurs2-0.com](https://entrepreneurs2-0.com). Charte,
 storyboard, code du décor, 9 séquences, assemblage et mix : c'est le modèle à imiter.

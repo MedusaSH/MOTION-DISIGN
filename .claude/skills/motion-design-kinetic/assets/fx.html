@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kinetic FX kit (référence exécutable)</title>
+<!--
+  Source UNIQUE du look cinétique (voir frame.md). Chaque séquence copie MOT POUR MOT le bloc CSS et le kit JS entre les
+  marqueurs « FX : début / fin » (seul changement : « ../assets/ » devient « assets/ » ; sélecteurs scopés sous le root
+  de la séquence). Les helpers prennent la timeline GSAP de la séquence : tout est seek-safe (fromTo +
+  immediateRender:false), déterministe (aucun aléatoire), sans callback.
+  Ouvrir ce fichier dans Chromium : la démo montre la grammaire (slam chromatique, caption, carte glass 3D, grain).
+-->
+<style>
+/* ===================== FX : début du bloc CSS à copier ===================== */
+@font-face { font-family: "Geist"; src: url("../assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Geist"; src: url("../assets/fonts/Geist-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Geist Mono"; src: url("../assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Instrument Serif"; src: url("../assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Serif"; src: url("../assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
+@font-face { font-family: "Caveat"; src: url("../assets/fonts/Caveat-500.woff2") format("woff2"); }
+.fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+/* grounds: night (problem), ember (pivot light), paper (solution) */
+.fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+.fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+  radial-gradient(1000px 800px at 10% 95%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
+.fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+.fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
+.fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 256px 256px; }
+.fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+.fx-paper ~ .fx-vignette, .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+.fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+.fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+/* kinetic type */
+.fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+.fx-k.ink { color: #0c0c0f; }
+.fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+.fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fx-w { display: inline-block; will-change: transform, filter, opacity; }
+/* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
+.fx-chroma { position: relative; display: inline-block; }
+.fx-chroma > .r, .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+.fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+.fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+/* caption (the voice, readable without sound): bottom center, band y 890-980 */
+.fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+.fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+.fx-cap .w { display: inline-block; opacity: 0; }
+.fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+.fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+/* surfaces */
+.fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
+.fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
+.fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+.fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+.fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+.fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+/* ===================== FX : fin du bloc CSS à copier ===================== */
+html, body { margin: 0; background: #000; }
+</style>
+</head>
+<body>
+<div id="frame" class="fx-stage">
+  <div class="fx-night"></div><div class="fx-glow" style="left:1300px;top:240px"></div>
+  <div class="fx-k" id="demo-word" style="top:330px;font-size:300px"><span class="fx-chroma">MARDI</span></div>
+  <div class="fx-cap"><span class="w" style="opacity:1">Mardi,</span> <span class="w fx-key" style="opacity:1">dix-neuf heures.</span></div>
+  <div class="fx-vignette"></div><div class="fx-grain"></div>
+</div>
+<script src="../assets/vendor/gsap.min.js"></script>
+<script>
+/* ===================== FX : début du kit JS à copier ===================== */
+/* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
+const FX = {
+  /* deterministic pseudo-random from an index (no random) */
+  rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
+  /* split text of el into .fx-w spans per word (call once at build) */
+  words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
+    return t.map((w, i) => { const s = document.createElement("span"); s.className = "fx-w"; s.textContent = w;
+      el.appendChild(s); if (i < t.length - 1) el.appendChild(document.createTextNode(" ")); return s; }); },
+  /* chromatic copies inside a .fx-chroma wrapper: returns {r, b} */
+  chroma(wrap) { const txt = wrap.textContent; const mk = (c) => { const s = document.createElement("span"); s.className = c; s.textContent = txt; s.setAttribute("aria-hidden", "true"); wrap.appendChild(s); return s; };
+    return { r: mk("r"), b: mk("b") }; },
+  /* SLAM: element arrives too big + blurred and lands hard (1-4 frames), chromatic split snaps back */
+  slam(tl, el, t, { from = 1.6, blur = 18, d = 0.12, chroma = null, rot = 0 } = {}) {
+    tl.fromTo(el, { scale: from, opacity: 0, filter: `blur(${blur}px)`, rotation: rot }, { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: d, ease: "expo.out", immediateRender: false }, t);
+    if (chroma) { tl.fromTo(chroma.r, { x: -14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t);
+                  tl.fromTo(chroma.b, { x: 14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t); }
+  },
+  /* RISE: words mask-up one by one (wrap each .fx-w parent with overflow hidden yourself if you want a hard mask) */
+  rise(tl, words, t, { stagger = 0.06, d = 0.32, y = 60 } = {}) {
+    words.forEach((w, i) => tl.fromTo(w, { y, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t + i * stagger)); },
+  /* cue a single word exactly on its voice time */
+  cue(tl, w, t, { y = 30, d = 0.14 } = {}) { tl.fromTo(w, { y, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* SHAKE: deterministic camera shake on an impact (finite keyframes) */
+  shake(tl, el, t, { amp = 14, d = 0.32, n = 7, seed = 1 } = {}) {
+    for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.to(el, { x: (FX.rnd(seed + i) - .5) * 2 * amp * k, y: (FX.rnd(seed + i + 50) - .5) * 2 * amp * k, duration: d / n, ease: "none" }, t + i * d / n); }
+    tl.to(el, { x: 0, y: 0, duration: d / n, ease: "power2.out" }, t + d); },
+  /* FLASH: 1-2 frame white (or ember) flash on a cut */
+  flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
+  /* WHIP: blur-pan out of a shot (exit) */
+  whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* PUNCH: fast zoom-in on a target (camera), then slow drift */
+  punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
+    tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
+    tl.to(cam, { scale: s * (1 + drift), duration: hold, ease: "none" }, t + d); },
+  /* KEY BOX: the orange box of a caption keyword opens left to right */
+  key(tl, el, t) { tl.fromTo(el, { "--k": 0 }, { "--k": 1, duration: .14, ease: "power3.out", immediateRender: false }, t); },
+  /* SHIMMER: gradient sweep through .fx-k.hot text */
+  shimmer(tl, el, t, { d = 1.2 } = {}) { tl.fromTo(el, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: d, ease: "power2.inOut", immediateRender: false }, t); },
+  /* ROLL: digits text sequence (discrete, seek-safe) e.g. ["19:00","20:12","21:30","22:47"] at times */
+  roll(tl, el, values, times) { values.forEach((v, i) => tl.set(el, { textContent: v }, times[i])); },
+};
+/* ===================== FX : fin du kit JS à copier ===================== */
+const tl = gsap.timeline({ paused: true });
+const ch = FX.chroma(document.querySelector("#demo-word .fx-chroma"));
+FX.slam(tl, document.querySelector("#demo-word"), 0.03, { chroma: ch });
+tl.seek(0.5);
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+You build ONE frame of a HyperFrames motion design (version 2 of a launch film). You do not see my conversation: these files are your whole world.
+
+Read first, in this order, and follow them as your role:
+1. /home/user/MOTION-DISIGN/synapze-v2/.hyperframes/frame-packets/_role.md (worker contract)
+2. /home/user/MOTION-DISIGN/synapze-v2/.hyperframes/frame-packets/06-pivot.md (your storyboard block, blueprint and motion rules)
+3. /home/user/MOTION-DISIGN/synapze-v2/frame.md (the v2 look: colors, fonts, components, motion) and /home/user/MOTION-DISIGN/synapze-v2/reference/fx.html (the executable FX kit)
+
+## Dispatch context
+- PROJECT_DIR: /home/user/MOTION-DISIGN/synapze-v2
+- frame_id: 06-pivot
+- output: /home/user/MOTION-DISIGN/synapze-v2/compositions/frames/06-pivot.html (the only file you write)
+- canvas: 1920x1080, 30 fps; frame duration: 2.45 s; world: dark
+- confirmed sketch: none
+- captions: disabled (the voice is shown by your own kinetic type and .fx-cap captions, as the Scene lines say)
+- GSAP: load it ONLY with <script src="assets/vendor/gsap.min.js"></script> inside your <template>. The network is blocked: any CDN URL breaks the render.
+- Shared look: copy the CSS block and the JS kit of /home/user/MOTION-DISIGN/synapze-v2/reference/fx.html verbatim, between the « FX : début / fin » markers (only `../assets/` becomes `assets/`; scope selectors under your root, prefix ids with this frame). Use its helpers (FX.slam, FX.rise, FX.cue, FX.shake, FX.flash, FX.whipOut/whipIn, FX.punch, FX.key, FX.shimmer, FX.roll, FX.chroma, FX.words). Always put .fx-vignette and .fx-grain on top.
+- WHY THIS VERSION EXISTS: the client found v1 too linear, not modern enough, not enough editing and effects. Be bold and premium (think a 2026 Linear / Vercel / Arc launch film): something happens every 0.3–0.6 s, hard cuts on the words, impacts you can feel (slam + chromatic split + shake + flash), 3D depth, glow and grain — while every sentence stays readable and only one hero holds the eye at a time. Follow the Scene lines precisely for timing and content; you are free (and expected) to add craft within them: micro-drifts, parallax layers, light streaks, motion trails, subtle glows.
+- Check your work before you answer: render stills of your file at its key-image times and around its cuts with a local headless Chromium (Playwright is installed; seek your own paused timeline), look at them, and fix what is not premium. Report: key images checked, cuts, deviations.
+- Last dark frame before the light flash: from 2.15 s end on a bright bar at (960, 540) (10 × 160 px with a hot glow); the orchestrator floods the light from that point (full from ~2.35 s to the end of your frame).
+
+## House rules (they override the contract where they differ)
+- Word cues are frame-local seconds: each word appears on its cue (0 to 2 frames early), never late. Visible copy = exactly what the Scene lines quote, French typography (’ « » and non-breaking spaces before : ? !).
+- BLOCKING. A frame is not masked before its start: every element not on screen at t=0 starts with `opacity: 0` in CSS, and every `fromTo` that starts after t=0 has `immediateRender: false`.
+- BLOCKING. handoff_in and handoff_out are binding: your first image is exactly handoff_in, your last image is exactly handoff_out.
+- BLOCKING. An inner `<template id="...">` goes INSIDE the root element (`<div id="root">`), never beside it.
+- BLOCKING. Never set `style.visibility = "visible"`: use `"inherit"`.
+- BLOCKING. Tween transforms, opacity, filter and CSS variables only: never top, left, width, height or letterSpacing. No backdrop-filter. No interpolated clip-path polygon (circle, ellipse, inset are fine). Every id starts with a letter and carries this frame's prefix. No blurred object over 1800 px wide.
+- No `repeat: -1`, no CSS animation, no Math.random (use FX.rnd), no `<audio>`, no network asset. Fonts and images from `assets/...` only.
+- Write a complete first version of your file early (every scene roughed in, timeline registered), then refine it.
+- Do not run any `npx hyperframes` command, do not edit any other project file. Writing your file is your last action.
