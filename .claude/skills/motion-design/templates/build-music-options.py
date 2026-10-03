@@ -30,7 +30,7 @@ DUR = 45.0          # film duration (s) = TOTAL in assemble.sh
 PIVOT = 14.02       # the pivot word or silence where the music stops (e.g. « Stop. »)
 LIGHT = 14.30       # the light flash where the music comes back, drop on it (LEAK_AT + 0.05 in assemble.sh)
 VOICE = "assets/audio/voix-montage.wav"        # voice montage from build-audio.sh
-SFX_EVENTS = "assets/audio/sfx-events.json"    # [["name", seconds, gain], ...] of the film (build-audio.sh format)
+SFX_EVENTS = "assets/audio/sfx-events.json"    # [["name", seconds, gain(, length, offset)], ...] (see SFX_SLICE)
 OUT = "assets/audio/mix-{id}.wav"
 MUSIC_DIR = os.environ.get("MUSIC_DIR", os.path.join(HERE, "assets", "music"))
 SFX_DIR = os.environ.get("SFX_DIR", os.path.join(HERE, "..", ".claude", "skills", "media-use", "audio", "assets", "sfx"))
@@ -57,6 +57,23 @@ DUCK = "threshold=0.035:ratio=5:attack=25:release=420:makeup=1"   # music under 
 LOUDNESS = "I=-16:TP=-1.5:LRA=11"                                   # web delivery
 LIMIT = 0.79                 # final limiter ceiling (linear, -2 dBFS) so the true peak stays under -1.5 dBTP
 # ---------------------------------------------------------------------------------------------------------------------
+
+# Some library SFX are long sustained textures (the glitch files are 2.6-3.5 s of static): a one-shot event uses only
+# a short slice of them. Event format: ["name", seconds, gain] or ["name", seconds, gain, length, offset_in_file].
+SFX_SLICE = {"glitch-1": (0.12, 0.30), "glitch-2": (0.12, 0.60), "glitch-3": (0.12, 0.20)}  # name: (length, offset)
+
+
+def sfx_chain(ev):
+    name, length, offset = ev[0], None, 0.0
+    if len(ev) > 3:
+        length = float(ev[3])
+        offset = float(ev[4]) if len(ev) > 4 else 0.0
+    elif name in SFX_SLICE:
+        length, offset = SFX_SLICE[name]
+    if length is None:
+        return ""
+    return (f"atrim=start={offset:.3f}:duration={length:.3f},asetpts=PTS-STARTPTS,"
+            f"afade=t=in:d=0.005,afade=t=out:st={max(length - 0.03, 0):.3f}:d=0.03,")
 
 
 def path(rel):
@@ -110,10 +127,11 @@ def build(oid):
     fc.append("[mduck]asplit=2[mmix][mcheck]")
     labels = ["[v]", "[mmix]"]
     events = json.load(open(path(SFX_EVENTS), encoding="utf-8")) if os.path.exists(path(SFX_EVENTS)) else []
-    for j, (name, t, g) in enumerate(list(events) + PIVOT_SFX):
+    for j, ev in enumerate(list(events) + PIVOT_SFX):
+        name, t, g = ev[0], ev[1], ev[2]
         inputs += ["-i", sfx_file(name)]
         ms = int(round(float(t) * 1000))
-        fc.append(f"[{idx}]aformat=sample_rates=44100:channel_layouts=stereo,volume={g},adelay={ms}|{ms}[e{j}]")
+        fc.append(f"[{idx}]{sfx_chain(ev)}aformat=sample_rates=44100:channel_layouts=stereo,volume={g},adelay={ms}|{ms}[e{j}]")
         labels.append(f"[e{j}]")
         idx += 1
     fc.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0:duration=first,atrim=0:{DUR},"

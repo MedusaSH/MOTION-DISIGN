@@ -20,7 +20,7 @@ MUSIC="${MUSIC-assets/audio/music.mp3}"            # CC0 track (set MUSIC="" for
 MUSIC_START="${MUSIC_START:-0}"                    # where to start in the track (skip a quiet intro, see pitfalls.md)
 MUSIC_VOLUME="${MUSIC_VOLUME:-0.12}"               # 0.10 to 0.15 under a voice
 SFX_DIR="${SFX_DIR:-../.claude/skills/media-use/audio/assets/sfx}"   # Pixabay SFX shipped with HeyGen's media-use
-SFX_EVENTS="${SFX_EVENTS:-assets/audio/sfx-events.json}"             # [["name", seconds, volume], ...] on the FINAL timeline
+SFX_EVENTS="${SFX_EVENTS:-assets/audio/sfx-events.json}"             # [["name", seconds, volume(, length, offset)], ...] on the FINAL timeline
 VOICE_OUT="${VOICE_OUT:-assets/audio/voix-montage.wav}"
 MIX_OUT="${MIX_OUT:-assets/audio/mix.wav}"
 # ---------------------------------------------------------------------------------------------------------------------
@@ -104,10 +104,15 @@ if music:
                  f"afade=t=out:st={max(0.0, total - 3):.3f}:d=3,volume={float(env['MUSIC_VOLUME'])}[m]")
     labels.append("[m]")
     index += 1
-for k, (name, at, volume) in enumerate(events):
+SFX_SLICE = {"glitch-1": (0.12, 0.30), "glitch-2": (0.12, 0.60), "glitch-3": (0.12, 0.20)}  # long static textures: slice
+for k, ev in enumerate(events):
+    name, at, volume = ev[0], ev[1], ev[2]
+    length, offset = (float(ev[3]), float(ev[4]) if len(ev) > 4 else 0.0) if len(ev) > 3 else SFX_SLICE.get(name, (None, 0.0))
+    trim = (f"atrim=start={offset:.3f}:duration={length:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.005,"
+            f"afade=t=out:st={max(length - 0.03, 0):.3f}:d=0.03,") if length else ""
     args += ["-i", sfx_file(name)]
     delay = int(round(float(at) * 1000))
-    graph.append(f"[{index}]aformat=sample_rates=44100:channel_layouts=stereo,volume={float(volume)},adelay={delay}|{delay}[e{k}]")
+    graph.append(f"[{index}]{trim}aformat=sample_rates=44100:channel_layouts=stereo,volume={float(volume)},adelay={delay}|{delay}[e{k}]")
     labels.append(f"[e{k}]")
     index += 1
 graph.append("".join(labels) + f"amix=inputs={len(labels)}:normalize=0:duration=first,alimiter=limit=0.95[out]")
