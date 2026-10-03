@@ -48,12 +48,33 @@
     /* elements born after t = 0 (built by the kit or moved into the world, ids given right after filBuild) */
     #f03-wrap #f03-cnthread, #f03-wrap #f03-fthread, #f03-wrap #f03-fhang,
     #f03-wrap #f03-e1thread, #f03-wrap #f03-e2thread, #f03-wrap #f03-e3thread,
-    #f03-wrap #f03-e1hang, #f03-wrap #f03-e2hang, #f03-wrap #f03-e3hang, #f03-wrap #f03-advhang { opacity: 0; }
+    #f03-wrap #f03-e1hang, #f03-wrap #f03-e2hang, #f03-wrap #f03-e3hang, #f03-wrap #f03-advhang, #f03-lamp { opacity: 0; }
 
-    /* the notebook (styleframe P05, sf.css .carnet), world scale 0.38 */
-    #f03-cnw { width: 296.4px; height: 364.8px; }
+    /* the lamp of the styleframes (fixed on the stage, top left), lit after the seam */
+    #f03-lamp { position: absolute; left: -250px; top: -300px; width: 1400px; height: 1000px; pointer-events: none;
+      background: radial-gradient(closest-side, rgba(255,196,120,.16), transparent); }
+    /* hatch as built by frame 02: the kit's band, its stripes on an inner skin (same scale as the band in both axes) */
+    #f03-wrap #f03-hatch { background: none; overflow: hidden; }
+    #f03-wrap .f03-skin { position: absolute; left: 0; top: 0; width: 5600px; height: 100%; transform-origin: 0 0;
+      background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px); }
+
+    /* frame 02's empty card at 20:00 (built at ×2 in the world, receded ×0.6): off screen here, kept for the seam */
+    #f03-c0w { width: 1120px; height: 1024px; }
+    #f03-wrap .f03-c0 { position: absolute; left: 0; top: 0; width: 560px; height: 512px; box-sizing: border-box;
+      transform: scale(2); transform-origin: 0 0; background: #FBF7EE; border-radius: 10px; padding: 30px 34px; color: #0E1624;
+      box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
+    #f03-wrap .f03-c0crm { font: 500 14px/18px "DM Mono", monospace; letter-spacing: 2px; color: #9AA3B4; }
+    #f03-wrap .f03-c0title { font: 400 38px/52px "DM Serif Display", serif; margin: 6px 0 4px; white-space: nowrap; }
+    #f03-wrap .f03-c0f { margin-top: 16px; }
+    #f03-wrap .f03-c0k { font: 500 15px/20px "DM Mono", monospace; letter-spacing: 1px; color: #5B6578; text-transform: uppercase; margin-bottom: 6px; }
+    #f03-wrap .f03-c0v { position: relative; height: 52px; box-sizing: border-box; border: 1.5px solid #D8CFBD; border-radius: 8px; background: #fff;
+      padding: 0 16px; display: flex; align-items: center; }
+    #f03-wrap .f03-c0on { position: absolute; left: -1.5px; top: -1.5px; right: -1.5px; bottom: -1.5px; border: 1.5px solid #F24E1E; border-radius: 8px; }
+
+    /* the notebook (styleframe P05, sf.css .carnet), frame 02's size: world scale 0.785 */
+    #f03-cnw { width: 612.3px; height: 753.6px; }
     #f03-wrap .f03-carnet { position: absolute; left: 0; top: 0; width: 780px; height: 960px; box-sizing: border-box;
-      transform: scale(0.38); transform-origin: 0 0; background: #F4EEDC; border-radius: 8px; padding: 70px 70px 0 100px;
+      transform: scale(0.785); transform-origin: 0 0; background: #F4EEDC; border-radius: 8px; padding: 70px 70px 0 100px;
       background-image: repeating-linear-gradient(transparent 0 63px, #CFC6B0 63px 64px); background-position: 0 40px;
       color: #1C2B4A; font: 500 50px/64px "Caveat", cursive;
       box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
@@ -78,8 +99,8 @@
     #root .f03-car { display: inline-block; width: 3px; height: 30px; background: #F24E1E; margin-left: 2px; opacity: 0; }
     #root .f03-ch { display: none; }
 
-    /* SAISIE stamps (styleframe P06), world scale 1 / 4.5 */
-    #root .f03-stw { position: absolute; width: 1px; height: 1px; transform: scale(0.2222); transform-origin: 0 0; }
+    /* SAISIE stamps (styleframe P06), world scale 1 / 2.268 */
+    #root .f03-stw { position: absolute; width: 1px; height: 1px; transform: scale(0.4409); transform-origin: 0 0; }
     #root .f03-st { position: absolute; left: 0; top: 0; font: 500 46px/1.2 "DM Mono", monospace; letter-spacing: 8px; color: #5B6578;
       border: 3px solid #5B6578; padding: 8px 20px; border-radius: 6px; white-space: nowrap; opacity: 0; }
 
@@ -122,15 +143,15 @@
       </div>
     </div>
 
-    <!-- the empty card of the previous frame, hanging at 20:00 (off screen in this frame) -->
-    <div class="f03-cw" id="f03-c0">
-      <div class="f03-card">
-        <div class="f03-cm">MON CRM · FICHE PROSPECT</div>
-        <div class="f03-ct">Nouveau prospect</div>
-        <div class="f03-f"><div class="f03-k">Nom</div><div class="f03-v"></div></div>
-        <div class="f03-f"><div class="f03-k">Date de naissance</div><div class="f03-v"></div></div>
-        <div class="f03-f"><div class="f03-k">Ville</div><div class="f03-v"></div></div>
-        <div class="f03-f"><div class="f03-k">Besoin</div><div class="f03-v"></div></div>
+    <!-- frame 02's empty card hanging at 20:00 (off screen in this frame) -->
+    <div id="f03-c0w">
+      <div class="f03-c0">
+        <div class="f03-c0crm">MON CRM · FICHE PROSPECT</div>
+        <div class="f03-c0title">Nouveau prospect</div>
+        <div class="f03-c0f"><div class="f03-c0k">Nom</div><div class="f03-c0v"><i class="f03-c0on"></i></div></div>
+        <div class="f03-c0f"><div class="f03-c0k">Date de naissance</div><div class="f03-c0v"></div></div>
+        <div class="f03-c0f"><div class="f03-c0k">Ville</div><div class="f03-c0v"></div></div>
+        <div class="f03-c0f"><div class="f03-c0k">Besoin</div><div class="f03-c0v"></div></div>
       </div>
     </div>
 
@@ -254,17 +275,20 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       var dots = h.world.querySelector(".fil-dots");
       h.stage.insertBefore(dots, h.cam);
       Object.assign(dots.style, { left: "-80px", top: "-80px", width: "2112px", height: "1248px" });
-      // the warm halo becomes the lamp of the styleframes (fixed on the stage, top left, behind the subject)
-      h.stage.insertBefore(h.halo, h.cam);
-      Object.assign(h.halo.style, { left: "450px", top: "200px" });
+      // the kit halo stays where frame 02 left it (world 2400, off screen); the styleframes' lamp is a stage layer lit after the seam
+      h.halo.style.left = X19 + "px";
+      var lamp = filEl(h.stage, ""); lamp.id = "f03-lamp"; h.stage.insertBefore(lamp, h.cam);
+      // hatch as in frame 02: stripes on an inner skin; band and skin share one scale m (1 / 1.2 at the seam, then world)
+      h.hatch.id = "f03-hatch";
+      var skin = filEl(h.hatch, "f03-skin");
       // micro « SAISIE » rows under the segment (kit row at 19:00, plus 20:00 and 22:00)
       var rows = [h.hatchLabel,
         filEl(h.world, "fil-hatch-l", { left: X20 + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE"),
         filEl(h.world, "fil-hatch-l", { left: X22 + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE")];
 
       // hanging objects: the old card at 20:00, the notebook at 21:00, the typed card at 21:15, three cards, the advice form
-      var c0 = filHang(h.world, X20, $("f03-c0"), { len: 150 });
-      var cn = filHang(h.world, X21, $("f03-cnw"), { len: 60 });
+      var c0 = filHang(h.world, X20, $("f03-c0w"), { len: 416 });
+      var cn = filHang(h.world, X21, $("f03-cnw"), { len: 150 });
       var cf = filHang(h.world, X2115, $("f03-cf"), { len: 150 });
       var e1 = filHang(h.world, X2130, $("f03-e1"), { len: 150 });
       var e2 = filHang(h.world, X2145, $("f03-e2"), { len: 150 });
@@ -275,8 +299,8 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       e1.hang.id = "f03-e1hang"; e2.hang.id = "f03-e2hang"; e3.hang.id = "f03-e3hang";
       adv.thread.style.display = "none"; adv.hang.id = "f03-advhang";
       // stamps under the segment, just under the notebook (world y 580, scale 1 / 4.5)
-      [["f03-sw1", 4708], ["f03-sw2", 4815], ["f03-sw3", 4922]].forEach(function (p) {
-        var w = $(p[0]); h.world.appendChild(w); w.style.left = p[1] + "px"; w.style.top = "582px";
+      [["f03-sw1", 4596], ["f03-sw2", 4808], ["f03-sw3", 5020]].forEach(function (p) {
+        var w = $(p[0]); h.world.appendChild(w); w.style.left = p[1] + "px"; w.style.top = "619px";
       });
       h.world.appendChild(h.point); h.world.appendChild(h.clock);
 
@@ -292,12 +316,12 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       /* ---------------- camera: one source of truth, camAt(t) = [px, py, s] ---------------- */
       // handoff_in: cam(4800, 380, 1.2), blur 10.  handoff_out: cam(6300, 540, 0.9), blur 8, travelling right (power3.in).
       var SEGS = [
-        [0.00, 0.25, [4800, 380, 1.2], [4797, 323.2, 2.5], "power2.out"],     // end of the push onto the notebook (P05)
-        [0.25, 1.65, null, [4820.1, 323.2, 2.5], "none"],                     // drift +14 px/s
-        [1.90, 0.10, null, [4824, 566.7, 4.5], "expo.inOut"],                 // notch x1.8 down onto the hatched segment (P06)
-        [2.00, 0.80, null, [4856, 566.7, 4.5], "none"],                       // drift +40 px/s
-        [2.80, 0.40, null, [4936, 384.4, 1.8], "power3.out"],                 // pull: notebook left, card right, equal margins
-        [3.20, 1.40, null, [4950, 384.4, 1.8], "none"],                       // drift +10 px/s
+        [0.00, 0.30, [4800, 380, 1.2], [4800, 49.1, 1.26], "power2.out"],     // end of frame 02's push up onto the notebook (P05)
+        [0.30, 1.60, null, [4822.4, 49.1, 1.26], "none"],                     // drift +14 px/s
+        [1.90, 0.10, null, [4824, 592.9, 2.268], "expo.inOut"],               // notch x1.8 down onto the hatched segment (P06)
+        [2.00, 0.80, null, [4856, 592.9, 2.268], "none"],                     // drift +40 px/s
+        [2.80, 0.40, null, [4949, 370.3, 1.65], "power3.out"],                // pull: notebook left, card right, equal margins
+        [3.20, 1.40, null, [4963, 370.3, 1.65], "none"],                      // drift +10 px/s
         [4.60, 0.40, null, [5600, 540, 1.1], "power3.out"],                   // glide right: the row of cards (P07)
         [5.00, 0.50, null, [5605, 540, 1.1], "none"],                         // drift +10 px/s
         [5.50, 0.30, null, [6300, 540, 0.9], "power3.in"],                    // travelling right into handoff_out
@@ -329,6 +353,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       gsap.set(hudScale, { scale: 1 / C0[2] });
       gsap.set(hudY, { scaleY: 1 / C0[2] });
       gsap.set(hudX, { scaleX: 1 / C0[2] });
+      gsap.set([h.hatch, skin], { scaleY: 1 / C0[2] }); gsap.set(skin, { scaleY: 1, scaleX: 1 / C0[2] });
+      // frame 02's card at 3.70: receded x0.6, hoisted 260, thread 416 -> 676, labels printed, « Nom » outlined, caret off
+      gsap.set(c0.hang, { scale: 0.6, y: -260, rotation: -0.29 });
+      gsap.set(c0.thread, { scaleY: 676 / 416 });
 
       var tl = gsap.timeline({ paused: true });
       function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
@@ -351,12 +379,22 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft(h.cam, { filter: "blur(6px)" }, { filter: "blur(0px)", duration: 0.05, ease: "power2.out" }, 1.95);
       ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(8px)", duration: 0.30, ease: "power2.in" }, 5.50);
 
+      [[0.00, 1 / 1.2, 1, 0.30, "power2.out"], [1.90, 1, 1.76, 0.10, "expo.inOut"], [2.80, 1.76, 1, 0.40, "power3.out"]].forEach(function (m) {
+        ft(h.hatch, { scaleY: m[1] }, { scaleY: m[2], duration: m[3], ease: m[4] }, m[0]);
+        ft(skin, { scaleX: m[1] }, { scaleX: m[2], duration: m[3], ease: m[4] }, m[0]);
+      });
+      // the lamp of the styleframes lights after the seam
+      ft(lamp, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.30);
+
       /* ---------------- Scene 1 (0.00 – 1.90): the notes of the advice ---------------- */
       // 0.00 -> 0.22 the falling notebook catches above 21:00, swings 2° once, then drifts (living hold)
-      ft(cn.hang, { y: -120, scale: 1.08, rotation: 0, filter: "blur(5px)" }, { y: -10, scale: 1.02, filter: "blur(2px)", duration: 0.10, ease: "power2.in" }, 0);
-      ft(cn.hang, { y: -10, scale: 1.02, filter: "blur(2px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.10);
-      ft(cn.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.10);
-      [[0.22, 0, -2.5, 0.20, "sine.out"], [0.42, -2.5, -1.2, 0.30, "sine.inOut"], [0.72, -1.2, -2, 0.78, "sine.inOut"],
+      // frame 02 hands it over at y -60, x1.08, blur 6, falling at ~5100 px/s: it catches at 0.02
+      ft(cn.hang, { y: -60, scale: 1.08, rotation: 0, filter: "blur(6px)" }, { y: -8, scale: 1.02, filter: "blur(2px)", duration: 0.02, ease: "none" }, 0);
+      ft(cn.hang, { y: -8, scale: 1.02, filter: "blur(2px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.02);
+      ft(cn.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.02);
+      // on the pull the notebook recedes on its thread (as frame 02's card did), leaving 21:15 to the card
+      ft(cn.hang, { scale: 1 }, { scale: 0.4, duration: 0.40, ease: "power3.out", immediateRender: false }, 2.80);
+      [[0.14, 0, -2.5, 0.20, "sine.out"], [0.34, -2.5, -1.2, 0.30, "sine.inOut"], [0.64, -1.2, -2, 0.86, "sine.inOut"],
        [1.50, -2, 0.8, 0.50, "sine.inOut"], [2.00, 0.8, -0.8, 0.60, "sine.inOut"], [2.60, -0.8, 0.5, 0.70, "sine.inOut"],
        [3.30, 0.5, -0.4, 0.80, "sine.inOut"], [4.10, -0.4, 0.3, 0.90, "sine.inOut"], [5.00, 0.3, -0.2, 0.80, "sine.inOut"]
       ].forEach(function (r) { ft(cn.hang, { rotation: r[1] }, { rotation: r[2], duration: r[3], ease: r[4] }, r[0]); });
