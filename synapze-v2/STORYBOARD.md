@@ -48,7 +48,7 @@ patterns: ../patterns/STORYBOARD-CRAFT.md, ../patterns/PATTERNS.md
 - scene: MARDI slams on night; cut on « dix-neuf » to a giant rolling 19:00; cut on « Votre » to a 3D calendar card whose 18:00 event is swiped out on « partir »
 - duration: 3.70s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/01-mardi.html
 - voiceover: "Mardi, dix-neuf heures. Votre dernier rendez-vous vient de partir."
 - type: hook
@@ -85,7 +85,7 @@ Scene 3 (1.50 à 3.70 s) : P3, le rendez-vous part
 - scene: « DEUXIÈME JOURNÉE » kinetic in outline + fill over a dim empty generic CRM card; then the silent gag as a time-lapse montage of hard cuts every 0.25 s, ending frozen on 22:47
 - duration: 3.70s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/02-deuxieme-journee.html
 - voiceover: "Et votre deuxième journée commence."
 - type: pain_point
@@ -116,7 +116,7 @@ Scene 2 (1.79 à 3.70 s) : P5, le gag time-lapse (muet)
 - scene: « le conseil. » in serif over the broker's handwritten notes; cut to full orange: SAISIE slammed then crossed out; cut to split screen notebook | form being retyped; « fiche par fiche » multiplies the form into a wall
 - duration: 5.80s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/03-saisie.html
 - voiceover: "Votre métier, c'est le conseil. Pas la saisie. Pourtant, vous retapez vos notes, fiche par fiche."
 - type: pain_point
@@ -153,7 +153,7 @@ Scene 3 (2.80 à 5.80 s) : P8, retaper fiche par fiche
 - scene: the advice form in 3D; each « case » is a hard cut to an extreme macro of a box being ticked by the mouse, with shake
 - duration: 3.00s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/04-case-par-case.html
 - voiceover: "Vous remplissez le devoir de conseil, case par case."
 - type: pain_point
@@ -184,7 +184,7 @@ Scene 2 (2.00 à 3.00 s) : P10, case · par · case
 - scene: a 3D iPhone floating in the night receives a glowing WhatsApp notification on Saturday 21:14; behind it giant days scroll SAM → DIM → LUN; LUNDI. slams in serif; the notification goes grey, unanswered
 - duration: 3.30s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/05-samedi.html
 - voiceover: "Et le prospect qui vous écrit samedi soir... attend lundi."
 - type: pain_point
@@ -215,7 +215,7 @@ Scene 2 (2.30 à 3.30 s) : P12, attend lundi
 - scene: silence on black: the question appears word by word in serif italic, the orange caret erases it, then stretches into a bar of light that explodes
 - duration: 2.45s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/06-pivot.html
 - voiceover: "Et si vous arrêtiez d'écrire ?"
 - type: pivot
@@ -240,7 +240,7 @@ Scene 1 (0.00 à 2.45 s) : P13, le pivot
 - scene: warm paper and orange light; a full-width waveform driven by the real voice with « Synapze » and « parlez. »; cut to the real Synapze screen floating in 3D with punch-ins on the transcription and on the IA fields filling
 - duration: 4.75s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/07-vous-parlez.html
 - voiceover: "Avec Synapze, vous parlez. Une note vocale après le rendez-vous, et la fiche client s'écrit."
 - type: demo
@@ -271,7 +271,7 @@ Scene 2 (1.86 à 4.75 s) : P15, la fiche s'écrit
 - scene: the same advice form, now on paper light: its five boxes tick themselves in cascade with IA chips and sparks, a completeness ring fills, the stamp slams on « traçable »
 - duration: 2.95s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/08-tracable.html
 - voiceover: "Le devoir de conseil se remplit tout seul, traçable."
 - type: demo
@@ -296,7 +296,7 @@ Scene 1 (0.00 à 2.95 s) : P16, ça se remplit tout seul
 - scene: a 3D iPhone with the WhatsApp copy: Camille's Saturday question gets an instant answer at 21:14; on « jour et nuit » the frame splits: left warm day, right deep night, the clock jumps to 03:12 and the assistant answers again
 - duration: 3.30s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/09-whatsapp.html
 - voiceover: "Sur WhatsApp, votre assistant répond à vos clients, jour et nuit."
 - type: demo
@@ -327,7 +327,7 @@ Scene 2 (2.57 à 3.30 s) : P18, jour / nuit
 - scene: « L'IA ne remplace pas le courtier. » kinetic; a 0.6 s fly-through recap of the film's interfaces; IMBATTABLE slams in hot gradient with shimmer and shake; the clock lands on 19:05; everything collapses into an orange line
 - duration: 3.50s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/10-imbattable.html
 - voiceover: "L'IA ne remplace pas le courtier. Elle le rend imbattable."
 - type: payoff
@@ -358,7 +358,7 @@ Scene 2 (2.06 à 3.50 s) : P20, imbattable
 - scene: on night, the orange line becomes the logo « • Synapze • »; the promise « Le courtier parle. L'IA fait tout le reste. »; the button « Demander une démo » glows, a cursor clicks it directly; living hold; iris to black
 - duration: 7.35s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/11-fin.html
 - voiceover: "Synapze. Le courtier parle, l'IA fait tout le reste. Demandez votre démo."
 - type: cta
