@@ -104,35 +104,49 @@
     #f10-lpw { width: 938.9px; height: 592.2px; }
     #f10-wrap .f10-laptop { position: absolute; left: 0; top: 0; width: 1300px; height: 820px; box-sizing: border-box; transform: scale(0.7222);
       transform-origin: 0 0; background: #1A1F2A; border-radius: 24px; padding: 22px; }
-    #f10-wrap .f10-scr { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; position: relative; background: #000; }
-    #f10-wrap .f10-scr img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    #f10-wrap .f10-lscr { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; position: relative; background: #000; }
+    #f10-wrap .f10-lscr img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* WhatsApp phone (sf.css .phone + .wa2), world scale 0.95 */
-    #f10-phw { width: 380px; height: 779px; }
-    #f10-wrap .f10-phone { position: absolute; left: 0; top: 0; width: 400px; height: 820px; box-sizing: border-box; transform: scale(0.95);
-      transform-origin: 0 0; border-radius: 62px; background: #05080F; padding: 14px; }
-    #f10-wrap .f10-phone .f10-scr { border-radius: 50px; }
-    #f10-wrap .f10-wa2 { height: 100%; display: flex; flex-direction: column; background: #EFEAE2; font-family: "DM Sans", sans-serif; color: #111; }
-    #f10-wrap .f10-st { height: 48px; flex: none; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 4px; font: 600 16px "DM Sans", sans-serif; background: #F6F5F3; }
-    #f10-wrap .f10-hd { background: #F6F5F3; border-bottom: 1px solid #DEDCD7; padding: 8px 14px 10px; display: flex; align-items: center; gap: 10px; }
-    #f10-wrap .f10-back { color: #1DAB61; font: 400 30px/1 "DM Sans", sans-serif; margin-right: 2px; }
-    #f10-wrap .f10-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg,#C9B79C,#A88F6E); display: grid; place-items: center; color: #fff; font: 600 15px "DM Sans", sans-serif; }
-    #f10-wrap .f10-nm { font: 600 17px "DM Sans", sans-serif; line-height: 1.1; }
-    #f10-wrap .f10-nm small { display: block; font: 400 12px "DM Sans", sans-serif; color: #667781; }
-    #f10-wrap .f10-ic { margin-left: auto; display: flex; gap: 18px; }
-    #f10-wrap .f10-ic i { width: 22px; height: 16px; box-sizing: border-box; border: 2px solid #1DAB61; border-radius: 4px; display: block; }
-    #f10-wrap .f10-body { flex: 1; padding: 8px 0; background-color: #EFEAE2; overflow: hidden;
+    /* the iPhone (sf.css .phone) with WhatsApp iOS (frame.md whatsapp-ios, sf.css .wa2, styleframe C3) */
+    #f10-phw { width: 400px; height: 820px; }
+    #root .f10-phone { position: absolute; left: 0; top: 0; width: 400px; height: 820px; box-sizing: border-box; border-radius: 62px;
+      background: #05080F; padding: 14px; box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #root .f10-scr { width: 100%; height: 100%; border-radius: 50px; overflow: hidden; position: relative; background: #05080F; }
+    #root .f10-wa2 { height: 100%; display: flex; flex-direction: column; background: #EFEAE2; font-family: "DM Sans", sans-serif; color: #111; }
+    #root .f10-st { height: 48px; flex: none; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 4px;
+      font: 600 16px "DM Sans", sans-serif; background: #F6F5F3; }
+    #root .f10-hd { background: #F6F5F3; border-bottom: 1px solid #DEDCD7; padding: 8px 14px 10px; display: flex; align-items: center; gap: 10px; flex: none; }
+    #root .f10-back { color: #1DAB61; font: 400 30px/1 "DM Sans", sans-serif; margin-right: 2px; }
+    #root .f10-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #C9B79C, #A88F6E); display: grid; place-items: center;
+      color: #fff; font: 600 15px "DM Sans", sans-serif; }
+    #root .f10-nm { font: 600 17px "DM Sans", sans-serif; line-height: 1.1; }
+    #root .f10-nm small { display: block; font: 400 12px "DM Sans", sans-serif; color: #667781; }
+    #root .f10-ic { margin-left: auto; display: flex; gap: 18px; }
+    #root .f10-ic i { width: 22px; height: 16px; box-sizing: border-box; border: 2px solid #1DAB61; border-radius: 4px; display: block; }
+    #root .f10-body { flex: 1; position: relative; padding: 8px 0; background-color: #EFEAE2;
       background-image: radial-gradient(rgba(0,0,0,.035) 2px, transparent 2.5px), radial-gradient(rgba(0,0,0,.03) 1.5px, transparent 2px);
-      background-size: 34px 34px, 22px 22px; background-position: 0 0, 11px 17px; }
-    #f10-wrap .f10-pill { margin: 8px auto; width: max-content; background: #fff; border-radius: 8px; padding: 4px 10px; font: 500 12px "DM Sans", sans-serif; color: #54656F; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
-    #f10-wrap .f10-b { position: relative; max-width: 78%; box-sizing: border-box; margin: 3px 12px; padding: 6px 9px 18px; border-radius: 9px; font: 400 15.5px/1.32 "DM Sans", sans-serif; background: #fff; box-shadow: 0 1px .5px rgba(11,20,26,.13); width: max-content; }
-    #f10-wrap .f10-b.f10-in { border-top-left-radius: 0; }
-    #f10-wrap .f10-b.f10-out { background: #D9FDD3; margin-left: auto; border-top-right-radius: 0; }
-    #f10-wrap .f10-t { position: absolute; right: 8px; bottom: 3px; font: 400 11px "DM Sans", sans-serif; color: #667781; }
-    #f10-wrap .f10-k { color: #53BDEB; letter-spacing: -3px; margin-left: 4px; }
-    #f10-wrap .f10-bar2 { background: #F6F5F3; padding: 8px 12px 26px; display: flex; align-items: center; gap: 12px; color: #1DAB61; font: 400 26px "DM Sans", sans-serif; }
-    #f10-wrap .f10-bar2 .f10-f { flex: 1; height: 34px; border-radius: 17px; background: #fff; border: 1px solid #E1DED8; }
-    #f10-wrap .f10-bar2 .f10-m { width: 18px; height: 26px; box-sizing: border-box; border: 2.5px solid #1DAB61; border-radius: 9px; }
+      background-size: 34px 34px, 22px 22px; background-position: 0 0, 11px 17px; overflow: hidden; }
+    #root .f10-pill { margin: 8px auto; width: max-content; background: #fff; border-radius: 8px; padding: 4px 10px; font: 500 12px "DM Sans", sans-serif;
+      color: #54656F; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
+    #root .f10-b { position: relative; box-sizing: border-box; max-width: 78%; margin: 3px 12px; padding: 6px 9px 18px; border-radius: 9px;
+      font: 400 15.5px/1.32 "DM Sans", sans-serif; background: #fff; box-shadow: 0 1px .5px rgba(11,20,26,.13); width: max-content; }
+    #root .f10-b.f10-in { border-top-left-radius: 0; transform-origin: 0 0; }
+    #root .f10-b.f10-out { background: #D9FDD3; margin-left: auto; border-top-right-radius: 0; transform-origin: 100% 0; }
+    #root .f10-t { position: absolute; right: 8px; bottom: 3px; font: 400 11px "DM Sans", sans-serif; color: #667781; }
+    #root .f10-k { position: relative; display: inline-block; color: #53BDEB; letter-spacing: -3px; margin-left: 4px; }
+    #root .f10-k .f10-kg { position: absolute; left: 0; top: 0; color: #8696A0; }
+    #root .f10-typing { margin: 3px 12px; background: #fff; border-radius: 9px; border-top-left-radius: 0; padding: 10px 14px; width: max-content;
+      display: flex; gap: 5px; transform-origin: 0 0; }
+    #root .f10-typing i { width: 7px; height: 7px; border-radius: 50%; background: #8696A0; display: block; }
+    #root .f10-in-bar { background: #F6F5F3; padding: 8px 12px 26px; display: flex; align-items: center; gap: 12px; color: #1DAB61;
+      font: 400 26px "DM Sans", sans-serif; flex: none; }
+    #root .f10-in-bar .f10-f { flex: 1; height: 34px; box-sizing: border-box; border-radius: 17px; background: #fff; border: 1px solid #E1DED8; }
+    #root .f10-in-bar .f10-m { width: 18px; height: 26px; box-sizing: border-box; border: 2.5px solid #1DAB61; border-radius: 9px; }
+    #root .f10-col { display: inline-block; height: 20px; overflow: hidden; vertical-align: top; }
+    #root .f10-dgs { display: block; height: 20px; line-height: 20px; }
+    #root .f10-colon2 { display: inline-block; height: 20px; line-height: 20px; vertical-align: top; }
+    /* the last reply of frame 9, landed in its slot */
+    #root #f10-fly { box-shadow: 0 1px .5px rgba(11,20,26,.13), 0 18px 36px rgba(14,22,36,.14); margin-top: 3.375px; }
 
     /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box, peak-stroke), light world */
     #f10-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
@@ -182,21 +196,22 @@
       </div>
     </div>
     <div id="f10-lpw">
-      <div class="f10-laptop f10-sh"><div class="f10-scr"><img src="assets/ui/voice-note/vn-22.jpg" alt=""></div></div>
+      <div class="f10-laptop f10-sh"><div class="f10-lscr"><img src="assets/ui/voice-note/vn-22.jpg" alt=""></div></div>
     </div>
     <div id="f10-phw">
-      <div class="f10-phone f10-sh"><div class="f10-scr"><div class="f10-wa2">
-        <div class="f10-st"><span>03:12</span><span>●●● ▮</span></div>
-        <div class="f10-hd"><span class="f10-back">‹</span><div class="f10-av">CR</div><div class="f10-nm">Camille R.<small>en ligne</small></div><div class="f10-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
+      <div class="f10-phone"><div class="f10-scr"><div class="f10-wa2">
+        <div class="f10-st"><span class="f10-clk"><span class="f10-col"><span class="f10-dgs">0</span></span><span class="f10-col"><span class="f10-dgs">3</span></span><span class="f10-colon2">:</span><span class="f10-col"><span class="f10-dgs">1</span></span><span class="f10-col"><span class="f10-dgs">2</span></span></span><span>●●● ▮</span></div>
+        <div class="f10-hd"><span class="f10-back">‹</span><div class="f10-av">CR</div><div class="f10-nm">Camille R.<small>en ligne</small></div>
+          <div class="f10-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
         <div class="f10-body">
           <div class="f10-pill">Samedi</div>
           <div class="f10-b f10-in">Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis ?<span class="f10-t">21:14</span></div>
           <div class="f10-b f10-out">Bonjour Camille, je suis l'assistant IA du cabinet. Pour préparer votre devis : combien de personnes à couvrir ?<span class="f10-t">21:14<span class="f10-k">✓✓</span></span></div>
           <div class="f10-pill">Aujourd'hui</div>
           <div class="f10-b f10-in">Nous sommes quatre, deux adultes et deux enfants.<span class="f10-t">03:12</span></div>
-          <div class="f10-b f10-out">Parfait. Je prépare trois offres adaptées à votre famille.<span class="f10-t">03:12<span class="f10-k">✓✓</span></span></div>
+          <div class="f10-b f10-out" id="f10-fly">Parfait. Je prépare trois offres adaptées à votre famille.<span class="f10-t">03:12<span class="f10-k">✓✓</span></span></div>
         </div>
-        <div class="f10-bar2">+<div class="f10-f"></div>◎<div class="f10-m"></div></div>
+        <div class="f10-in-bar">+<div class="f10-f"></div>◎<div class="f10-m"></div></div>
       </div></div></div>
     </div>
 

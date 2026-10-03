@@ -52,7 +52,7 @@
 
     /* « • Synapze • » (styleframes P17: .logo, 140 px, top 430) */
     #root .f11-logotext { position: absolute; left: 0; right: 0; top: 430px; text-align: center; white-space: nowrap;
-      font: 400 140px "DM Serif Display", serif; color: #F1EBDE; }
+      font: 400 140px "DM Serif Display", serif; letter-spacing: -0.75px; color: #F1EBDE; }
     #root .f11-dot { display: inline-block; color: #F24E1E; margin: 0 26px; opacity: 0; }
     #root .f11-ch { display: inline-block; opacity: 0; transform-origin: 50% 100%; }
     #f11-ul { position: absolute; left: 736px; top: 619px; width: 448px; height: 3px; background: #F24E1E; border-radius: 3px; opacity: 0; }
@@ -231,7 +231,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       /* ---------------- Scene 1 (0.00 – 0.90): the logo assembles on the stroke ---------------- */
       // 0.00 the point becomes the left orange dot (P17: center 655, 528.5, ~36 px)
       ft(h.point, { x: 0, y: 0, scale: 1, boxShadow: "0 0 0 12px rgba(242,78,30,0.2)" },
-        { x: 655 - LX0, y: -11.5, scale: 1.2, boxShadow: "0 0 0 0px rgba(242,78,30,0)", duration: 0.28, ease: "power3.inOut" }, 0);
+        { x: 655 - LX0, y: -11.5, scale: 35 / 30, boxShadow: "0 0 0 0px rgba(242,78,30,0)", duration: 0.16, ease: "power2.inOut" }, 0);
       // the stroke settles under the letters (they fall onto it): center 540 -> 579 (baseline)
       ft(h.orange, { y: 0 }, { y: 39, duration: 0.22, ease: "power3.inOut" }, 0.02);
       // 0.05 – 0.35 the letters fall one by one (x1.4 and blurred -> crisp in 0.12 s, 0.04 s apart)
@@ -303,17 +303,19 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         ft(b, { opacity: 0, scaleY: 0.08 }, { opacity: 1, scaleY: 1, duration: 0.10, ease: "power3.out" }, t0);
         // living hold: finite breathing segments, each bar on its own period (deterministic), until the end
         var per = 0.34 + 0.06 * ((i * 7) % 5), lo = 0.45 + 0.08 * ((i * 3) % 4), t = 4.30, up = true;
-        while (t < DUR) {
-          var dd = Math.min(per, DUR - t);
-          ft(b, { scaleY: up ? 1 : lo }, { scaleY: up ? lo : 1, duration: per, ease: "sine.inOut" }, t);
+        while (t < DUR - 0.01) {
+          var dd = Math.min(per, DUR - t), a0 = up ? 1 : lo, a1 = up ? lo : 1;
+          // the last segment is cut at the end of the frame (same curve, partial target) so the timeline stays 7.35 s
+          var e = gsap.parseEase("sine.inOut"), q = dd / per, part = a0 + (a1 - a0) * e(q);
+          ft(b, { scaleY: a0 }, { scaleY: part, duration: dd, ease: (function (q) { return function (p) { return e(p * q) / e(q); }; })(q) }, t);
           t += per; up = !up;
         }
       });
       // the halo ring of the button breathes with the wave
-      [[4.40, 24, 0.14], [5.20, 18, 0.18], [6.00, 24, 0.14], [6.80, 18, 0.18]].forEach(function (k, i, arr) {
+      [[4.40, 24, 0.14], [5.15, 18, 0.18], [5.90, 24, 0.14], [6.60, 18, 0.18]].forEach(function (k, i, arr) {
         var prev = i === 0 ? [0, 18, 0.18] : arr[i - 1];
         ft(btn, { boxShadow: "0 0 0 " + prev[1] + "px rgba(242,78,30," + prev[2] + ")" },
-          { boxShadow: "0 0 0 " + k[1] + "px rgba(242,78,30," + k[2] + ")", duration: 0.8, ease: "sine.inOut" }, k[0]);
+          { boxShadow: "0 0 0 " + k[1] + "px rgba(242,78,30," + k[2] + ")", duration: 0.75, ease: "sine.inOut" }, k[0]);
       });
 
       // 6.90 -> 7.30 iris to black, closing on the button (its screen centre while the camera pulls)
