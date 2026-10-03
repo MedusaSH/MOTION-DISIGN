@@ -80,9 +80,6 @@
       #f06-cr { background: #ff2d55; }
       #f06-cb { background: #2de1ff; }
 
-      /* warm sheen that sweeps through the letters (multiply: black stays black) */
-      #f06-sheen { position: absolute; left: 0; top: 440px; width: 360px; height: 210px; opacity: 0; mix-blend-mode: multiply;
-        background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,150,100,.9) 50%, rgba(255,255,255,0) 80%); }
 
       /* light that gathers on the caret (riser) */
       #f06-halo { position: absolute; left: 660px; top: 240px; width: 600px; height: 600px; border-radius: 50%; opacity: 0;
@@ -110,7 +107,6 @@
           <div id="f06-flare2"></div>
           <div id="f06-streaks"></div>
           <div id="f06-row"><span class="f06-wd" data-cue="0.09">Et</span> <span class="f06-wd" data-cue="0.20">si</span> <span class="f06-wd" data-cue="0.30">vous</span> <span class="f06-wd" data-cue="0.51">arrêtiez</span> <span class="f06-wd" data-cue="0.93">d’écrire ?</span><div id="f06-caret"><div id="f06-cr" class="f06-cc"></div><div id="f06-cb" class="f06-cc"></div><div id="f06-bar"><div id="f06-core"></div></div></div></div>
-          <div id="f06-sheen"></div>
           <div id="f06-flare"></div>
           <div id="f06-ring"></div>
         </div>
@@ -199,6 +195,8 @@ const FX = {
         var tl = gsap.timeline({ paused: true });
 
         /* ---------- t = 0 : handoff_in, black and the orange caret 6 x 96 at the center ---------- */
+        gsap.set(row, { x: rowX(0) });
+        gsap.set(caret, { x: GAP, opacity: 1 });
         tl.set(row, { x: rowX(0) }, 0);
         tl.set(caret, { x: GAP, opacity: 1 }, 0);
         tl.set(bar, { x: 0, y: 0, scaleX: 1, scaleY: 1 }, 0);
@@ -248,13 +246,9 @@ const FX = {
         /* ---------- ember glow builds under the question, breathes, then dims with the erase ---------- */
         var ember = $("f06-ember");
         tl.fromTo(ember, { opacity: 0, scale: .7 }, { opacity: .32, scale: .9, duration: .5, ease: "power2.out", immediateRender: false }, .45);
-        tl.to(ember, { opacity: .5, scale: 1, duration: .5, ease: "power2.out" }, .93);
+        // 0.93 -> 1.45 : the hold breathes, the ember swells under « d'écrire ? »
+        tl.to(ember, { opacity: .5, scale: 1.08, duration: .52, ease: "sine.out" }, .93);
         tl.to(ember, { opacity: .12, scale: .55, duration: .42, ease: "power2.in" }, 1.45);
-
-        /* ---------- 1.00 -> 1.42 : a warm sheen sweeps through the letters (hold stays alive) ---------- */
-        var sheen = $("f06-sheen");
-        tl.fromTo(sheen, { x: 300, opacity: 0 }, { x: 1380, opacity: .55, duration: .44, ease: "power1.inOut", immediateRender: false }, 1.0);
-        tl.to(sheen, { opacity: 0, duration: .06, ease: "none" }, 1.42);
 
         /* ---------- 1.45 -> 1.85 : the caret erases the sentence right to left, one letter / 0.0138 s ---------- */
         var N = chars.length, STEP = 0.40 / (N - 1);
@@ -298,7 +292,7 @@ const FX = {
         tl.fromTo(cr, { x: -12, scaleX: SX, scaleY: SY * 1.2, opacity: .9 }, { x: 0, scaleY: SY, opacity: 0, duration: .24, ease: "power3.out", immediateRender: false }, 2.15);
         tl.fromTo(cb, { x: 12, scaleX: SX, scaleY: SY * 1.2, opacity: .9 }, { x: 0, scaleY: SY, opacity: 0, duration: .24, ease: "power3.out", immediateRender: false }, 2.15);
         // impact: small ember flash + camera shake, settled by 2.39
-        FX.flash(tl, $("f06-flash"), 2.15, { peak: .22, d: .1 });
+        FX.flash(tl, $("f06-flash"), 2.15, { peak: .09, d: .08 });
         FX.shake(tl, shk, 2.15, { amp: 9, d: .2, n: 6, seed: 3 });
         // anamorphic flare opens across the bar
         tl.fromTo($("f06-flare"), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: .9, duration: .3, ease: "expo.out", immediateRender: false }, 2.15);
