@@ -1,0 +1,360 @@
+<template>
+  <div id="root" data-composition-id="04-case-par-case" data-width="1920" data-height="1080" data-duration="3.0">
+  <style>
+  /* ===================== FX : début du bloc CSS à copier ===================== */
+  @font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: "Geist Mono"; src: url("assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
+  @font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); }
+  [data-composition-id="04-case-par-case"] .fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+  /* grounds: night (problem), ember (pivot light), paper (solution) */
+  [data-composition-id="04-case-par-case"] .fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+  [data-composition-id="04-case-par-case"] .fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+    radial-gradient(1000px 800px at 10% 95%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
+  [data-composition-id="04-case-par-case"] .fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+  [data-composition-id="04-case-par-case"] .fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
+  [data-composition-id="04-case-par-case"] .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 256px 256px; }
+  [data-composition-id="04-case-par-case"] .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  [data-composition-id="04-case-par-case"] .fx-paper ~ .fx-vignette, [data-composition-id="04-case-par-case"] .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+  [data-composition-id="04-case-par-case"] .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+  [data-composition-id="04-case-par-case"] .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+  /* kinetic type */
+  [data-composition-id="04-case-par-case"] .fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+  [data-composition-id="04-case-par-case"] .fx-k.ink { color: #0c0c0f; }
+  [data-composition-id="04-case-par-case"] .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+  [data-composition-id="04-case-par-case"] .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+  [data-composition-id="04-case-par-case"] .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+  [data-composition-id="04-case-par-case"] .fx-w { display: inline-block; will-change: transform, filter, opacity; }
+  /* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
+  [data-composition-id="04-case-par-case"] .fx-chroma { position: relative; display: inline-block; }
+  [data-composition-id="04-case-par-case"] .fx-chroma > .r, [data-composition-id="04-case-par-case"] .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+  [data-composition-id="04-case-par-case"] .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+  [data-composition-id="04-case-par-case"] .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+  /* caption (the voice, readable without sound): bottom center, band y 890-980 */
+  [data-composition-id="04-case-par-case"] .fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+  [data-composition-id="04-case-par-case"] .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+  [data-composition-id="04-case-par-case"] .fx-cap .w { display: inline-block; opacity: 0; }
+  [data-composition-id="04-case-par-case"] .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+  [data-composition-id="04-case-par-case"] .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+  /* surfaces */
+  [data-composition-id="04-case-par-case"] .fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
+  [data-composition-id="04-case-par-case"] .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
+  [data-composition-id="04-case-par-case"] .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+  [data-composition-id="04-case-par-case"] .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+  [data-composition-id="04-case-par-case"] .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+  [data-composition-id="04-case-par-case"] .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+  /* ===================== FX : fin du bloc CSS à copier ===================== */
+
+  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; }
+  [data-composition-id="04-case-par-case"] #f04-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+
+  /* ---------- Scene 1: the advice form, 3D, on the night ---------- */
+  [data-composition-id="04-case-par-case"] #f04-s1 { position: absolute; inset: 0; }
+  [data-composition-id="04-case-par-case"] #f04-glow { left: 1380px; top: 300px; }
+  [data-composition-id="04-case-par-case"] #f04-glow2 { left: 520px; top: 380px; width: 1000px; height: 1000px; margin: -500px 0 0 -500px; opacity: .55; }
+  [data-composition-id="04-case-par-case"] #f04-cam1 { transform-origin: 520px 360px; }
+  [data-composition-id="04-case-par-case"] #f04-form { position: absolute; left: 410px; top: 120px; width: 1100px; height: 640px; box-sizing: border-box; border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbf9f6 100%); color: #15151a;
+    box-shadow: 0 60px 140px rgba(0,0,0,.65), 0 0 120px rgba(242,78,30,.22), 0 2px 0 rgba(255,255,255,.9) inset;
+    transform-origin: 50% 50%; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-ttl { position: absolute; left: 72px; top: 54px; font: 700 40px/1 "Geist", sans-serif; letter-spacing: -0.025em; white-space: nowrap; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-doc { position: absolute; left: 72px; top: 112px; display: flex; align-items: center; gap: 12px;
+    font: 500 19px/1 "Geist Mono", monospace; letter-spacing: .04em; color: #8a857e; white-space: nowrap; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-doc i { display: block; width: 16px; height: 20px; border: 2px solid #b9b3aa; border-radius: 3px; box-sizing: border-box; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-hr { position: absolute; left: 72px; right: 72px; top: 160px; height: 2px; background: #ebe7e1; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-row { position: absolute; left: 72px; right: 72px; height: 84px; border-bottom: 1px solid #efebe6; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-box { position: absolute; left: 0; top: 23px; width: 38px; height: 38px; box-sizing: border-box; border: 2.5px solid #9aa0aa; border-radius: 7px; background: #fff; opacity: 0; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-lab { position: absolute; left: 66px; top: 26px; font: 500 30px/1 "Geist", sans-serif; letter-spacing: -0.015em; color: #1c1c22; white-space: nowrap; opacity: 0; }
+  [data-composition-id="04-case-par-case"] #f04-form .f04-fld { position: absolute; right: 0; top: 30px; width: 380px; height: 24px; border-radius: 6px; background: #f2efea; opacity: 0; transform-origin: 0 50%; }
+  [data-composition-id="04-case-par-case"] #f04-sheen { position: absolute; left: 0; top: 0; width: 1100px; height: 640px; border-radius: 14px; pointer-events: none; overflow: hidden; }
+  [data-composition-id="04-case-par-case"] #f04-sheen i { position: absolute; left: -420px; top: -200px; width: 260px; height: 1100px;
+    background: linear-gradient(90deg, rgba(255,214,190,0), rgba(255,190,150,.32), rgba(255,214,190,0)); }
+  [data-composition-id="04-case-par-case"] #f04-cur1 { position: absolute; left: 0; top: 0; width: 36px; height: 55px; opacity: 0; transform-origin: 0 0;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)); }
+  [data-composition-id="04-case-par-case"] #f04-scrim1 { position: absolute; left: 0; right: 0; bottom: 0; height: 330px; pointer-events: none;
+    background: linear-gradient(rgba(5,5,7,0), rgba(5,5,7,.78) 45%, rgba(5,5,7,.92)); }
+
+  /* ---------- Scene 2: three macro shots (hard cuts) ---------- */
+  [data-composition-id="04-case-par-case"] .f04-shot { position: absolute; inset: 0; overflow: hidden; opacity: 0; background: #0b0b0e; }
+  [data-composition-id="04-case-par-case"] .f04-shk { position: absolute; inset: 0; }
+  [data-composition-id="04-case-par-case"] .f04-mcam { position: absolute; inset: 0; perspective: 1300px; }
+  [data-composition-id="04-case-par-case"] .f04-plane { position: absolute; left: -540px; top: -460px; width: 3000px; height: 2000px;
+    background: radial-gradient(1100px 800px at 46% 44%, #ffffff 0%, #f7f4ef 55%, #e9e3db 100%); }
+  [data-composition-id="04-case-par-case"] .f04-paperx { position: absolute; left: -1400px; top: -900px; width: 5800px; height: 3800px;
+    background: radial-gradient(1500px 1100px at 2900px 1800px, #ffffff 0%, #f7f4ef 45%, #e6dfd6 100%); }
+  [data-composition-id="04-case-par-case"] .f04-mline { position: absolute; left: 0; right: 0; height: 6px; background: #ebe6df; }
+  [data-composition-id="04-case-par-case"] .f04-mbox { position: absolute; box-sizing: border-box; border-style: solid; border-color: #9aa0aa; background: #fff;
+    box-shadow: 0 10px 30px rgba(40,20,10,.08) inset; }
+  [data-composition-id="04-case-par-case"] .f04-mon { position: absolute; box-sizing: border-box; border-style: solid; border-color: #f24e1e; background: rgba(242,78,30,.07); opacity: 0; }
+  [data-composition-id="04-case-par-case"] .f04-burst { position: absolute; border-radius: 50%; opacity: 0;
+    background: radial-gradient(closest-side, rgba(242,78,30,.55), rgba(242,78,30,.18) 55%, rgba(242,78,30,0)); }
+  [data-composition-id="04-case-par-case"] .f04-tick { position: absolute; overflow: visible; }
+  [data-composition-id="04-case-par-case"] .f04-tick path { fill: none; stroke: #f24e1e; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+  [data-composition-id="04-case-par-case"] .f04-tick.r path { stroke: #ff2d55; } [data-composition-id="04-case-par-case"] .f04-tick.b path { stroke: #2de1ff; }
+  [data-composition-id="04-case-par-case"] .f04-tick.r, [data-composition-id="04-case-par-case"] .f04-tick.b { opacity: 0; mix-blend-mode: multiply; }
+  [data-composition-id="04-case-par-case"] .f04-mlab { position: absolute; font-family: "Geist", sans-serif; font-weight: 500; letter-spacing: -0.03em; color: #1c1c22; white-space: nowrap; line-height: 1; }
+  [data-composition-id="04-case-par-case"] .f04-far { filter: blur(7px); }
+  [data-composition-id="04-case-par-case"] .f04-mcur { position: absolute; left: 0; top: 0; transform-origin: 0 0; filter: drop-shadow(0 18px 22px rgba(0,0,0,.32)); }
+  [data-composition-id="04-case-par-case"] .f04-mscrim { position: absolute; left: 0; right: 0; bottom: 0; height: 360px; pointer-events: none;
+    background: linear-gradient(rgba(5,5,7,0), rgba(5,5,7,.72) 48%, rgba(5,5,7,.9)); }
+  [data-composition-id="04-case-par-case"] .f04-mvig { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(1100px 760px at 42% 40%, rgba(5,5,7,0) 50%, rgba(5,5,7,.5) 100%); }
+  [data-composition-id="04-case-par-case"] #f04-streak1 { left: -200px; top: 250px; width: 1100px; height: 3px; }
+  [data-composition-id="04-case-par-case"] #f04-streak2 { left: -200px; top: 640px; width: 1400px; height: 2px; }
+  [data-composition-id="04-case-par-case"] #f04-streak3 { left: -200px; top: 420px; width: 1600px; height: 4px; }
+  [data-composition-id="04-case-par-case"] #f04-cap .fx-key { --k: 0; }
+  </style>
+
+    <!-- ground (full-bleed clip, lowest track) -->
+    <div id="f04-bg" class="clip" data-start="0" data-duration="3.0" data-track-index="0"><div class="fx-night"></div></div>
+
+    <div class="fx-stage" id="f04-stage">
+      <!-- ============ Scene 1 (0.00–2.00): the advice form in 3D ============ -->
+      <div id="f04-s1">
+        <div class="fx-glow" id="f04-glow"></div>
+        <div class="fx-glow" id="f04-glow2"></div>
+        <div class="fx-3d" id="f04-cam1">
+          <div id="f04-form">
+            <div class="f04-ttl">Fiche de conseil · Mutuelle santé</div>
+            <div class="f04-doc"><i></i>Modèle_DDA_v3.docx</div>
+            <div class="f04-hr"></div>
+            <div class="f04-row" style="top:180px"><div class="f04-box" id="f04-b1"></div><div class="f04-lab" id="f04-l1">Besoins exprimés</div><div class="f04-fld" id="f04-f1"></div></div>
+            <div class="f04-row" style="top:264px"><div class="f04-box" id="f04-b2"></div><div class="f04-lab" id="f04-l2">Situation familiale</div><div class="f04-fld" id="f04-f2"></div></div>
+            <div class="f04-row" style="top:348px"><div class="f04-box" id="f04-b3"></div><div class="f04-lab" id="f04-l3">Budget</div><div class="f04-fld" id="f04-f3"></div></div>
+            <div class="f04-row" style="top:432px"><div class="f04-box" id="f04-b4"></div><div class="f04-lab" id="f04-l4">Garanties proposées</div><div class="f04-fld" id="f04-f4"></div></div>
+            <div class="f04-row" style="top:516px"><div class="f04-box" id="f04-b5"></div><div class="f04-lab" id="f04-l5">Justification du conseil</div><div class="f04-fld" id="f04-f5"></div></div>
+            <div id="f04-sheen"><i id="f04-sheenbar"></i></div>
+            <svg id="f04-cur1" viewBox="0 0 24 37"><path d="M1.5 1.5 L1.5 30 L8.2 23.6 L12.6 34.2 L17.4 32.2 L13.1 21.9 L22.2 21.9 Z" fill="#fff" stroke="#111" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div id="f04-scrim1"></div>
+      </div>
+
+      <!-- ============ Scene 2 (2.00–3.00): macro 1 « Besoins exprimés » ============ -->
+      <div class="f04-shot" id="f04-m1"><div class="f04-shk" id="f04-m1shk"><div class="f04-mcam" id="f04-m1cam">
+        <div class="f04-plane" style="transform-origin:1160px 860px; transform: rotateX(16deg) rotateY(18deg) rotate(-4deg);">
+          <div class="f04-paperx"></div><div class="f04-mline" style="top:1155px"></div>
+          <div class="f04-mline f04-far" style="top:560px;left:700px;right:auto;width:1500px"></div>
+          <div class="f04-burst" id="f04-m1burst" style="left:910px;top:610px;width:500px;height:500px"></div>
+          <div class="f04-mbox" style="left:1035px;top:735px;width:250px;height:250px;border-width:15px;border-radius:44px"></div>
+          <div class="f04-mon" id="f04-m1on" style="left:1035px;top:735px;width:250px;height:250px;border-width:15px;border-radius:44px"></div>
+          <svg class="f04-tick" id="f04-m1tk" viewBox="0 0 30 30" style="left:1035px;top:735px;width:250px;height:250px"><path d="M6.5 15.6 L12.6 21.6 L24 8.6"/></svg>
+          <div class="f04-mlab" style="left:1385px;top:782px;font-size:160px">Besoins exprimés</div>
+          <div class="f04-mbox f04-far" style="left:1035px;top:1290px;width:250px;height:250px;border-width:15px;border-radius:44px"></div>
+          <svg class="f04-mcur" id="f04-m1cur" viewBox="0 0 24 37" style="width:150px;height:231px"><path d="M1.5 1.5 L1.5 30 L8.2 23.6 L12.6 34.2 L17.4 32.2 L13.1 21.9 L22.2 21.9 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+      </div></div><div class="f04-mvig"></div><div class="f04-mscrim"></div></div>
+
+      <!-- macro 2 « Situation familiale » (opposite angle) -->
+      <div class="f04-shot" id="f04-m2"><div class="f04-shk" id="f04-m2shk"><div class="f04-mcam" id="f04-m2cam">
+        <div class="f04-plane" style="transform-origin:1310px 880px; transform: rotateX(-12deg) rotateY(-20deg) rotate(5deg);">
+          <div class="f04-paperx"></div><div class="f04-mline" style="top:1215px"></div>
+          <div class="f04-mline f04-far" style="top:550px;left:800px;right:auto;width:1500px"></div>
+          <div class="f04-mbox f04-far" style="left:1160px;top:60px;width:300px;height:300px;border-width:18px;border-radius:52px;border-color:#f24e1e"></div>
+          <div class="f04-burst" id="f04-m2burst" style="left:1010px;top:580px;width:600px;height:600px"></div>
+          <div class="f04-mbox" style="left:1160px;top:730px;width:300px;height:300px;border-width:18px;border-radius:52px"></div>
+          <div class="f04-mon" id="f04-m2on" style="left:1160px;top:730px;width:300px;height:300px;border-width:18px;border-radius:52px"></div>
+          <svg class="f04-tick" id="f04-m2tk" viewBox="0 0 30 30" style="left:1160px;top:730px;width:300px;height:300px"><path d="M6.5 15.6 L12.6 21.6 L24 8.6"/></svg>
+          <div class="f04-mlab" style="left:1560px;top:790px;font-size:180px">Situation familiale</div>
+          <svg class="f04-mcur" id="f04-m2cur" viewBox="0 0 24 37" style="width:170px;height:262px"><path d="M1.5 1.5 L1.5 30 L8.2 23.6 L12.6 34.2 L17.4 32.2 L13.1 21.9 L22.2 21.9 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+      </div></div><div class="f04-mvig"></div><div class="f04-mscrim"></div></div>
+
+      <!-- macro 3 « Budget » (tighter, chroma) -->
+      <div class="f04-shot" id="f04-m3"><div class="f04-shk" id="f04-m3shk"><div class="f04-mcam" id="f04-m3cam">
+        <div class="f04-plane" style="transform-origin:1440px 880px; transform: rotateX(14deg) rotateY(12deg) rotate(-7deg);">
+          <div class="f04-paperx"></div><div class="f04-mline" style="top:1330px"></div>
+          <div class="f04-mbox f04-far" style="left:1230px;top:-310px;width:420px;height:420px;border-width:24px;border-radius:70px;border-color:#f24e1e"></div>
+          <div class="f04-burst" id="f04-m3burst" style="left:1040px;top:480px;width:800px;height:800px"></div>
+          <div class="f04-mbox" style="left:1230px;top:670px;width:420px;height:420px;border-width:24px;border-radius:70px"></div>
+          <div class="f04-mon" id="f04-m3on" style="left:1230px;top:670px;width:420px;height:420px;border-width:24px;border-radius:70px"></div>
+          <svg class="f04-tick r" id="f04-m3tkr" viewBox="0 0 30 30" style="left:1230px;top:670px;width:420px;height:420px"><path d="M6.5 15.6 L12.6 21.6 L24 8.6"/></svg>
+          <svg class="f04-tick b" id="f04-m3tkb" viewBox="0 0 30 30" style="left:1230px;top:670px;width:420px;height:420px"><path d="M6.5 15.6 L12.6 21.6 L24 8.6"/></svg>
+          <svg class="f04-tick" id="f04-m3tk" viewBox="0 0 30 30" style="left:1230px;top:670px;width:420px;height:420px"><path d="M6.5 15.6 L12.6 21.6 L24 8.6"/></svg>
+          <div class="f04-mlab" style="left:1790px;top:735px;font-size:260px">Budget</div>
+          <svg class="f04-mcur" id="f04-m3cur" viewBox="0 0 24 37" style="width:215px;height:331px"><path d="M1.5 1.5 L1.5 30 L8.2 23.6 L12.6 34.2 L17.4 32.2 L13.1 21.9 L22.2 21.9 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+      </div></div><div class="f04-mvig"></div><div class="f04-mscrim"></div></div>
+
+      <div class="fx-streak" id="f04-streak1"></div>
+      <div class="fx-streak" id="f04-streak2"></div>
+      <div class="fx-streak" id="f04-streak3"></div>
+
+      <!-- caption: the voice, word by word -->
+      <div class="fx-cap" id="f04-cap"><span class="w" data-cue="0.10">Vous</span> <span class="w" data-cue="0.31">remplissez</span> <span class="w" data-cue="0.84">le</span> <span class="w" data-cue="0.94">devoir</span> <span class="w" data-cue="1.26">de</span> <span class="w" data-cue="1.36">conseil,</span> <span class="fx-key" id="f04-key"><span class="w" data-cue="2.00">case</span> <span class="w" data-cue="2.27">par</span> <span class="w" data-cue="2.47">case.</span></span></div>
+
+      <div class="fx-flash" id="f04-flashw"></div>
+      <div class="fx-flash ember" id="f04-flashe"></div>
+      <div class="fx-vignette"></div><div class="fx-grain" id="f04-grain"></div>
+    </div>
+
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script>
+  (function () {
+/* ===================== FX : début du kit JS à copier ===================== */
+/* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
+const FX = {
+  /* deterministic pseudo-random from an index (no random) */
+  rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
+  /* split text of el into .fx-w spans per word (call once at build) */
+  words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
+    return t.map((w, i) => { const s = document.createElement("span"); s.className = "fx-w"; s.textContent = w;
+      el.appendChild(s); if (i < t.length - 1) el.appendChild(document.createTextNode(" ")); return s; }); },
+  /* chromatic copies inside a .fx-chroma wrapper: returns {r, b} */
+  chroma(wrap) { const txt = wrap.textContent; const mk = (c) => { const s = document.createElement("span"); s.className = c; s.textContent = txt; s.setAttribute("aria-hidden", "true"); wrap.appendChild(s); return s; };
+    return { r: mk("r"), b: mk("b") }; },
+  /* SLAM: element arrives too big + blurred and lands hard (1-4 frames), chromatic split snaps back */
+  slam(tl, el, t, { from = 1.6, blur = 18, d = 0.12, chroma = null, rot = 0 } = {}) {
+    tl.fromTo(el, { scale: from, opacity: 0, filter: `blur(${blur}px)`, rotation: rot }, { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: d, ease: "expo.out", immediateRender: false }, t);
+    if (chroma) { tl.fromTo(chroma.r, { x: -14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t);
+                  tl.fromTo(chroma.b, { x: 14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t); }
+  },
+  /* RISE: words mask-up one by one (wrap each .fx-w parent with overflow hidden yourself if you want a hard mask) */
+  rise(tl, words, t, { stagger = 0.06, d = 0.32, y = 60 } = {}) {
+    words.forEach((w, i) => tl.fromTo(w, { y, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t + i * stagger)); },
+  /* cue a single word exactly on its voice time */
+  cue(tl, w, t, { y = 30, d = 0.14 } = {}) { tl.fromTo(w, { y, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* SHAKE: deterministic camera shake on an impact (finite keyframes) */
+  shake(tl, el, t, { amp = 14, d = 0.32, n = 7, seed = 1 } = {}) {
+    for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.to(el, { x: (FX.rnd(seed + i) - .5) * 2 * amp * k, y: (FX.rnd(seed + i + 50) - .5) * 2 * amp * k, duration: d / n, ease: "none" }, t + i * d / n); }
+    tl.to(el, { x: 0, y: 0, duration: d / n, ease: "power2.out" }, t + d); },
+  /* FLASH: 1-2 frame white (or ember) flash on a cut */
+  flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
+  /* WHIP: blur-pan out of a shot (exit) */
+  whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* PUNCH: fast zoom-in on a target (camera), then slow drift */
+  punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
+    tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
+    tl.to(cam, { scale: s * (1 + drift), duration: hold, ease: "none" }, t + d); },
+  /* KEY BOX: the orange box of a caption keyword opens left to right */
+  key(tl, el, t) { tl.fromTo(el, { "--k": 0 }, { "--k": 1, duration: .14, ease: "power3.out", immediateRender: false }, t); },
+  /* SHIMMER: gradient sweep through .fx-k.hot text */
+  shimmer(tl, el, t, { d = 1.2 } = {}) { tl.fromTo(el, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: d, ease: "power2.inOut", immediateRender: false }, t); },
+  /* ROLL: digits text sequence (discrete, seek-safe) e.g. ["19:00","20:12","21:30","22:47"] at times */
+  roll(tl, el, values, times) { values.forEach((v, i) => tl.set(el, { textContent: v }, times[i])); },
+};
+/* ===================== FX : fin du kit JS à copier ===================== */
+
+    var FID = "04-case-par-case", DUR = 3.0, F = 1 / 30;
+    var root = document.querySelector('[data-composition-id="' + FID + '"]');
+    var $ = function (id) { return root.querySelector("#" + id); };
+    var tl = gsap.timeline({ paused: true });
+    // fromTo helper: anything starting after t = 0 never renders its start state early
+    function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+
+    /* ======================= Scene 1 (0.00 – 2.00) ======================= */
+    var form = $("f04-form"), cam1 = $("f04-cam1");
+    // 0.00 handoff_in: the form enters tilted (rotateX 14, rotateY 10), x1.2, blurred; lands in 0.25 s (pop 0.05)
+    ft(form, { scale: 1.2, y: 60, filter: "blur(18px)", opacity: 0.9 },
+             { scale: 1, y: 0, filter: "blur(0px)", opacity: 1, duration: 0.25, ease: "expo.out" }, 0);
+    // camera drift: rotateY 10 -> 4, rotateX 14 -> 11 over the scene (linear, never stops)
+    ft(form, { rotationX: 14, rotationY: 10 }, { rotationX: 11, rotationY: 4, duration: 2.0, ease: "none" }, 0);
+    // push 4 %/s, then 1.50 the slow push towards the first box
+    ft(cam1, { scale: 1, x: 0, y: 0 }, { scale: 1.06, x: 0, y: 0, duration: 1.5, ease: "none" }, 0);
+    ft(cam1, { scale: 1.06, x: 0, y: 0 }, { scale: 1.3, x: 150, y: 70, duration: 0.5, ease: "sine.in" }, 1.5);
+    // ember glows drift
+    ft($("f04-glow"), { x: 0, y: 0, scale: 1 }, { x: -120, y: 30, scale: 1.08, duration: 2.0, ease: "none" }, 0);
+    ft($("f04-glow2"), { x: 0, opacity: 0.35 }, { x: 60, opacity: 0.6, duration: 2.0, ease: "none" }, 0);
+
+    // 0.40 the rows type themselves, one after another
+    for (var k = 1; k <= 5; k++) {
+      var t0 = 0.40 + (k - 1) * 0.09, lab = $("f04-l" + k), n = lab.textContent.length;
+      ft($("f04-b" + k), { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.22, ease: "back.out(2.2)" }, t0);
+      ft(lab, { opacity: 1, clipPath: "inset(-20% 100% -20% 0%)" }, { opacity: 1, clipPath: "inset(-20% 0% -20% 0%)", duration: 0.24, ease: "steps(" + Math.min(n, 14) + ")" }, t0 + 0.02);
+      ft($("f04-f" + k), { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.3, ease: "expo.out" }, t0 + 0.12);
+    }
+    // a warm sheen glides over the paper (1.30 – 1.80, on « conseil »)
+    ft($("f04-sheenbar"), { x: 0, rotation: 18 }, { x: 1700, rotation: 18, duration: 0.55, ease: "power2.inOut" }, 1.28);
+
+    // 0.90 the mouse arrow arrives on a curve (0.4 s), then creeps onto the first box
+    var cur1 = $("f04-cur1");
+    ft(cur1, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.90);
+    ft(cur1, { x: 1160 }, { x: 124, duration: 0.40, ease: "power3.out" }, 0.90);
+    ft(cur1, { y: 720 }, { y: 250, duration: 0.40, ease: "power1.out" }, 0.90);
+    ft(cur1, { rotation: -14 }, { rotation: 0, duration: 0.40, ease: "power2.out" }, 0.90);
+    ft(cur1, { x: 124, y: 250 }, { x: 102, y: 232, duration: 0.6, ease: "sine.inOut" }, 1.40);
+
+    /* ======================= Scene 2 (2.00 – 3.00): case · par · case ======================= */
+    var CUTS = [2.00, 2.27, 2.47], ENDS = [2.27, 2.47, 3.00];
+    var shots = [$("f04-m1"), $("f04-m2"), $("f04-m3")];
+    // hard cuts (seek-safe sets)
+    tl.set($("f04-s1"), { opacity: 1 }, 0);
+    tl.set($("f04-s1"), { opacity: 0 }, CUTS[0]);
+    shots.forEach(function (s, i) {
+      tl.set(s, { opacity: 1 }, CUTS[i]);
+      if (i < 2) tl.set(s, { opacity: 0 }, CUTS[i + 1]);
+    });
+    // cursor tip targets per macro (plane coordinates) = box centre, slightly low-right
+    var TIP = [[1220, 915], [1382, 946], [1541, 972]];
+    var OFF = [[60, 70], [-70, 80], [70, 60]];
+    var BOOST = [1.08, 1.08, 1.08];
+    shots.forEach(function (s, i) {
+      var j = i + 1, t = CUTS[i], len = ENDS[i] - t;
+      var camEl = $("f04-m" + j + "cam"), shk = $("f04-m" + j + "shk"), cur = $("f04-m" + j + "cur");
+      var on = $("f04-m" + j + "on"), burst = $("f04-m" + j + "burst"), tick = $("f04-m" + j + "tk").querySelector("path");
+      var boxes = [on.previousElementSibling, on].concat(Array.prototype.slice.call(s.querySelectorAll(".f04-tick")));
+      // micro-zoom x1 -> x1.08 across the macro
+      ft(camEl, { scale: 1 }, { scale: BOOST[i], duration: len, ease: "none" }, t);
+      // the arrow: already there on the cut, last 2 frames of its approach, then the press (cursor-click)
+      ft(cur, { x: TIP[i][0] + OFF[i][0], y: TIP[i][1] + OFF[i][1] }, { x: TIP[i][0], y: TIP[i][1], duration: 0.05, ease: "expo.out" }, t);
+      ft(cur, { scale: 1 }, { scale: 0.86, duration: 0.05, ease: "power1.in" }, t + 0.02);
+      ft(cur, { scale: 0.86 }, { scale: 1, duration: 0.25, ease: "back.out(2)" }, t + 0.07);
+      // the box: linear press, spring release (press-release-spring, dramatic)
+      ft(boxes, { scale: 1 }, { scale: 0.88, duration: 0.05, ease: "power1.in" }, t + 0.02);
+      ft(boxes, { scale: 0.88 }, { scale: 1, duration: 0.45, ease: "back.out(2.4)" }, t + 0.07);
+      // the orange tick is drawn in 0.06 s, the box turns orange
+      ft(on, { opacity: 0 }, { opacity: 1, duration: 0.03, ease: "none" }, t + 0.03);
+      var L = 30; try { L = Math.ceil(tick.getTotalLength()) + 1; } catch (e) {}
+      var ticks = [tick];
+      if (j === 3) { ticks.push($("f04-m3tkr").querySelector("path"), $("f04-m3tkb").querySelector("path")); }
+      gsap.set(ticks, { strokeDasharray: L, strokeDashoffset: L });   // hidden until the click
+      ft(ticks, { strokeDasharray: L, strokeDashoffset: L }, { strokeDasharray: L, strokeDashoffset: 0, duration: 0.06, ease: "power2.out" }, t + 0.03);
+      // burst glow behind the box on the release
+      ft(burst, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1.25, duration: 0.18, ease: "power2.out" }, t + 0.07);
+      ft(burst, { opacity: 1 }, { opacity: 0.45, duration: Math.max(0.1, len - 0.25), ease: "power2.in" }, t + 0.25);
+      // shake on the impact
+      FX.shake(tl, shk, t + 0.03, { amp: j === 3 ? 18 : 14, d: Math.min(0.32, len - 0.06), n: 7, seed: 11 * j });
+    });
+    // macro 3: chromatic split on the tick
+    ft($("f04-m3tkr"), { x: -22, y: 6, opacity: 0.9 }, { x: 0, y: 0, opacity: 0, duration: 0.3, ease: "power3.out" }, CUTS[2] + 0.03);
+    ft($("f04-m3tkb"), { x: 22, y: -6, opacity: 0.9 }, { x: 0, y: 0, opacity: 0, duration: 0.3, ease: "power3.out" }, CUTS[2] + 0.03);
+    // flashes on the cuts
+    FX.flash(tl, $("f04-flashw"), CUTS[0], { peak: 0.8, d: 0.08 });
+    FX.flash(tl, $("f04-flashe"), CUTS[1], { peak: 0.55, d: 0.08 });
+    FX.flash(tl, $("f04-flashw"), CUTS[2], { peak: 0.9, d: 0.1 });
+    // light streaks crossing on the cuts
+    ft($("f04-streak1"), { x: 0, opacity: 0.9 }, { x: 2200, opacity: 0, duration: 0.16, ease: "power2.out" }, CUTS[0]);
+    ft($("f04-streak2"), { x: 2400, opacity: 0.8 }, { x: -400, opacity: 0, duration: 0.14, ease: "power2.out" }, CUTS[1]);
+    ft($("f04-streak3"), { x: 0, opacity: 0 }, { x: -1400, opacity: 0.9, duration: 0.2, ease: "power2.in" }, 2.80);
+    // 2.80 motion blur: the macro is yanked to the left, smeared
+    ft($("f04-m3cam"), { x: 0, skewX: 0 }, { x: -220, skewX: -7, duration: 0.2, ease: "power2.in" }, 2.80);
+    // the smear: per-element blur (every blurred object stays under 1800 px wide)
+    var smear = Array.prototype.slice.call(shots[2].querySelectorAll(".f04-mbox:not(.f04-far), .f04-mon, .f04-tick, .f04-mlab, .f04-mcur"));
+    ft(smear, { filter: "blur(0px)" }, { filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, 2.80);
+
+    /* ======================= caption: word by word, the key box opens at 2.00 ======================= */
+    Array.prototype.forEach.call($("f04-cap").querySelectorAll(".w"), function (w) {
+      var c = parseFloat(w.getAttribute("data-cue"));
+      FX.cue(tl, w, Math.max(0.001, c - F), { y: 26, d: 0.12 });
+    });
+    FX.key(tl, $("f04-key"), CUTS[0] - F);
+
+    /* ======================= grain lives (every 2 frames) ======================= */
+    for (var g = 0, gi = 0; g < DUR; g += 2 * F, gi++) {
+      tl.set($("f04-grain"), { x: Math.round((FX.rnd(gi + 300) - 0.5) * 60), y: Math.round((FX.rnd(gi + 700) - 0.5) * 60) }, g);
+    }
+
+    tl.set({}, {}, DUR);
+    window.__timelines = window.__timelines || {};
+    window.__timelines[FID] = tl;
+  })();
+  </script>
+  </div>
+</template>

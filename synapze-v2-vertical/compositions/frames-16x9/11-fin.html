@@ -1,0 +1,376 @@
+<template>
+  <style>
+/* ===================== FX : début du bloc CSS à copier ===================== */
+@font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
+@font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); }
+[data-composition-id="11-fin"] .fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+/* grounds: night (problem), ember (pivot light), paper (solution) */
+[data-composition-id="11-fin"] .fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+[data-composition-id="11-fin"] .fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+  radial-gradient(1000px 800px at 10% 95%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
+[data-composition-id="11-fin"] .fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+[data-composition-id="11-fin"] .fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
+[data-composition-id="11-fin"] .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 256px 256px; }
+[data-composition-id="11-fin"] .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+[data-composition-id="11-fin"] .fx-paper ~ .fx-vignette, [data-composition-id="11-fin"] .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+[data-composition-id="11-fin"] .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+[data-composition-id="11-fin"] .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+/* kinetic type */
+[data-composition-id="11-fin"] .fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+[data-composition-id="11-fin"] .fx-k.ink { color: #0c0c0f; }
+[data-composition-id="11-fin"] .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+[data-composition-id="11-fin"] .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+[data-composition-id="11-fin"] .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-composition-id="11-fin"] .fx-w { display: inline-block; will-change: transform, filter, opacity; }
+/* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
+[data-composition-id="11-fin"] .fx-chroma { position: relative; display: inline-block; }
+[data-composition-id="11-fin"] .fx-chroma > .r, [data-composition-id="11-fin"] .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+[data-composition-id="11-fin"] .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+[data-composition-id="11-fin"] .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+/* caption (the voice, readable without sound): bottom center, band y 890-980 */
+[data-composition-id="11-fin"] .fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+[data-composition-id="11-fin"] .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+[data-composition-id="11-fin"] .fx-cap .w { display: inline-block; opacity: 0; }
+[data-composition-id="11-fin"] .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+[data-composition-id="11-fin"] .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+/* surfaces */
+[data-composition-id="11-fin"] .fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
+[data-composition-id="11-fin"] .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
+[data-composition-id="11-fin"] .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+[data-composition-id="11-fin"] .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+[data-composition-id="11-fin"] .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+[data-composition-id="11-fin"] .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+/* ===================== FX : fin du bloc CSS à copier ===================== */
+
+    #root, [data-composition-id="11-fin"] { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+    /* outside the iris: black (end of the film) */
+    #f11-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #000; }
+    #f11-iris { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+    /* handoff_in ground: flat night #050507; the warm night gradient comes up over it */
+    #f11-base { position: absolute; inset: 0; background: #050507; }
+    [data-composition-id="11-fin"] .f11-full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #f11-cam, #f11-punch, #f11-shake { transform-origin: 960px 540px; }
+
+    /* elements born after t = 0 */
+    #f11-night, #f11-glow, #f11-glow2, [data-composition-id="11-fin"] .f11-ember, [data-composition-id="11-fin"] .f11-ch, #f11-dr, #f11-streak, [data-composition-id="11-fin"] .f11-w, #f11-btnw, #f11-bglow,
+    #f11-burst, [data-composition-id="11-fin"] .f11-uc, #f11-cur, [data-composition-id="11-fin"] .f11-rip, [data-composition-id="11-fin"] .f11-bar { opacity: 0; }
+    [data-composition-id="11-fin"] .fx-chroma > .r, [data-composition-id="11-fin"] .fx-chroma > .b { opacity: 0; }
+
+    /* ember particles drifting (parallax, behind everything) */
+    [data-composition-id="11-fin"] .f11-ember { position: absolute; border-radius: 50%; background: #ffb08a; box-shadow: 0 0 10px 2px rgba(242,78,30,.55); }
+
+    /* logo « • Synapze • » (Scene 1 layout; the group then rises to the top) */
+    #f11-logo { transform-origin: 960px 447px; }
+    #f11-mask { position: absolute; left: 0; top: 300px; width: 1920px; height: 238px; overflow: hidden; }
+    #f11-word { position: absolute; left: 0; right: 0; top: 53px; text-align: center; white-space: nowrap;
+      font: 800 160px/160px "Geist", sans-serif; letter-spacing: -0.045em; color: #f6f1ea; }
+    [data-composition-id="11-fin"] .f11-ch { display: inline-block; }
+    [data-composition-id="11-fin"] .f11-dot { position: absolute; width: 28px; height: 28px; border-radius: 50%; background: #f24e1e;
+      box-shadow: 0 0 18px rgba(242,78,30,.55); }
+    #f11-dl { left: 766px; top: 526px; box-shadow: none; }   /* t = 0: the point at the left end of the stroke (780, 540) */
+    #f11-dr { left: 1316px; top: 433px; }  /* the right dot (1330, 447) */
+    #f11-line { position: absolute; left: 780px; top: 538px; width: 360px; height: 4px; border-radius: 4px; background: #f24e1e; }
+    #f11-streak { left: 0; top: 446px; width: 520px; height: 3px; box-shadow: 0 0 16px rgba(255,176,138,.9); }
+
+    /* the promise */
+    #f11-prom { transform-origin: 960px 500px; }
+    [data-composition-id="11-fin"] .f11-line { position: absolute; left: 0; right: 0; text-align: center; white-space: nowrap;
+      font: 800 110px/130px "Geist", sans-serif; letter-spacing: -0.045em; color: #f6f1ea; }
+    #f11-l1 { top: 375px; }
+    #f11-l2 { top: 515px; }
+    [data-composition-id="11-fin"] .f11-w { display: inline-block; will-change: transform, filter, opacity; }
+    [data-composition-id="11-fin"] .f11-hot { font: italic 400 128px/130px "Instrument Serif", serif; letter-spacing: -0.02em; padding: 0 .07em; margin: 0 -.07em;
+      background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; background-position: 100% 0%;
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* the call to action */
+    #f11-bglow { position: absolute; left: 560px; top: 470px; width: 800px; height: 340px; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(242,78,30,.55), rgba(242,78,30,.16) 55%, rgba(242,78,30,0)); }
+    #f11-burst { position: absolute; left: 660px; top: 540px; width: 600px; height: 200px; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255,150,100,.9), rgba(184,39,10,.45) 55%, rgba(184,39,10,0)); }
+    #f11-btnw { position: absolute; left: 0; right: 0; top: 594px; text-align: center; }
+    [data-composition-id="11-fin"] #f11-btn { position: relative; overflow: hidden; font: 600 40px/1 "Geist", sans-serif; letter-spacing: -0.01em; padding: 26px 56px; gap: 0;
+      box-shadow: 0 0 0 1px rgba(255,190,160,.35) inset, 0 18px 50px rgba(242,78,30,.45), 0 0 90px rgba(242,78,30,.35); }
+    #f11-sheen { position: absolute; left: -200px; top: -20px; width: 140px; height: 140px; pointer-events: none;
+      background: linear-gradient(105deg, rgba(255,255,255,0) 20%, rgba(255,255,255,.45) 50%, rgba(255,255,255,0) 80%); }
+    #f11-url { position: absolute; left: 0; right: 0; top: 722px; text-align: center; font: 500 26px/1 "Geist Mono", monospace;
+      letter-spacing: .14em; color: #9a948c; white-space: nowrap; }
+    [data-composition-id="11-fin"] .f11-uc { display: inline-block; }
+    [data-composition-id="11-fin"] .f11-rip { position: absolute; left: 900px; top: 580px; width: 120px; height: 120px; border-radius: 50%; box-sizing: border-box; border: 2px solid #ff6a2b; }
+    #f11-wave { position: absolute; left: 723px; top: 787px; width: 474px; height: 56px; }
+    [data-composition-id="11-fin"] .f11-bar { position: absolute; top: 0; width: 4px; height: 56px; border-radius: 3px; background: #f24e1e; box-shadow: 0 0 8px rgba(242,78,30,.5); }
+    #f11-cur { position: absolute; left: 960px; top: 640px; width: 40px; height: 56px; transform-origin: 0 0; z-index: 70;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
+  </style>
+
+  <div id="root" data-composition-id="11-fin" data-width="1920" data-height="1080" data-duration="7.35">
+    <div id="f11-bg" class="clip" data-start="0" data-duration="7.35" data-track-index="0"></div>
+    <div id="f11-iris">
+      <div class="fx-stage" id="f11-stage">
+        <div id="f11-base"></div>
+        <div class="fx-night" id="f11-night"></div>
+        <div class="fx-glow" id="f11-glow" style="left:960px;top:447px"></div>
+        <div class="fx-glow" id="f11-glow2" style="left:1500px;top:180px"></div>
+        <div class="f11-full" id="f11-embers"></div>
+
+        <div class="f11-full" id="f11-cam"><div class="f11-full" id="f11-punch"><div class="f11-full" id="f11-shake">
+
+          <!-- the logo « • Synapze • » -->
+          <div class="f11-full" id="f11-logo">
+            <div class="fx-streak" id="f11-streak"></div>
+            <div id="f11-mask"><div id="f11-word"><span class="f11-ch">S</span><span class="f11-ch">y</span><span class="f11-ch">n</span><span class="f11-ch">a</span><span class="f11-ch">p</span><span class="f11-ch">z</span><span class="f11-ch">e</span></div></div>
+            <div id="f11-line"></div>
+            <div class="f11-dot" id="f11-dl"></div>
+            <div class="f11-dot" id="f11-dr"></div>
+          </div>
+
+          <!-- the promise -->
+          <div class="f11-full" id="f11-prom">
+            <div class="f11-line" id="f11-l1"><span class="f11-w" data-cue="0.92">Le</span> <span class="f11-w" data-cue="1.03">courtier</span> <span class="f11-w" id="f11-parle" data-cue="1.47"><span class="fx-chroma" id="f11-parle-c">parle.</span></span></div>
+            <div class="f11-line" id="f11-l2"><span class="f11-w" data-cue="2.00">L’IA</span> <span class="f11-w" data-cue="2.21">fait</span> <span class="f11-w" data-cue="2.42">tout</span> <span class="f11-w f11-hot" id="f11-le" data-cue="2.64">le</span> <span class="f11-w f11-hot" id="f11-reste" data-cue="2.74">reste.</span></div>
+          </div>
+
+          <!-- the button, the URL, the wave -->
+          <div class="f11-full" id="f11-cta">
+            <div id="f11-bglow"></div>
+            <div id="f11-burst"></div>
+            <div class="f11-rip" id="f11-rip1"></div>
+            <div class="f11-rip" id="f11-rip2" style="border-color:#ffd2bd"></div>
+            <div class="f11-rip" id="f11-rip3"></div>
+            <div id="f11-btnw"><div class="fx-pill" id="f11-btn"><div id="f11-sheen"></div>Demander une démo</div></div>
+            <div id="f11-url"><span class="f11-uc">s</span><span class="f11-uc">y</span><span class="f11-uc">n</span><span class="f11-uc">a</span><span class="f11-uc">p</span><span class="f11-uc">z</span><span class="f11-uc">e</span><span class="f11-uc">.</span><span class="f11-uc">e</span><span class="f11-uc">u</span></div>
+            <div id="f11-wave"></div>
+          </div>
+
+          <!-- the cursor (tip at its top-left corner) -->
+          <svg id="f11-cur" viewBox="0 0 40 56" xmlns="http://www.w3.org/2000/svg"><path d="M2 2 L2 42 L11.5 33 L18 48.5 L25 45.5 L18.5 30.5 L31 30.5 Z" fill="#fff" stroke="#0c0c0f" stroke-width="2.6" stroke-linejoin="round"/></svg>
+        </div></div></div>
+
+        <div class="fx-flash ember" id="f11-flash"></div>
+        <div class="fx-vignette"></div>
+        <div class="fx-grain" id="f11-grain"></div>
+      </div>
+    </div>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "11-fin";
+        var DUR = 7.35;
+        var root = document.querySelector('[data-composition-id="' + FID + '"]');
+        var $ = function (id) { return root.querySelector("#" + id); };
+        var $$ = function (sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); };
+
+/* ===================== FX : début du kit JS à copier ===================== */
+/* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
+const FX = {
+  /* deterministic pseudo-random from an index (no random) */
+  rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
+  /* split text of el into .fx-w spans per word (call once at build) */
+  words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
+    return t.map((w, i) => { const s = document.createElement("span"); s.className = "fx-w"; s.textContent = w;
+      el.appendChild(s); if (i < t.length - 1) el.appendChild(document.createTextNode(" ")); return s; }); },
+  /* chromatic copies inside a .fx-chroma wrapper: returns {r, b} */
+  chroma(wrap) { const txt = wrap.textContent; const mk = (c) => { const s = document.createElement("span"); s.className = c; s.textContent = txt; s.setAttribute("aria-hidden", "true"); wrap.appendChild(s); return s; };
+    return { r: mk("r"), b: mk("b") }; },
+  /* SLAM: element arrives too big + blurred and lands hard (1-4 frames), chromatic split snaps back */
+  slam(tl, el, t, { from = 1.6, blur = 18, d = 0.12, chroma = null, rot = 0 } = {}) {
+    tl.fromTo(el, { scale: from, opacity: 0, filter: `blur(${blur}px)`, rotation: rot }, { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: d, ease: "expo.out", immediateRender: false }, t);
+    if (chroma) { tl.fromTo(chroma.r, { x: -14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t);
+                  tl.fromTo(chroma.b, { x: 14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t); }
+  },
+  /* RISE: words mask-up one by one (wrap each .fx-w parent with overflow hidden yourself if you want a hard mask) */
+  rise(tl, words, t, { stagger = 0.06, d = 0.32, y = 60 } = {}) {
+    words.forEach((w, i) => tl.fromTo(w, { y, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t + i * stagger)); },
+  /* cue a single word exactly on its voice time */
+  cue(tl, w, t, { y = 30, d = 0.14 } = {}) { tl.fromTo(w, { y, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* SHAKE: deterministic camera shake on an impact (finite keyframes) */
+  shake(tl, el, t, { amp = 14, d = 0.32, n = 7, seed = 1 } = {}) {
+    for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.to(el, { x: (FX.rnd(seed + i) - .5) * 2 * amp * k, y: (FX.rnd(seed + i + 50) - .5) * 2 * amp * k, duration: d / n, ease: "none" }, t + i * d / n); }
+    tl.to(el, { x: 0, y: 0, duration: d / n, ease: "power2.out" }, t + d); },
+  /* FLASH: 1-2 frame white (or ember) flash on a cut */
+  flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
+  /* WHIP: blur-pan out of a shot (exit) */
+  whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* PUNCH: fast zoom-in on a target (camera), then slow drift */
+  punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
+    tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
+    tl.to(cam, { scale: s * (1 + drift), duration: hold, ease: "none" }, t + d); },
+  /* KEY BOX: the orange box of a caption keyword opens left to right */
+  key(tl, el, t) { tl.fromTo(el, { "--k": 0 }, { "--k": 1, duration: .14, ease: "power3.out", immediateRender: false }, t); },
+  /* SHIMMER: gradient sweep through .fx-k.hot text */
+  shimmer(tl, el, t, { d = 1.2 } = {}) { tl.fromTo(el, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: d, ease: "power2.inOut", immediateRender: false }, t); },
+  /* ROLL: digits text sequence (discrete, seek-safe) e.g. ["19:00","20:12","21:30","22:47"] at times */
+  roll(tl, el, values, times) { values.forEach((v, i) => tl.set(el, { textContent: v }, times[i])); },
+};
+/* ===================== FX : fin du kit JS à copier ===================== */
+
+        var tl = gsap.timeline({ paused: true });
+        var EARLY = 1 / 30;  // word cues land 1 frame early
+        // fromTo helper: anything starting after 0 never renders before its time
+        function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
+        // finite alternating "breath" between two states, never past t1 (no repeat)
+        function breathe(el, a, b, t0, t1, per, ease) {
+          var t = t0, up = true;
+          while (t + per <= t1 + 1e-6) { ft(el, up ? Object.assign({}, a) : Object.assign({}, b), Object.assign(up ? Object.assign({}, b) : Object.assign({}, a), { duration: per, ease: ease || "sine.inOut" }), t); t += per; up = !up; }
+        }
+
+        /* ---------------- grounds, light, embers (the living layer under everything) ---------------- */
+        ft($("f11-night"), { opacity: 0 }, { opacity: 1, duration: 0.85, ease: "power2.out" }, 0.04);
+        ft($("f11-glow"), { opacity: 0, scale: 0.35 }, { opacity: 0.75, scale: 0.75, duration: 0.6, ease: "power3.out" }, 0.06);
+        // 0.50 the ember flares with the sparkle, then settles and drifts behind the promise, then the button
+        ft($("f11-glow"), { scale: 0.75 }, { scale: 0.95, duration: 0.25, ease: "expo.out" }, 0.50);
+        ft($("f11-glow"), { x: 0, y: 0, scale: 0.95 }, { x: -60, y: 70, scale: 1.05, duration: 2.4, ease: "sine.inOut" }, 0.75);
+        ft($("f11-glow"), { x: -60, y: 70, scale: 1.05 }, { x: 0, y: 190, scale: 0.85, duration: 0.5, ease: "power3.inOut" }, 3.15);
+        ft($("f11-glow"), { x: 0, y: 190 }, { x: 70, y: 175, duration: 3.7, ease: "none" }, 3.65);
+        ft($("f11-glow2"), { opacity: 0 }, { opacity: 0.35, duration: 1.4, ease: "power2.out" }, 0.3);
+        ft($("f11-glow2"), { x: 0, y: 0 }, { x: -160, y: 50, duration: DUR - 0.3, ease: "none" }, 0.3);
+
+        var emb = $("f11-embers");
+        for (var i = 0; i < 26; i++) {
+          var e = document.createElement("div"); e.className = "f11-ember";
+          var depth = FX.rnd(i + 11), sz = 2 + depth * 4;
+          e.style.width = e.style.height = sz.toFixed(1) + "px";
+          e.style.left = (80 + FX.rnd(i + 1) * 1760).toFixed(0) + "px";
+          e.style.top = (160 + FX.rnd(i + 31) * 760).toFixed(0) + "px";
+          if (depth > 0.75) e.style.filter = "blur(1.5px)";
+          emb.appendChild(e);
+          var t0 = 0.25 + FX.rnd(i + 71) * 0.9;
+          ft(e, { opacity: 0 }, { opacity: 0.25 + depth * 0.6, duration: 0.8, ease: "power1.out" }, t0);
+          ft(e, { x: 0, y: 0 }, { x: (FX.rnd(i + 91) - 0.5) * 120, y: -(50 + depth * 170), duration: DUR - 0.2, ease: "none" }, 0.2);
+        }
+
+        // grain lives: re-seeded 12 times a second (discrete, deterministic)
+        var grain = $("f11-grain");
+        for (var g = 0; g * (1 / 12) < DUR - 1e-6; g++) {
+          tl.set(grain, { x: Math.round((FX.rnd(g + 200) - 0.5) * 60), y: Math.round((FX.rnd(g + 400) - 0.5) * 60) }, g / 12);
+        }
+
+        // camera: a slow linear push that never stops (two speeds: gestures + drift)
+        ft($("f11-cam"), { scale: 1 }, { scale: 1.035, duration: DUR, ease: "none" }, 0);
+
+        /* ---------------- Scene 1 (0.00 – 0.90): the stroke becomes « • Synapze • » ---------------- */
+        var dl = $("f11-dl"), dr = $("f11-dr"), line = $("f11-line");
+        // 0.00 the point (18 px at the stroke's left end) springs up to become the left dot (590, 447), 28 px
+        ft(dl, { x: 0, scale: 18 / 28 }, { x: -190, scale: 1, duration: 0.24, ease: "power3.inOut" }, 0);
+        ft(dl, { boxShadow: "0 0 0px rgba(242,78,30,0)" }, { boxShadow: "0 0 18px rgba(242,78,30,0.55)", duration: 0.24, ease: "power2.out" }, 0);
+        ft(dl, { y: 0 }, { y: -93, duration: 0.24, ease: "back.out(1.6)" }, 0);
+        // 0.05 – 0.40 the letters rise out of the stroke (hard mask on the line), 0.035 s apart
+        $$(".f11-ch").forEach(function (c, i) {
+          ft(c, { y: 180, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.26, ease: "expo.out" }, 0.05 + i * 0.035);
+        });
+        // 0.42 the right dot flicks off the stroke's right end and lands (1330, 447)
+        ft(dr, { x: -190, y: 93, scale: 0.6, opacity: 0 }, { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.16, ease: "back.out(2.2)" }, 0.42);
+        // 0.50 the stroke becomes a fine underline under the word (620 x 2 px), with a light streak (sparkle)
+        ft(line, { scaleX: 1, scaleY: 1 }, { scaleX: 620 / 360, scaleY: 0.5, duration: 0.16, ease: "expo.out" }, 0.50);
+        ft($("f11-streak"), { x: 380, opacity: 0 }, { x: 1080, opacity: 1, duration: 0.18, ease: "power2.in" }, 0.50);
+        ft($("f11-streak"), { opacity: 1 }, { opacity: 0, duration: 0.14, ease: "power2.out" }, 0.68);
+        ft([dl, dr], { boxShadow: "0 0 18px rgba(242,78,30,0.55)" }, { boxShadow: "0 0 36px rgba(255,106,43,0.95)", duration: 0.12, ease: "expo.out" }, 0.50);
+        ft([dl, dr], { boxShadow: "0 0 36px rgba(255,106,43,0.95)" }, { boxShadow: "0 0 18px rgba(242,78,30,0.55)", duration: 0.5, ease: "power2.out" }, 0.62);
+        // 0.64 -> 0.90 the logo climbs to the top (scale 0.55, centre y 165), a 3D tilt settles on the way
+        ft($("f11-logo"), { y: 0, scale: 1, rotationX: 0, transformPerspective: 1400 },
+          { y: -282, scale: 0.55, rotationX: 0, duration: 0.26, ease: "power3.inOut" }, 0.64);
+
+        /* ---------------- Scene 2 (0.90 – 3.30): the promise, word on cue ---------------- */
+        function wordIn(w, t) {
+          ft(w, { opacity: 0, y: 46, rotationX: -80, transformPerspective: 900, filter: "blur(10px)" },
+            { opacity: 1, y: 0, rotationX: 0, filter: "blur(0px)", duration: 0.26, ease: "expo.out" }, t);
+        }
+        var parle = $("f11-parle"), le = $("f11-le"), reste = $("f11-reste");
+        $$(".f11-w").forEach(function (w) {
+          var cue = parseFloat(w.getAttribute("data-cue"));
+          if (w === parle || w === reste) return;
+          wordIn(w, cue - EARLY);
+        });
+        // 1.47 « parle. » slams with a chromatic split, a short shake and a camera punch
+        var ch = FX.chroma($("f11-parle-c"));
+        FX.slam(tl, parle, 1.47 - EARLY, { from: 1.55, blur: 16, d: 0.12, chroma: ch });
+        FX.shake(tl, $("f11-shake"), 1.47, { amp: 9, d: 0.26, n: 6, seed: 3 });
+        ft($("f11-punch"), { scale: 1 }, { scale: 1.04, duration: 0.14, ease: "expo.out" }, 1.47);
+        ft($("f11-punch"), { scale: 1.04 }, { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1.65);
+        // 2.74 « reste. » (serif, warm orange) slams softly, a warm ember flash, the line breathes
+        FX.slam(tl, reste, 2.74 - EARLY, { from: 1.45, blur: 14, d: 0.14 });
+        FX.flash(tl, $("f11-flash"), 2.74, { peak: 0.12, d: 0.16 });
+        ft($("f11-punch"), { scale: 1 }, { scale: 1.03, duration: 0.14, ease: "expo.out" }, 2.74);
+        ft($("f11-punch"), { scale: 1.03 }, { scale: 1, duration: 0.45, ease: "power2.inOut" }, 2.92);
+        // 3.00 a shimmer runs through « le reste. »
+        FX.shimmer(tl, le, 3.00, { d: 0.9 });
+        FX.shimmer(tl, reste, 3.00, { d: 0.9 });
+        // 3.04 -> 3.30 the promise steps up and down in scale to make room for the button
+        ft($("f11-prom"), { y: 0, scale: 1 }, { y: -117, scale: 0.8, duration: 0.28, ease: "power3.inOut" }, 3.04);
+        ft($("f11-logo"), { y: -282 }, { y: -300, duration: 0.28, ease: "power3.inOut" }, 3.04);
+
+        /* ---------------- Scene 3 (3.30 – 7.35): the button, the click, the living hold ---------------- */
+        var btnw = $("f11-btnw"), btn = $("f11-btn");
+        // 3.35 the button slams in softly with its glow
+        FX.slam(tl, btnw, 3.35, { from: 1.25, blur: 12, d: 0.18 });
+        ft($("f11-bglow"), { opacity: 0, scale: 0.6 }, { opacity: 0.85, scale: 1, duration: 0.35, ease: "expo.out" }, 3.35);
+        FX.flash(tl, $("f11-flash"), 3.35, { peak: 0.07, d: 0.14 });
+        // 3.60 « synapze.eu » types in
+        $$(".f11-uc").forEach(function (c, i) {
+          ft(c, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.08, ease: "power3.out" }, 3.60 + i * 0.022);
+        });
+        // 3.70 -> 4.15 the cursor arrives in one curve (x and y on different eases) and lands on the button centre
+        var cur = $("f11-cur");
+        ft(cur, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 3.70);
+        ft(cur, { x: 560 }, { x: 0, duration: 0.45, ease: "power3.out" }, 3.70);
+        ft(cur, { y: 360 }, { y: 0, duration: 0.45, ease: "power2.inOut" }, 3.70);
+        gsap.set(cur, { x: 560, y: 360 });
+        // 4.15 direct click: cursor + button press together (linear press, spring release)
+        ft(cur, { scale: 1 }, { scale: 0.82, duration: 0.07, ease: "power2.in" }, 4.15);
+        ft(cur, { scale: 0.82 }, { scale: 1, duration: 0.12, ease: "power2.out" }, 4.22);
+        ft(btn, { scale: 1 }, { scale: 0.9, duration: 0.10, ease: "power1.in" }, 4.15);
+        ft(btn, { scale: 0.9 }, { scale: 1, duration: 0.6, ease: "back.out(2.2)" }, 4.25);
+        ft(btn, { backgroundColor: "#f24e1e" }, { backgroundColor: "#b8270a", duration: 0.10, ease: "power1.in" }, 4.15);
+        ft(btn, { backgroundColor: "#b8270a" }, { backgroundColor: "#ff6a2b", duration: 0.25, ease: "power2.out" }, 4.25);
+        ft(btn, { backgroundColor: "#ff6a2b" }, { backgroundColor: "#f24e1e", duration: 0.9, ease: "power2.inOut" }, 4.6);
+        // ripple rings from the click point, the burst behind the button, a soft orange flash, a small shake
+        ["f11-rip1", "f11-rip2", "f11-rip3"].forEach(function (id, i) {
+          ft($(id), { scale: 0.5, opacity: 0.95 }, { scale: 5, opacity: 0, duration: 0.8, ease: "power2.out" }, 4.15 + i * 0.08);
+        });
+        ft($("f11-burst"), { scale: 0.8, opacity: 0 }, { scale: 2.2, opacity: 0.8, duration: 0.3, ease: "power2.out" }, 4.25);
+        ft($("f11-burst"), { opacity: 0.8 }, { opacity: 0, duration: 0.6, ease: "power2.in" }, 4.55);
+        FX.flash(tl, $("f11-flash"), 4.15, { peak: 0.14, d: 0.2 });
+        FX.shake(tl, $("f11-shake"), 4.15, { amp: 6, d: 0.24, n: 6, seed: 9 });
+        // the cursor eases off the label after the click (the button reads clean in the hold)
+        ft(cur, { x: 0, y: 0 }, { x: 150, y: 70, duration: 1.6, ease: "power2.inOut" }, 4.5);
+        ft(cur, { x: 150, y: 70 }, { x: 175, y: 82, duration: 1.0, ease: "none" }, 6.1);
+        // 4.30 a fine orange wave is born under the button, from the centre outward, then breathes
+        var wave = $("f11-wave"), N = 48;
+        for (var b = 0; b < N; b++) {
+          var bar = document.createElement("div"); bar.className = "f11-bar"; bar.style.left = (b * 10) + "px";
+          wave.appendChild(bar);
+          var d = Math.abs(b - (N - 1) / 2) / ((N - 1) / 2);
+          var env = 0.25 + 0.75 * Math.pow(1 - d, 1.4);
+          var hgt = Math.max(0.1, env * (0.45 + 0.55 * FX.rnd(b + 500)));
+          ft(bar, { opacity: 0, scaleY: 0.04 }, { opacity: 1, scaleY: hgt, duration: 0.16, ease: "power3.out" }, 4.22 + d * 0.14);
+          var per = 0.36 + 0.07 * ((b * 7) % 5), lo = hgt * (0.35 + 0.1 * ((b * 3) % 4));
+          breathe(bar, { scaleY: hgt }, { scaleY: lo }, 4.22 + d * 0.14 + 0.16, 7.30, per);
+        }
+        // living hold: the button glow breathes, a sheen crosses the button twice
+        breathe($("f11-bglow"), { opacity: 0.85, scale: 1 }, { opacity: 0.55, scale: 0.92 }, 4.6, 7.3, 0.85);
+        ft($("f11-sheen"), { x: 0 }, { x: 760, duration: 0.7, ease: "power2.inOut" }, 5.25);
+        ft($("f11-sheen"), { x: 0 }, { x: 760, duration: 0.7, ease: "power2.inOut" }, 6.25);
+
+        // 6.90 -> 7.30 iris to black, closing on the button (its screen centre under the camera push)
+        var sAt = 1.035 * 7.1 / DUR + (1 - 7.1 / DUR);       // cam scale at ~7.1 s
+        var BY = 540 + sAt * (640 - 540), BX = 960;
+        ft($("f11-iris"), { clipPath: "circle(1250px at " + BX + "px " + BY.toFixed(1) + "px)" },
+          { clipPath: "circle(0px at " + BX + "px " + BY.toFixed(1) + "px)", duration: 0.40, ease: "power2.inOut" }, 6.90);
+
+        tl.set({}, {}, DUR);
+        window.__timelines = window.__timelines || {};
+        window.__timelines[FID] = tl;
+      })();
+    </script>
+  </div>
+</template>
