@@ -90,10 +90,40 @@
 
     /* ---------- scene 1 : one phone, tilted ---------- */
     [data-composition-id="09-whatsapp"] #f09-s1 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
-    [data-composition-id="09-whatsapp"] #f09-cam1 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
-    [data-composition-id="09-whatsapp"] #f09-ph1w { position: absolute; left: 750px; top: 18px; width: 420px; height: 861px; transform-origin: 50% 50%; }
-    [data-composition-id="09-whatsapp"] #f09-ph1w .f09-phone { transform: scale(1.05); box-shadow: 0 0 0 2px #2b303b inset, 0 0 0 1px rgba(255,255,255,.12) inset, -50px 60px 120px rgba(120,50,10,.28), -10px 16px 30px rgba(40,20,10,.18); }
+    [data-composition-id="09-whatsapp"] #f09-cam1 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 470px; }
+    [data-composition-id="09-whatsapp"] #f09-ph1w { position: absolute; left: 774px; top: 90px; width: 371px; height: 760px; transform-origin: 50% 50%; }
+    [data-composition-id="09-whatsapp"] #f09-ph1w .f09-phone { transform: scale(.927); box-shadow: 0 0 0 2px #2b303b inset, 0 0 0 1px rgba(255,255,255,.12) inset, -50px 60px 120px rgba(120,50,10,.28), -10px 16px 30px rgba(40,20,10,.18); }
     [data-composition-id="09-whatsapp"] #f09-glow1 { left: 960px; top: 470px; opacity: .7; }
+    /* scene-1 phone: chat content zoomed ×1.6 inside the screen so bubbles read ~23-26 px on screen */
+    #f09-ph1w .f09-wa.f09-big { width: 232.5px; height: 495px; transform: scale(1.6); transform-origin: 0 0; }
+    #f09-ph1w .f09-big .f09-st { height: 30px; font-size: 10px; padding: 0 20px 3px; }
+    #f09-ph1w .f09-big .f09-hd { padding: 4px 8px 6px; gap: 6px; }
+    #f09-ph1w .f09-big .f09-back { font-size: 20px; }
+    #f09-ph1w .f09-big .f09-av { width: 24px; height: 24px; font-size: 10px; }
+    #f09-ph1w .f09-big .f09-nm { font-size: 12px; } #f09-ph1w .f09-big .f09-nm small { font-size: 8.5px; }
+    #f09-ph1w .f09-big .f09-ic { gap: 10px; } #f09-ph1w .f09-big .f09-ic i { width: 14px; height: 11px; border-width: 1.5px; }
+    #f09-ph1w .f09-big .f09-body { padding: 4px 0; background-size: 22px 22px, 15px 15px; }
+    #f09-ph1w .f09-big .f09-pill { margin: 4px auto 5px; font-size: 9px; padding: 3px 8px; }
+    #f09-ph1w .f09-big .f09-b { max-width: 90%; margin: 3px 7px; padding: 5px 8px 15px; font-size: 15px; line-height: 1.28; }
+    #f09-ph1w .f09-big .f09-b.f09-out { margin-left: auto; }
+    #f09-ph1w .f09-big .f09-t { font-size: 9px; }
+    #f09-ph1w .f09-big .f09-typing { margin: 3px 7px; padding: 8px 11px; }
+    #f09-ph1w .f09-big .f09-inbar { padding: 5px 8px 12px; gap: 8px; font-size: 18px; }
+    #f09-ph1w .f09-big .f09-inbar .f09-f { height: 24px; }
+    #f09-ph1w .f09-big .f09-inbar .f09-m { width: 12px; height: 18px; border-width: 2px; }
+    #f09-chat { transform-origin: 60% 78%; }
+    #f09-slot { position: relative; }
+    #f09-a-ty { position: absolute; left: 0; top: 0; }
+    #f09-shadow { position: absolute; left: 700px; top: 812px; width: 520px; height: 64px; border-radius: 50%; filter: blur(16px);
+      background: radial-gradient(closest-side, rgba(90,40,15,.38), rgba(90,40,15,0)); }
+    .f09-ghost { position: absolute; opacity: 0; }
+    .f09-ghost .f09-b { margin: 0; max-width: none; }
+    #f09-gh1 { left: 150px; top: 190px; width: 470px; filter: blur(5px); }
+    #f09-gh2 { left: 1300px; top: 540px; width: 520px; filter: blur(9px); z-index: 30; }
+    #f09-gh3 { left: 1330px; top: 150px; width: 400px; filter: blur(3px); }
+    #f09-gh1 .f09-b, #f09-gh3 .f09-b { font-size: 26px; padding: 12px 16px 30px; width: auto; }
+    #f09-gh2 .f09-b { font-size: 30px; padding: 14px 18px 34px; width: auto; }
+    #f09-gh1 .f09-t, #f09-gh2 .f09-t, #f09-gh3 .f09-t { font-size: 16px; right: 14px; bottom: 7px; }
     [data-composition-id="09-whatsapp"] #f09-blob1 { position: absolute; left: 1280px; top: -120px; width: 900px; height: 700px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,176,138,.55), rgba(255,176,138,0)); }
     [data-composition-id="09-whatsapp"] #f09-blob2 { position: absolute; left: -260px; top: 560px; width: 1000px; height: 700px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,150,110,.40), rgba(255,150,110,0)); }
     [data-composition-id="09-whatsapp"] #f09-st1 { left: 1100px; top: 330px; width: 820px; }
@@ -117,16 +147,16 @@
     [data-composition-id="09-whatsapp"] #f09-night .f09-star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #dfe8ff; }
     [data-composition-id="09-whatsapp"] #f09-seam { position: absolute; left: 998px; top: 0; width: 4px; height: 1128px; background: #f24e1e; transform-origin: 50% 50%; transform: scaleY(0);
       box-shadow: 0 0 18px rgba(242,78,30,.9), 0 0 60px rgba(242,78,30,.5); z-index: 40; }
-    [data-composition-id="09-whatsapp"] #f09-fx #f09-jour, [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { position: absolute; top: 70px; width: 1000px; left: 0; right: auto; font-size: 200px; font-weight: 900; letter-spacing: -0.005em; opacity: 0; z-index: 10; }
+    [data-composition-id="09-whatsapp"] #f09-fx #f09-jour, [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { position: absolute; top: 96px; width: 1000px; left: 0; right: auto; font-size: 200px; font-weight: 900; letter-spacing: -0.005em; opacity: 0; z-index: 10; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-jour { left: 0; color: transparent; -webkit-text-stroke: 3px #0c0c0f; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { left: 1000px; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-jour .fx-chroma > .r, [data-composition-id="09-whatsapp"] #f09-fx #f09-jour .fx-chroma > .b { mix-blend-mode: multiply; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-jour .fx-chroma > .b { color: #2de1ff !important; }
     [data-composition-id="09-whatsapp"] #f09-s2 .fx-3d { width: 2000px; height: 1128px; perspective-origin: 50% 50%; z-index: 20; }
-    [data-composition-id="09-whatsapp"] .f09-pw { position: absolute; top: 250px; width: 320px; height: 656px; transform-origin: 50% 50%; }
-    [data-composition-id="09-whatsapp"] #f09-pwL { left: 360px; }
-    [data-composition-id="09-whatsapp"] #f09-pwR { left: 1320px; }
-    [data-composition-id="09-whatsapp"] .f09-pw .f09-phone { transform: scale(.8); }
+    [data-composition-id="09-whatsapp"] .f09-pw { position: absolute; top: 254px; width: 312px; height: 640px; transform-origin: 50% 50%; }
+    [data-composition-id="09-whatsapp"] #f09-pwL { left: 364px; }
+    [data-composition-id="09-whatsapp"] #f09-pwR { left: 1324px; }
+    [data-composition-id="09-whatsapp"] .f09-pw .f09-phone { transform: scale(.78); }
     [data-composition-id="09-whatsapp"] #f09-pwL .f09-phone { box-shadow: 0 0 0 2px #2b303b inset, 0 0 0 1px rgba(255,255,255,.12) inset, 40px 50px 100px rgba(120,50,10,.30), 8px 14px 26px rgba(40,20,10,.18); }
     [data-composition-id="09-whatsapp"] #f09-pwR .f09-phone { box-shadow: 0 0 0 2px #2b303b inset, 0 0 0 1px rgba(255,255,255,.14) inset, -40px 50px 110px rgba(0,0,0,.55), 0 0 90px rgba(90,130,255,.18); }
     [data-composition-id="09-whatsapp"] .f09-clk { position: absolute; top: 560px; font: 500 40px/48px "Geist Mono", monospace; font-variant-numeric: tabular-nums; letter-spacing: .02em; z-index: 30; }
@@ -149,23 +179,27 @@
         <div id="f09-blob1"></div><div id="f09-blob2"></div>
         <div id="f09-cam1">
           <div class="fx-glow" id="f09-glow1"></div>
+          <div class="f09-ghost" id="f09-gh1"><div class="f09-b f09-in">Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis&nbsp;?<span class="f09-t">21:14</span></div></div>
+          <div class="f09-ghost" id="f09-gh3"><div class="f09-b f09-out">Pour préparer votre devis&nbsp;: combien de personnes à couvrir&nbsp;?<span class="f09-t">21:14</span></div></div>
+          <div id="f09-shadow"></div>
           <div class="fx-streak" id="f09-st1"></div><div class="fx-streak" id="f09-st2"></div><div class="fx-streak" id="f09-st3"></div>
           <div class="fx-3d">
             <div id="f09-ph1w">
-              <div class="f09-phone"><div class="f09-scr"><div class="f09-island"></div><div class="f09-glare" id="f09-glare1"></div><div class="f09-wa">
+              <div class="f09-phone"><div class="f09-scr"><div class="f09-island"></div><div class="f09-glare" id="f09-glare1"></div><div class="f09-wa f09-big">
                 <div class="f09-st"><span>21:14</span><span>●●● ▮</span></div>
                 <div class="f09-hd"><span class="f09-back">‹</span><div class="f09-av">CR</div><div class="f09-nm">Camille R.<small>en ligne</small></div>
                   <div class="f09-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
-                <div class="f09-body">
+                <div class="f09-body"><div id="f09-chat">
                   <div class="f09-pill f09-rv" id="f09-a-p1">Samedi</div>
                   <div class="f09-b f09-in f09-rv" id="f09-a-b1">Bonjour, je cherche une mutuelle pour ma famille. Vous pouvez me faire un devis&nbsp;?<span class="f09-t">21:14</span></div>
-                  <div class="f09-b f09-out f09-rv" id="f09-a-b2"><i class="f09-ring" id="f09-a-ring"></i>Bonjour Camille, je suis l’assistant IA du cabinet. Pour préparer votre devis&nbsp;: combien de personnes à couvrir&nbsp;?<span class="f09-t">21:14<span class="f09-k">✓✓<span class="f09-kg" id="f09-a-kg">✓✓</span></span></span></div>
-                  <div class="f09-typing f09-rv" id="f09-a-ty" style="position:absolute;left:0;top:150px"><i></i><i></i><i></i></div>
-                </div>
+                  <div id="f09-slot"><div class="f09-typing f09-rv" id="f09-a-ty"><i></i><i></i><i></i></div>
+                  <div class="f09-b f09-out f09-rv" id="f09-a-b2"><i class="f09-ring" id="f09-a-ring"></i>Bonjour Camille, je suis l’assistant IA du cabinet. Pour préparer votre devis&nbsp;: combien de personnes à couvrir&nbsp;?<span class="f09-t">21:14<span class="f09-k">✓✓<span class="f09-kg" id="f09-a-kg">✓✓</span></span></span></div></div>
+                </div></div>
                 <div class="f09-inbar">+<div class="f09-f"></div>◎<div class="f09-m"></div></div>
               </div></div></div>
             </div>
           </div>
+          <div class="f09-ghost" id="f09-gh2"><div class="f09-b f09-out">Bonjour Camille, je suis l’assistant IA du cabinet.<span class="f09-t">21:14<span class="f09-k">✓✓</span></span></div></div>
         </div>
         <div id="f09-scrim"></div>
       </div>
@@ -306,8 +340,16 @@ const FX = {
       ft($("f09-glow1"), { x: 120, y: 20, scale: 0.9 }, { x: -40, y: -20, scale: 1.0, duration: CUT, ease: "none" }, 0);
       ft($("f09-blob1"), { x: 0, y: 0 }, { x: -70, y: 30, duration: CUT, ease: "none" }, 0);
       ft($("f09-blob2"), { x: 0, y: 0 }, { x: 60, y: -20, duration: CUT, ease: "none" }, 0);
-      // slow camera push before the punch
-      ft(cam1, { scale: 1.0 }, { scale: 1.03, duration: 1.46, ease: "none" }, 0);
+      // slow camera push (phone stays inside y 40-860)
+      ft(cam1, { scale: 1.0 }, { scale: 1.015, duration: CUT, ease: "none" }, 0);
+      // blurred ghost copies of the real bubbles drift at 30 % (depth)
+      ft($("f09-gh1"), { opacity: 0, x: 60, y: 10 }, { opacity: 0.3, x: 20, y: 0, duration: 0.4, ease: "power2.out" }, 0.33);
+      ft($("f09-gh1"), { x: 20 }, { x: -30, duration: CUT - 0.73, ease: "none" }, 0.73);
+      ft($("f09-gh2"), { opacity: 0, x: 220, scale: 1.1 }, { opacity: 0.3, x: 60, scale: 1, duration: 0.35, ease: "expo.out" }, 1.42);
+      ft($("f09-gh2"), { x: 60 }, { x: -10, duration: CUT - 1.77, ease: "none" }, 1.77);
+      ft($("f09-gh3"), { opacity: 0, y: 30 }, { opacity: 0.22, y: 0, duration: 0.4, ease: "power2.out" }, 1.55);
+      ft($("f09-gh3"), { y: 0 }, { y: -18, duration: CUT - 1.95, ease: "none" }, 1.95);
+      ft($("f09-shadow"), { x: 900, opacity: 0.4 }, { x: 0, opacity: 1, duration: 0.24, ease: "expo.out" }, 0);
 
       // 0.25 WhatsApp: the Saturday pill and Camille's question
       ft($("f09-a-p1"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.18, ease: "back.out(2)" }, 0.25);
@@ -325,8 +367,10 @@ const FX = {
       tl.set(ty, { opacity: 0 }, 1.40);
       // 1.40 the answer bursts out (×1.15 → ×1)
       ft($("f09-a-b2"), { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2.2)" }, 1.40);
+      ft($("f09-a-b2"), { filter: "drop-shadow(0px 0px 2px rgba(242,78,30,0.9))" }, { filter: "drop-shadow(0px 0px 14px rgba(242,78,30,0.55))", duration: 0.5, ease: "power2.out", immediateRender: false }, 1.40);
       // 1.46 punch ×1.25 on the answer + notification ripple + glow pulse
-      FX.punch(tl, cam1, 1.46, { s: 1.25 * 1.03, x: 0, y: 70, d: 0.18, drift: 0.03, hold: CUT - 1.64 });
+      // punch ×1.15 on the chat content (inside the screen: the phone never leaves the frame)
+      FX.punch(tl, $("f09-chat"), 1.46, { s: 1.12, d: 0.18, drift: 0.025, hold: CUT - 1.64 });
       ft($("f09-a-ring"), { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.12, duration: 0.42, ease: "power2.out" }, 1.46);
       ft($("f09-glow1"), { opacity: 1 }, { opacity: 0.7, duration: 0.6, ease: "power2.out" }, 1.46);
       // 1.72 read receipts turn blue
