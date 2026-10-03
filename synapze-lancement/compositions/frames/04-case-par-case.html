@@ -248,8 +248,8 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 
       /* ---------------- camera: one source of truth, camAt(t) = [px, py, s] (frame 03 method) ---------------- */
       // handoff_in: cam(6300, 540, 0.9) at the end of frame 03's power3.in travelling: x speed +6950 px/s, scale speed -2/s.
-      // P08 (2.40): cam(6770, 358, 1.53), the form centered, the line at screen y 818. handoff_out: cam(7900, 540, 1), +6000 px/s.
-      var S1 = 1.53, PXK = 6770, PYK = 358, VX = 16;
+      // P08 (2.40): cam(6600, 358, 1.53), the form centered on its 22:30 thread, the line at screen y 818. handoff_out: cam(7900, 540, 1), +6000 px/s.
+      var S1 = 1.53, PXK = X2230, PYK = 358, VX = 16;
       var C0 = [6300, 540, 0.9];
       var C1 = [PXK + VX * (0.50 - 2.40), PYK, S1];
       var C2 = [PXK + VX * (2.70 - 2.40), PYK, S1];
@@ -318,15 +318,13 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(14px)", duration: 0.30, ease: "expo.in" }, 2.70);
 
       /* ---------------- the advice form finishes its fall and hangs at 22:30 ---------------- */
-      // landed: x1.3073 (1100 px on screen at s 1.53), shifted +170 world px so that 22:30 sits under its left third (P08)
-      var DOC_S = 1100 / (550 * S1), DOC_DX = 170 / DOC_S;
+      // landed: x1.3073 (1100 px on screen at s 1.53, P08), centered on its 22:30 thread (so it is off frame left at 3.00)
+      var DOC_S = 1100 / (550 * S1);
       gsap.set(adv.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" });
-      gsap.set($("f04-advs"), { x: 0 });
       // the fall keeps frame 03's speed (power2.in, ~7100 px/s): f(p) = 1.7 p - 0.7 p², then catches (expo.out)
       var fallE = function (p) { return 1.7 * p - 0.7 * p * p; };
       ft(adv.hang, { y: -260, scale: 1.15, filter: "blur(8px)" }, { y: -10, scale: DOC_S * 1.03, filter: "blur(3px)", duration: 0.06, ease: fallE }, 0);
       ft(adv.hang, { y: -10, scale: DOC_S * 1.03, filter: "blur(3px)" }, { y: 0, scale: DOC_S, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.06);
-      ft($("f04-advs"), { x: 0 }, { x: DOC_DX, duration: 0.18, ease: "power2.out" }, 0);
       ft(adv.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.06);
       // swings 2° once, then drifts (living hold), level again for the clicks
       ft(adv.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.18);
