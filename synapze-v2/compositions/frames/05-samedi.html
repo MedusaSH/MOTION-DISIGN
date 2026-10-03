@@ -73,7 +73,7 @@
     [data-composition-id="05-samedi"] .f05-tki { display: flex; flex-direction: column; }
     [data-composition-id="05-samedi"] .f05-it { height: 440px; display: flex; align-items: center; justify-content: center; white-space: nowrap;
       font: 900 420px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: transparent; -webkit-text-stroke: 3px rgba(246,241,234,.30); }
-    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 352px; }
+    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 336px; }
     [data-composition-id="05-samedi"] .f05-lit .f05-it { -webkit-text-stroke: 3px #ffd2bd; }
     [data-composition-id="05-samedi"] #f05-tklit { opacity: 0; filter: drop-shadow(0 0 22px rgba(242,78,30,.65)); }
 
@@ -107,7 +107,7 @@
       background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.07) 50%, rgba(255,255,255,0)); transform: rotate(18deg); }
 
     /* glass notification, lifted off the screen in Z */
-    [data-composition-id="05-samedi"] #f05-nw { position: absolute; left: 22px; top: 268px; width: 336px; height: 132px; transform-style: preserve-3d; opacity: 0; }
+    [data-composition-id="05-samedi"] #f05-nw { position: absolute; left: 22px; top: 268px; width: 336px; height: 149px; transform-style: preserve-3d; opacity: 0; }
     [data-composition-id="05-samedi"] #f05-nglow { position: absolute; left: -10px; top: -8px; right: -10px; bottom: -8px; border-radius: 30px; opacity: 0;
       box-shadow: 0 0 34px 6px rgba(242,78,30,.75), 0 0 90px 24px rgba(242,78,30,.35); }
     [data-composition-id="05-samedi"] .f05-n { position: absolute; left: 0; top: 0; width: 336px; box-sizing: border-box; padding: 14px 16px 15px; border-radius: 24px; text-align: left;
@@ -145,12 +145,12 @@
         <div id="f05-shake">
           <div id="f05-cam">
             <div id="f05-tkw">
-              <div class="f05-tk" id="f05-tkbase"><div class="f05-tki" id="f05-tki1">
+              <div class="f05-tk" id="f05-tkbase"><div id="f05-tka1"><div class="f05-tki" id="f05-tki1">
                 <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it">LUNDI</div>
-              </div></div>
-              <div class="f05-tk f05-lit" id="f05-tklit"><div class="f05-tki" id="f05-tki2">
+              </div></div></div>
+              <div class="f05-tk f05-lit" id="f05-tklit"><div id="f05-tka2"><div class="f05-tki" id="f05-tki2">
                 <div class="f05-it">SAMEDI</div><div class="f05-it f05-long">DIMANCHE</div><div class="f05-it">LUNDI</div>
-              </div></div>
+              </div></div></div>
             </div>
             <div class="fx-streak" id="f05-st1"></div>
             <div class="fx-streak" id="f05-st2"></div>
@@ -162,9 +162,9 @@
                     <div class="f05-wall"></div>
                     <div class="f05-island"></div>
                     <div class="f05-lockic"></div>
-                    <div class="f05-dwin"><div id="f05-dst">
+                    <div class="f05-dwin"><div id="f05-dsa"><div id="f05-dst">
                       <div class="f05-dit">samedi 16</div><div class="f05-dit">dimanche 17</div><div class="f05-dit">lundi 18</div>
-                    </div></div>
+                    </div></div></div>
                     <div class="f05-twin"><div id="f05-tst">
                       <div class="f05-tit">21:14</div><div class="f05-tit">08:30</div>
                     </div></div>
@@ -286,18 +286,13 @@ const FX = {
       // 1.36 SAMEDI lights up (on the word « samedi »)
       tl.fromTo($("f05-tklit"), { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "expo.out", immediateRender: false }, 1.36 - E);
       tl.fromTo($("f05-tklit"), { opacity: 1 }, { opacity: 0.7, duration: 0.6, ease: "sine.inOut", immediateRender: false }, 1.6);
-      var inners = [$("f05-tki1"), $("f05-tki2")];
+      // vertical spring ticker, seek-safe: each spring is its own nested layer, so the steps ADD (outer + inner translate)
       var ITEM = 440;
-      var springs = [{ p: 0 }, { p: 0 }];
-      function applyTk() {
-        var s = springs[0].p + springs[1].p;
-        inners[0].style.transform = "translateY(" + (-s * ITEM) + "px)";
-        inners[1].style.transform = "translateY(" + (-s * ITEM) + "px)";
-      }
-      applyTk();
-      // steps land on « dimanche » 2.44 and « lundi » 2.70 (start a touch early so the click reads on the cue)
-      tl.to(springs[0], { p: 1, duration: 0.34, ease: "back.out(1.8)", onUpdate: applyTk }, 2.38);
-      tl.to(springs[1], { p: 1, duration: 0.40, ease: "back.out(2.4)", onUpdate: applyTk }, 2.64);
+      [["f05-tka1", "f05-tki1"], ["f05-tka2", "f05-tki2"]].forEach(function (pr) {
+        // steps land on « dimanche » 2.44 and « lundi » 2.70 (start a touch early so the click reads on the cue)
+        tl.fromTo($(pr[0]), { y: 0 }, { y: -ITEM, duration: 0.34, ease: "back.out(1.8)", immediateRender: false }, 2.38);
+        tl.fromTo($(pr[1]), { y: 0 }, { y: -ITEM, duration: 0.40, ease: "back.out(2.4)", immediateRender: false }, 2.64);
+      });
       // motion blur on each click
       tl.fromTo(tkw, { filter: "blur(0px)" }, { filter: "blur(5px)", duration: 0.05, ease: "none", immediateRender: false }, 2.38);
       tl.to(tkw, { filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, 2.43);
@@ -323,13 +318,9 @@ const FX = {
       tl.fromTo(phst, { filter: "blur(0px)", opacity: 1 }, { filter: "blur(9px)", opacity: 0.8, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.82);
 
       // lock screen: date and time tick on the cues (vertical spring steps, same items moved)
-      var ds = [{ p: 0 }, { p: 0 }], ts = [{ p: 0 }];
-      function applyD() { $("f05-dst").style.transform = "translateY(" + (-(ds[0].p + ds[1].p) * 28) + "px)"; }
-      function applyT() { $("f05-tst").style.transform = "translateY(" + (-ts[0].p * 112) + "px)"; }
-      applyD(); applyT();
-      tl.to(ds[0], { p: 1, duration: 0.3, ease: "back.out(2)", onUpdate: applyD }, 2.40);
-      tl.to(ds[1], { p: 1, duration: 0.3, ease: "back.out(2)", onUpdate: applyD }, 2.66);
-      tl.to(ts[0], { p: 1, duration: 0.34, ease: "back.out(2)", onUpdate: applyT }, 2.65);
+      tl.fromTo($("f05-dsa"), { y: 0 }, { y: -28, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 2.40);
+      tl.fromTo($("f05-dst"), { y: 0 }, { y: -28, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 2.66);
+      tl.fromTo($("f05-tst"), { y: 0 }, { y: -112, duration: 0.34, ease: "back.out(2)", immediateRender: false }, 2.65);
 
       // 0.95 the glass notification drops from the top with an ember glow
       var nw = $("f05-nw");

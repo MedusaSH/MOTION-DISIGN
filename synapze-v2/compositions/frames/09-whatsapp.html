@@ -117,7 +117,7 @@
     [data-composition-id="09-whatsapp"] #f09-night .f09-star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #dfe8ff; }
     [data-composition-id="09-whatsapp"] #f09-seam { position: absolute; left: 998px; top: 0; width: 4px; height: 1128px; background: #f24e1e; transform-origin: 50% 50%; transform: scaleY(0);
       box-shadow: 0 0 18px rgba(242,78,30,.9), 0 0 60px rgba(242,78,30,.5); z-index: 40; }
-    [data-composition-id="09-whatsapp"] #f09-fx #f09-jour, [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { position: absolute; top: 70px; width: 1000px; left: 0; right: auto; font-size: 200px; font-weight: 900; opacity: 0; z-index: 10; }
+    [data-composition-id="09-whatsapp"] #f09-fx #f09-jour, [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { position: absolute; top: 70px; width: 1000px; left: 0; right: auto; font-size: 200px; font-weight: 900; letter-spacing: -0.005em; opacity: 0; z-index: 10; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-jour { left: 0; color: transparent; -webkit-text-stroke: 3px #0c0c0f; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-nuit { left: 1000px; }
     [data-composition-id="09-whatsapp"] #f09-fx #f09-jour .fx-chroma > .r, [data-composition-id="09-whatsapp"] #f09-fx #f09-jour .fx-chroma > .b { mix-blend-mode: multiply; }
@@ -296,7 +296,7 @@ const FX = {
       /* ======================= SCENE 1 (0.00 → 2.57) ======================= */
       var ph = $("f09-ph1w"), cam1 = $("f09-cam1");
       // 0.00 whip-in from the right, rotateY -14 → -4 (camera track)
-      FX.whipIn(tl, ph, 0, { x: 900, d: 0.24 });
+      ft(ph, { x: 900, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.24, ease: "expo.out" }, 0);  // FX.whipIn, rendered at t=0 (handoff_in)
       ft(ph, { rotationY: -14, y: 10 }, { rotationY: -4, y: 0, duration: CUT, ease: "power2.out" }, 0);
       // light streaks dragged by the whip
       [["f09-st1", 0.00, -1500], ["f09-st2", 0.03, -1300], ["f09-st3", 0.05, -1100]].forEach(function (a) {
@@ -340,7 +340,7 @@ const FX = {
       tl.set($("f09-s2"), { opacity: 1 }, CUT);
       tl.set($("f09-capA"), { clipPath: "inset(0px 50% 0px 0px)" }, CUT);
       tl.set($("f09-capB"), { opacity: 1 }, CUT);
-      FX.flash(tl, $("f09-flash"), CUT, { peak: 0.7, d: 0.1 });
+      FX.flash(tl, $("f09-flash"), CUT, { peak: 0.5, d: 0.08 });
       // the orange seam opens from the center
       ft($("f09-seam"), { scaleY: 0 }, { scaleY: 1, duration: 0.18, ease: "expo.out" }, CUT);
       // camera pull -2 %/s

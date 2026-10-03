@@ -60,7 +60,7 @@
   /* Scene 1: MARDI */
   #f01-mardi { top: 300px; font-size: 320px; font-weight: 900; }
   #f01-mardi-in { transform-origin: 50% 50%; }
-  #f01-echo { top: 262px; font-size: 400px; font-weight: 900; opacity: .09; -webkit-text-stroke: 2px #f6f1ea; }
+  #f01-echo { top: 262px; font-size: 400px; font-weight: 900; opacity: 0; -webkit-text-stroke: 2px #f6f1ea; }
   #f01-lab1 { position: absolute; left: 0; right: 0; top: 640px; text-align: center; font-size: 22px; color: #b7afa5; opacity: 0; }
   #f01-lab1 span { display: inline-block; clip-path: inset(0 100% 0 0); }
   [data-composition-id="01-mardi"] .f01-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #f24e1e; margin-right: 16px; vertical-align: 2px; box-shadow: 0 0 14px rgba(242,78,30,.9); }
@@ -72,10 +72,10 @@
   [data-composition-id="01-mardi"] .f01-layer.r, [data-composition-id="01-mardi"] .f01-layer.b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; opacity: 0; }
   [data-composition-id="01-mardi"] .f01-layer.r { color: #ff2d55; }
   [data-composition-id="01-mardi"] .f01-layer.b { color: #2de1ff; }
-  [data-composition-id="01-mardi"] .f01-col { display: inline-block; height: 500px; overflow: hidden; vertical-align: top; }
+  [data-composition-id="01-mardi"] .f01-col { display: inline-block; height: 500px; overflow: hidden; vertical-align: top; letter-spacing: 0; padding: 0 12px; margin: 0 -32px 0 -12px; }
   [data-composition-id="01-mardi"] .f01-step { display: block; }
   [data-composition-id="01-mardi"] .f01-dg { display: block; height: 500px; }
-  [data-composition-id="01-mardi"] .f01-colon { display: inline-block; height: 500px; vertical-align: top; transform: translateY(-18px); }
+  [data-composition-id="01-mardi"] .f01-colon { display: inline-block; height: 500px; vertical-align: top; letter-spacing: 0; margin-right: -20px; transform: translateY(-18px); }
   #f01-uline { position: absolute; left: 560px; top: 652px; width: 800px; height: 6px; border-radius: 6px; background: #f24e1e;
     box-shadow: 0 0 24px rgba(242,78,30,.85), 0 0 60px rgba(242,78,30,.45); transform-origin: 0 50%; opacity: 0; }
 
@@ -86,18 +86,18 @@
   [data-composition-id="01-mardi"] .f01-ldots { display: flex; gap: 8px; }
   [data-composition-id="01-mardi"] .f01-ldots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.14); }
   [data-composition-id="01-mardi"] .f01-rule { height: 1px; background: rgba(255,255,255,.09); margin: 22px 0 0; }
-  [data-composition-id="01-mardi"] .f01-row { position: relative; height: 118px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  [data-composition-id="01-mardi"] .f01-row { position: relative; height: 136px; border-bottom: 1px solid rgba(255,255,255,.07); }
   [data-composition-id="01-mardi"] .f01-row:last-child { border-bottom: 0; }
-  [data-composition-id="01-mardi"] .f01-h { position: absolute; left: 0; top: 0; height: 118px; line-height: 118px; font: 500 24px/118px "Geist Mono", monospace; letter-spacing: .08em; color: #9a948c; }
-  [data-composition-id="01-mardi"] .f01-t { position: absolute; left: 150px; top: 0; height: 118px; line-height: 118px; font: 500 36px/118px "Geist", sans-serif; letter-spacing: -0.02em; color: #e9e3da; white-space: nowrap; }
+  [data-composition-id="01-mardi"] .f01-h { position: absolute; left: 0; top: 0; height: 136px; font: 500 24px/136px "Geist Mono", monospace; letter-spacing: .08em; color: #9a948c; }
+  [data-composition-id="01-mardi"] .f01-t { position: absolute; left: 150px; top: 0; height: 136px; font: 500 36px/136px "Geist", sans-serif; letter-spacing: -0.02em; color: #e9e3da; white-space: nowrap; }
   [data-composition-id="01-mardi"] .f01-typed { clip-path: inset(0 100% 0 0); }
-  [data-composition-id="01-mardi"] .f01-past { position: absolute; left: 116px; top: 52px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); box-sizing: border-box; }
+  [data-composition-id="01-mardi"] .f01-past { position: absolute; left: 116px; top: 61px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); box-sizing: border-box; }
   /* the 18:00 event chip and its empty slot */
-  #f01-slot { position: absolute; left: 132px; top: 14px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
+  #f01-slot { position: absolute; left: 132px; top: 23px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
     border: 2px dashed rgba(246,241,234,.16); opacity: 0; }
   #f01-check { position: absolute; left: 22px; top: 21px; width: 48px; height: 48px; opacity: 0; }
   #f01-check path { stroke-dasharray: 40; stroke-dashoffset: var(--f01-d, 40); }
-  [data-composition-id="01-mardi"] .f01-chip { position: absolute; left: 132px; top: 14px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
+  [data-composition-id="01-mardi"] .f01-chip { position: absolute; left: 132px; top: 23px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
     background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); overflow: hidden; }
   [data-composition-id="01-mardi"] .f01-chip .f01-hot { position: absolute; inset: 0; background: linear-gradient(100deg, #ff6a2b 0%, #f24e1e 55%, #d63a12 100%); opacity: 0; }
   [data-composition-id="01-mardi"] .f01-chip .f01-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #f24e1e; }
@@ -298,10 +298,10 @@ const FX = {
       ft(layers.b, { x: 16, opacity: 0.9 }, { x: 0, opacity: 0, duration: 0.28, ease: "power3.out" }, 0.67);
       FX.shake(tl, shake, 0.67, { amp: 7, d: 0.2, n: 5, seed: 11 });
       // the digits roll: 18:57 → 18:59 → 19:00 (additive spring steps, back.out click)
-      ft(stepEls["4-0"], { y: 0 }, { y: -IH, duration: 0.3, ease: "back.out(1.8)" }, 0.70);
-      ft(stepEls["4-1"], { y: 0 }, { y: -IH, duration: 0.32, ease: "back.out(2.4)" }, 0.76);
-      ft(stepEls["3-0"], { y: 0 }, { y: -IH, duration: 0.32, ease: "back.out(2.4)" }, 0.765);
-      ft(stepEls["1-0"], { y: 0 }, { y: -IH, duration: 0.32, ease: "back.out(2.4)" }, 0.77);
+      ft(stepEls["4-0"], { y: 0 }, { y: -IH, duration: 0.22, ease: "back.out(1.8)" }, 0.69);
+      ft(stepEls["4-1"], { y: 0 }, { y: -IH, duration: 0.24, ease: "back.out(2.4)" }, 0.74);
+      ft(stepEls["3-0"], { y: 0 }, { y: -IH, duration: 0.24, ease: "back.out(2.4)" }, 0.745);
+      ft(stepEls["1-0"], { y: 0 }, { y: -IH, duration: 0.24, ease: "back.out(2.4)" }, 0.75);
       // the clock keeps creeping forward
       ft(clk, { y: 0 }, { y: -8, duration: 0.6, ease: "none" }, 0.9);
       // 0.99: an orange 6 px line traces under the clock on « heures »
@@ -313,9 +313,9 @@ const FX = {
       // caption « Mardi, [dix-neuf heures.] » (Mardi, already there; the box opens with dix-neuf, grows with heures)
       tl.set($("f01-w1"), { opacity: 1 }, 0.62);
       FX.cue(tl, $("f01-w2"), 0.65, { y: 18, d: 0.12 });
-      ft($("f01-k1"), { "--k": 0 }, { "--k": 0.56, duration: 0.12, ease: "power3.out" }, 0.65);
+      ft($("f01-k1"), { "--k": 0 }, { "--k": 0.6, duration: 0.12, ease: "power3.out" }, 0.65);
       FX.cue(tl, $("f01-w3"), 0.97, { y: 18, d: 0.12 });
-      ft($("f01-k1"), { "--k": 0.56 }, { "--k": 1, duration: 0.12, ease: "power3.out" }, 0.97);
+      ft($("f01-k1"), { "--k": 0.6 }, { "--k": 1, duration: 0.12, ease: "power3.out" }, 0.97);
 
       /* ================= Scene 3 (1.50 – 3.70) : the appointment leaves ================= */
       tl.set(s2, { opacity: 0 }, 1.50);
@@ -327,8 +327,8 @@ const FX = {
       tl.set(cam, { scale: 1, x: 0, y: 0 }, 1.50);
       ft(cam, { scale: 1 }, { scale: 1.02, duration: 0.69, ease: "none" }, 1.50);
       // ember behind the card, upper right
-      tl.set(glow, { x: -40, y: 80, scale: 1 }, 1.50);
-      ft(glow, { x: -40, y: 80 }, { x: -110, y: 70, duration: 1.9, ease: "none" }, 1.50);
+      tl.set(glow, { x: -60, y: 200, scale: 1.1 }, 1.50);
+      ft(glow, { x: -60, y: 200 }, { x: -110, y: 180, duration: 1.9, ease: "none" }, 1.50);
       // 1.52 the tilted glass card arrives (×1.15, blur) and lands in 0.2 s
       var card = $("f01-card");
       ft(card, { rotationY: -18, rotationX: 8, scale: 1.15, z: 0, opacity: 0, filter: "blur(16px)" },
@@ -353,12 +353,12 @@ const FX = {
       tl.set($("f01-slot"), { opacity: 1 }, 2.74);
       ft(chip, { y: -10, scale: 1.05 }, { y: -14, scale: 1.06, duration: 0.15, ease: "none" }, 2.90);
       // 3.05 it flies left out of frame (x -1400, rotation -12, blur 24) with 3 ghost copies at 30 %, 0.03 s apart
-      var FLY = { x: -1400, y: -40, rotation: -12, filter: "drop-shadow(0px 26px 30px rgba(0,0,0,0.55)) blur(24px)", duration: 0.24, ease: "power3.in" };
+      var FLY = { x: -1400, y: -40, rotation: -12, filter: "drop-shadow(0px 26px 30px rgba(0,0,0,0.55)) blur(24px)", duration: 0.24, ease: "power2.out" };
       ft(chip, { x: 0, y: -14, rotation: 0, scale: 1.06, filter: "drop-shadow(0px 26px 30px rgba(0,0,0,0.55)) blur(0px)" }, Object.assign({}, FLY), 3.05);
       ["f01-g1", "f01-g2", "f01-g3"].forEach(function (id, i) {
         var g = $(id), t0 = 3.05 + 0.03 * (i + 1);
         tl.set(g, { opacity: 0.3 }, t0);
-        ft(g, { x: 0, y: -14, rotation: 0, scale: 1.06, filter: "blur(6px)" }, { x: -1400, y: -40, rotation: -12, filter: "blur(24px)", duration: 0.24, ease: "power3.in" }, t0);
+        ft(g, { x: 0, y: -14, rotation: 0, scale: 1.06, filter: "blur(6px)" }, { x: -1400, y: -40, rotation: -12, filter: "blur(24px)", duration: 0.24, ease: "power2.out" }, t0);
       });
       ft($("f01-st5"), { x: 0, opacity: 0.9, scaleX: 0.5 }, { x: -1500, opacity: 0, scaleX: 1.3, duration: 0.24, ease: "power3.in" }, 3.06);
       FX.shake(tl, shake, 3.10, { amp: 6, d: 0.18, n: 5, seed: 23 });
@@ -372,9 +372,9 @@ const FX = {
       });
       FX.key(tl, $("f01-k2"), 3.08);
       // 3.40 whip-out of the whole scene to the left (handoff_out: the card leaves blurred, 28 px; caption out)
-      ft(whip, { x: 0 }, { x: -1150, duration: 0.30, ease: "power3.in" }, 3.40);
+      ft(whip, { x: 0 }, { x: -820, duration: 0.30, ease: "power3.in" }, 3.40);
       ft(card, { filter: "blur(0px)" }, { filter: "blur(28px)", duration: 0.30, ease: "power2.in" }, 3.40);
-      ft(glow, { x: -110 }, { x: -820, duration: 0.30, ease: "power3.in" }, 3.40);
+      ft(glow, { x: -110 }, { x: -1050, duration: 0.30, ease: "power3.in" }, 3.40);
       ft($("f01-cap2in"), { x: 0, opacity: 1, filter: "blur(0px)" }, { x: -160, opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, 3.42);
 
       tl.set({}, {}, DUR);
