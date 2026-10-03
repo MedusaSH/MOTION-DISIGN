@@ -287,11 +287,11 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
             ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
           }
         }
-        // Scene 1: end of the whip. x keeps the handoff's +5200 px/s at 0.00 and lands at 0.30 (20:00 centered);
-        // y and scale leave at rest (as the pilot left them) and settle at 0.45 on the P03 framing
-        var WK = 5200 * 0.30 / (C1[0] - C0[0]);
-        var whipEnd = function (p) { var q = Math.min(1, p * 0.45 / 0.30); return 1 - Math.pow(1 - q, WK); };
-        camMove(0, 0.45, C0, C1, whipEnd, "power2.inOut", "power2.inOut");
+        // Scene 1: end of the whip. x keeps the handoff's +5200 px/s at 0.00 and lands at 0.25 (20:00 centered by 0.30);
+        // y and scale snap out (expo.out) to the P03 framing by 0.45, which holds 19:00 steady on screen (no back-and-forth)
+        var WK = 5200 * 0.25 / (C1[0] - C0[0]);
+        var whipEnd = function (p) { var q = Math.min(1, p * 0.45 / 0.25); return 1 - Math.pow(1 - q, WK); };
+        camMove(0, 0.45, C0, C1, whipEnd, "expo.out", "expo.out");
         ft(h.cam, { filter: "blur(12px)" }, { filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 0);
         // slow push (+2 %/s) about the card
         camMove(0.45, 1.45, C1, C2, "none");

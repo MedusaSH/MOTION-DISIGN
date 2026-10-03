@@ -236,7 +236,8 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // the advice form above 22:30 (frame 03: thread hidden, falling, y -260, x1.15, blur 8)
       var adv = filHang(h.world, X2230, $("f04-advw"), { len: 120 });
       adv.thread.id = "f04-advthread";
-      h.world.appendChild(h.point); h.world.appendChild(h.clock);
+      // point and clock above the cards, the clock behind the form (it emerges from behind it on the whip)
+      h.world.insertBefore(h.point, adv.thread); h.world.insertBefore(h.clock, adv.thread);
 
       // tick paths: measured length (svg-path-draw)
       [1, 2, 3].forEach(function (k) {
