@@ -67,6 +67,13 @@
       font: 500 26px "DM Mono", monospace; letter-spacing: 3px; padding: 14px 22px; border-radius: 6px; background: rgba(255,255,255,.85);
       white-space: nowrap; transform-origin: 50% 50%; opacity: 0; }
 
+    /* leftover of frame 07 at the seam: dark laptop frame + the real Synapze screen still vn-16 (copied from 07-vous-parlez) */
+    #f08-wrap .f08-laptop { position: absolute; left: 3550px; top: 195px; width: 1300px; height: 820px; box-sizing: border-box;
+      background: #1A1F2A; border-radius: 24px; padding: 22px; transform: scale(0.981818); transform-origin: 50% 50%;
+      box-shadow: 0 30px 60px rgba(14,22,36,.16), 0 6px 14px rgba(14,22,36,.10); }
+    #f08-wrap .f08-scr { position: relative; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; background: #F1EBDE; }
+    #f08-wrap .f08-scr img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
     /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box), light world */
     #f08-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
       background: linear-gradient(transparent, rgba(241,235,222,.92) 45%, #F1EBDE); }
@@ -82,6 +89,9 @@
   <div id="root" data-composition-id="08-tracable" data-width="1920" data-height="1080" data-duration="2.95">
     <div id="f08-bg" class="clip" data-start="0" data-duration="2.95" data-track-index="0"></div>
     <div id="f08-wrap"></div>
+
+    <!-- the Synapze screen of frame 07, leaving on the left during the settle (moved into the world by the script) -->
+    <div class="f08-laptop" id="f08-laptop"><div class="f08-scr"><img id="f08-vn16" src="assets/ui/voice-note/vn-16.jpg" alt=""></div></div>
 
     <!-- the advice form (moved under the line by filHang) -->
     <div class="f08-doc" id="f08-doc">
@@ -162,7 +172,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 /* ===================== FIL : fin du kit JS à copier ===================== */
 
       /* ---------------- world ---------------- */
-      var FX = 5700;                        // the advice form hangs here (world x), between handoff_in 4900 and handoff_out 7000
+      var FX = 5950;                        // the advice form hangs here (world x), between handoff_in 4900 and handoff_out 7000
       var XSAM = FIL.DAYS.sam;              // « SAM. 21:14 », entering from the right at the end (frame 9)
       var h = filBuild($("f08-wrap"), {
         ground: "light", x0: 3000, x1: 12000,
@@ -173,6 +183,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       var dots = h.world.querySelector(".fil-dots");
       h.stage.insertBefore(dots, h.cam);
       Object.assign(dots.style, { left: "3232px", top: "-320px", width: "4128px", height: "1440px" });
+
+      // frame 07's laptop (centre x 4200, y 605, ×0.98 in the world), above the line, still on screen at 0.00
+      h.world.appendChild($("f08-laptop"));
 
       // the advice form hangs at FX by a 130 px thread (its bottom 130 px above the line, as in P14)
       var fi = filHang(h.world, FX, $("f08-doc"), { len: 130 });
