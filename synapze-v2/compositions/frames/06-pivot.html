@@ -191,9 +191,9 @@ const FX = {
 
         /* ---- geometry measured in Chromium (Instrument Serif italic 120 px, this exact DOM) ----
            CL[i] = left edge of chars[i] from the row's left, WEND[k] = right edge of word k */
-        var CL = [0, 51.59, 99.8, 133.39, 183.59, 229.19, 276.8, 335.39, 386.59, 441.19, 482.8, 522.39, 562, 592.59, 625.19, 664.8,
-                  726, 780.59, 793.19, 832.8, 872.39, 914, 946.59, 986.19, 1025.8, 1033.39];
-        var WEND = [82.2, 166.02, 369.02, 708.41, 1074.02];
+        var CL = [0, 51.61, 99.83, 133.44, 183.66, 230.27, 277.88, 336.48, 387.7, 442.31, 483.92, 525.53, 565.14, 595.75, 628.36, 667.97,
+                  729.19, 783.8, 801.41, 841.02, 880.63, 922.23, 954.84, 996.45, 1036.06, 1046.06];
+        var WEND = [82.22, 166.05, 370.09, 711.58, 1086.67];
         var rowX = function (p) { return 960 - 3 - GAP - ROWL - p / 2; };   // keeps the line + caret centered (caret dead center when p = 0)
 
         var tl = gsap.timeline({ paused: true });

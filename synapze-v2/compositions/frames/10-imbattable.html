@@ -100,15 +100,17 @@
 
   /* scene 2 : IMBATTABLE. */
   [data-composition-id="10-imbattable"] #f10-st #f10-glow2 { left: 960px; top: 500px; }
-  [data-composition-id="10-imbattable"] #f10-st #f10-imb { top: 380px; font-size: 256px; font-weight: 900; letter-spacing: -0.045em; line-height: .9; transform-origin: 50% 50%; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb { top: 392px; font-size: 240px; font-weight: 900; letter-spacing: -0.045em; line-height: .9; transform-origin: 50% 50%; }
   [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma { line-height: .9; }
-  [data-composition-id="10-imbattable"] #f10-st #f10-imb-main { position: relative; left: auto; right: auto; display: inline-block; font-weight: 900; letter-spacing: -0.045em; padding: 0 .02em; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb-main { position: relative; left: auto; right: auto; display: inline-block; font-weight: 900; letter-spacing: -0.045em; padding: 0 .02em;
+    background-image: linear-gradient(100deg, #d93a12 0%, #f24e1e 22%, #ff6a2b 38%, #ffb08a 47%, #ffd2bd 50%, #ffb08a 53%, #ff6a2b 62%, #f24e1e 78%, #d93a12 100%);
+    background-position: 100% 0%; }
   [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma > .r, [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma > .b { mix-blend-mode: multiply; padding: 0 .02em; opacity: 0; }
   [data-composition-id="10-imbattable"] #f10-st #f10-imb .f10-depth { position: absolute; left: 0; top: 0; padding: 0 .02em; color: rgba(184,39,10,.30); filter: blur(16px); transform: translateY(26px); }
   [data-composition-id="10-imbattable"] #f10-st #f10-imb .f10-sheen { position: absolute; left: 0; top: 0; padding: 0 .02em; color: transparent;
-    background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,250,244,.95) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
-    background-size: 300% 100%; background-position: 100% 0%; -webkit-background-clip: text; background-clip: text; }
-  [data-composition-id="10-imbattable"] #f10-st #f10-clk { position: absolute; left: 0; right: 0; top: 640px; text-align: center; font: 500 50px/1 "Geist Mono", monospace; letter-spacing: .14em;
+    background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 44%, rgba(255,250,244,.55) 50%, rgba(255,255,255,0) 56%, rgba(255,255,255,0) 100%);
+    background-size: 220% 100%; background-position: 100% 0%; -webkit-background-clip: text; background-clip: text; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-clk { position: absolute; left: 0; right: 0; top: 636px; text-align: center; font: 500 50px/1 "Geist Mono", monospace; letter-spacing: .14em;
     color: #0c0c0f; font-variant-numeric: tabular-nums; }
   [data-composition-id="10-imbattable"] #f10-st #f10-clk .f10-cdot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #f24e1e; margin: 0 22px 0 0; vertical-align: 10px;
     box-shadow: 0 0 0 6px rgba(242,78,30,.18); }
@@ -119,11 +121,16 @@
   [data-composition-id="10-imbattable"] #f10-st #f10-line { position: absolute; left: 780px; top: 538px; width: 360px; height: 4px; border-radius: 4px; background: #f24e1e; transform-origin: 50% 50%; }
   [data-composition-id="10-imbattable"] #f10-st #f10-dot { position: absolute; left: 771px; top: 531px; width: 18px; height: 18px; border-radius: 50%; background: #f24e1e; }
   [data-composition-id="10-imbattable"] #f10-st .f10-top { z-index: 60; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-core { position: absolute; left: 948px; top: 488px; width: 24px; height: 24px; border-radius: 50%; background: #f24e1e; opacity: 0;
+    box-shadow: 0 0 0 10px rgba(242,78,30,.16), 0 0 60px 20px rgba(255,106,43,.45); }
+  [data-composition-id="10-imbattable"] #f10-st #f10-cglow { background: radial-gradient(closest-side, rgba(255,106,43,.55), rgba(242,78,30,.18) 50%, rgba(242,78,30,0)); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-str.thick { height: 4px; }
   </style>
 
   <div id="root" data-composition-id="10-imbattable" data-width="1920" data-height="1080" data-duration="3.5">
     <div id="f10-st" class="fx-stage">
       <div id="f10-bg" class="clip fx-paper" data-start="0" data-duration="3.5" data-track-index="0"></div>
+      <div id="f10-night" class="f10-full"></div>
 
       <!-- ============ SCENE 1 : le courtier ============ -->
       <div id="f10-s1" class="f10-full">
@@ -173,8 +180,9 @@
           <div id="f10-shk" class="f10-full">
             <div id="f10-glow2" class="fx-glow"></div>
             <div id="f10-cglow" class="fx-glow" style="left:960px;top:500px;width:900px;height:900px;margin:-450px 0 0 -450px"></div>
-            <div id="f10-i1" class="f10-str" style="left:-300px;top:470px;width:700px"></div>
-            <div id="f10-i2" class="f10-str" style="left:1520px;top:530px;width:700px"></div>
+            <div id="f10-core"></div>
+            <div id="f10-i1" class="f10-str thick" style="left:-300px;top:470px;width:700px"></div>
+            <div id="f10-i2" class="f10-str thick" style="left:1520px;top:530px;width:700px"></div>
             <div id="f10-i3" class="f10-str" style="left:-200px;top:250px;width:600px"></div>
             <div id="f10-i4" class="f10-str" style="left:1500px;top:770px;width:600px"></div>
             <div id="f10-i5" class="f10-str" style="left:-250px;top:720px;width:560px"></div>
@@ -187,7 +195,6 @@
       <div id="f10-cap" class="fx-cap ink"><span id="f10-c-elle" class="w">Elle</span> <span id="f10-c-le" class="w">le</span> <span id="f10-c-rend" class="w">rend</span></div>
 
       <!-- ============ END : night + orange line ============ -->
-      <div id="f10-night" class="f10-full f10-top"></div>
       <div id="f10-e1" class="f10-str f10-top" style="left:120px;top:539px;width:520px"></div>
       <div id="f10-e2" class="f10-str f10-top" style="left:1280px;top:539px;width:520px"></div>
       <div id="f10-line" class="f10-top"></div>
@@ -257,7 +264,11 @@
 
       // line 1 : sits alone at centre, lifts when line 2 arrives
       tl.fromTo($("f10-l1"), { y: 128 }, { y: 0, duration: 0.42, ease: "expo.out", immediateRender: false }, 1.10);
-      tl.set($("f10-l1"), { y: 128 }, 0);
+      gsap.set($("f10-l1"), { y: 128, x: 339 }); gsap.set($("f10-l2"), { x: 409 });
+      tl.set($("f10-l1"), { y: 128, x: 339 }, 0);
+      tl.to($("f10-l1"), { x: 280.5, duration: 0.22, ease: "expo.out" }, 0.37 - F);
+      tl.to($("f10-l1"), { x: 82.5, duration: 0.24, ease: "expo.out" }, 0.48 - F);
+      tl.to($("f10-l1"), { x: 0, duration: 0.24, ease: "expo.out" }, 0.96 - F);
       // L'IA rises from the very first image (handoff_in), lands on its cue 0.13
       tl.fromTo($("f10-w-lia"), { y: 70, opacity: 0.35, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
       // ne : cue rise
@@ -271,7 +282,9 @@
       FX.rise(tl, [$("f10-w-le"), $("f10-w-cour")], 1.13 - F, { stagger: 0.12, d: 0.42, y: 110 });
       ft($("f10-glow1b"), { opacity: 0, scale: 0.7 }, { opacity: 0.55, scale: 1, duration: 0.6, ease: "power2.out" }, 1.15);
       // micro drift of the serif hero against the push (parallax)
-      tl.fromTo($("f10-l2"), { x: 0 }, { x: -18, duration: 0.9, ease: "none", immediateRender: false }, 1.16);
+      tl.set($("f10-l2"), { x: 409 }, 0);
+      tl.to($("f10-l2"), { x: 0, duration: 0.32, ease: "expo.out" }, 1.25 - F);
+      tl.to($("f10-l2"), { x: -16, duration: 0.5, ease: "none" }, 1.56);
 
       // 1.40 – 2.00 : fly-through of the film's surfaces, back -> camera, blurred, 40 %
       const fly = [
@@ -307,9 +320,12 @@
       tl.set($("f10-cap"), { opacity: 0 }, 2.71 - F);
 
       // anticipation : ember gathers in the centre, streaks get sucked in
-      ft($("f10-cglow"), { opacity: 0, scale: 0.4 }, { opacity: 0.9, scale: 1, duration: 0.6, ease: "power2.in" }, 2.08);
+      ft($("f10-cglow"), { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.in" }, 2.08);
       tl.to($("f10-cglow"), { opacity: 0, scale: 1.8, duration: 0.3, ease: "power2.out" }, 2.69);
       tl.fromTo($("f10-cam2"), { scale: 1 }, { scale: 1.025, duration: 0.62, ease: "none" }, 2.06);
+      ft($("f10-core"), { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2.5)" }, 2.12);
+      tl.to($("f10-core"), { scale: 1.6, duration: 0.45, ease: "power2.in" }, 2.24);
+      tl.set($("f10-core"), { opacity: 0 }, 2.71 - F);
       const inS = [["f10-i1", 1], ["f10-i2", -1], ["f10-i3", 1], ["f10-i4", -1], ["f10-i5", 1], ["f10-i6", -1]];
       inS.forEach((s, i) => {
         const t0 = 2.40 + i * 0.035, el = $(s[0]);
@@ -338,7 +354,7 @@
 
       // 2.80 : shimmer (gradient sweep) + a one-pass white sheen band through the letters
       FX.shimmer(tl, $("f10-imb-main"), 2.80, { d: 0.5 });
-      ft(sheen, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: 0.5, ease: "none" }, 2.80);
+      FX.shimmer(tl, sheen, 2.80, { d: 0.5 });
 
       // 2.77 – 2.93 : the clock rolls 19:00 -> 19:05 and lands
       FX.cue(tl, $("f10-clk"), 2.77, { y: 22, d: 0.14 });
@@ -358,8 +374,8 @@
       tl.to($("f10-e1"), { opacity: 0, duration: 0.05, ease: "none" }, 3.40);
       ft($("f10-e2"), { x: 500, opacity: 0, scaleX: 0.5 }, { x: -520, opacity: 0.9, scaleX: 1, duration: 0.3, ease: "power3.in" }, C0 + 0.04);
       tl.to($("f10-e2"), { opacity: 0, duration: 0.05, ease: "none" }, 3.40);
-      ft($("f10-line"), { opacity: 0, scaleX: 1.6 }, { opacity: 1, scaleX: 1, duration: 0.17, ease: "power3.in" }, 3.28);
-      ft($("f10-dot"), { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.1, ease: "back.out(2.5)" }, 3.35);
+      ft($("f10-line"), { opacity: 0, scaleX: 1.6 }, { opacity: 1, scaleX: 1, duration: 0.14, ease: "power3.in" }, 3.31);
+      ft($("f10-dot"), { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.06, ease: "back.out(2.5)" }, 3.39);
 
       tl.set({}, {}, DUR);
       window.__timelines = window.__timelines || {};

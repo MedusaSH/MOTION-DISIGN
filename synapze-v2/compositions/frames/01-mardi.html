@@ -7,54 +7,54 @@
   @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
   @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
   @font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); }
-  #root .fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+  [data-composition-id="01-mardi"] .fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
   /* grounds: night (problem), ember (pivot light), paper (solution) */
-  #root .fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
-  #root .fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+  [data-composition-id="01-mardi"] .fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+  [data-composition-id="01-mardi"] .fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
     radial-gradient(1000px 800px at 10% 95%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
-  #root .fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
-  #root .fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
+  [data-composition-id="01-mardi"] .fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+  [data-composition-id="01-mardi"] .fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
     background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
-  #root .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+  [data-composition-id="01-mardi"] .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
     background-size: 256px 256px; }
-  #root .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
-  #root .fx-paper ~ .fx-vignette, #root .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
-  #root .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
-  #root .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+  [data-composition-id="01-mardi"] .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  [data-composition-id="01-mardi"] .fx-paper ~ .fx-vignette, [data-composition-id="01-mardi"] .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+  [data-composition-id="01-mardi"] .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+  [data-composition-id="01-mardi"] .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
   /* kinetic type */
-  #root .fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
-  #root .fx-k.ink { color: #0c0c0f; }
-  #root .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
-  #root .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
-  #root .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #root .fx-w { display: inline-block; will-change: transform, filter, opacity; }
+  [data-composition-id="01-mardi"] .fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+  [data-composition-id="01-mardi"] .fx-k.ink { color: #0c0c0f; }
+  [data-composition-id="01-mardi"] .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+  [data-composition-id="01-mardi"] .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+  [data-composition-id="01-mardi"] .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+  [data-composition-id="01-mardi"] .fx-w { display: inline-block; will-change: transform, filter, opacity; }
   /* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
-  #root .fx-chroma { position: relative; display: inline-block; }
-  #root .fx-chroma > .r, #root .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
-  #root .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
-  #root .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+  [data-composition-id="01-mardi"] .fx-chroma { position: relative; display: inline-block; }
+  [data-composition-id="01-mardi"] .fx-chroma > .r, [data-composition-id="01-mardi"] .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+  [data-composition-id="01-mardi"] .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+  [data-composition-id="01-mardi"] .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
   /* caption (the voice, readable without sound): bottom center, band y 890-980 */
-  #root .fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
-  #root .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
-  #root .fx-cap .w { display: inline-block; opacity: 0; }
-  #root .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
-  #root .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+  [data-composition-id="01-mardi"] .fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+  [data-composition-id="01-mardi"] .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+  [data-composition-id="01-mardi"] .fx-cap .w { display: inline-block; opacity: 0; }
+  [data-composition-id="01-mardi"] .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+  [data-composition-id="01-mardi"] .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
   /* surfaces */
-  #root .fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
-  #root .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+  [data-composition-id="01-mardi"] .fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
+  [data-composition-id="01-mardi"] .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
     box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
-  #root .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
-  #root .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
-  #root .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
-  #root .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+  [data-composition-id="01-mardi"] .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+  [data-composition-id="01-mardi"] .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+  [data-composition-id="01-mardi"] .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+  [data-composition-id="01-mardi"] .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
   /* ===================== FX : fin du bloc CSS à copier ===================== */
 
-  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; }
+  [data-composition-id="01-mardi"] { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; }
   #f01-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #050507; }
   #f01-glow { left: 1300px; top: 240px; }
   #f01-whip, #f01-shake, #f01-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
-  #root .f01-scene { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+  [data-composition-id="01-mardi"] .f01-scene { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
   #f01-s2, #f01-s3 { opacity: 0; }
 
   /* Scene 1: MARDI */
@@ -63,19 +63,19 @@
   #f01-echo { top: 262px; font-size: 400px; font-weight: 900; opacity: .09; -webkit-text-stroke: 2px #f6f1ea; }
   #f01-lab1 { position: absolute; left: 0; right: 0; top: 640px; text-align: center; font-size: 22px; color: #b7afa5; opacity: 0; }
   #f01-lab1 span { display: inline-block; clip-path: inset(0 100% 0 0); }
-  #root .f01-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #f24e1e; margin-right: 16px; vertical-align: 2px; box-shadow: 0 0 14px rgba(242,78,30,.9); }
+  [data-composition-id="01-mardi"] .f01-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #f24e1e; margin-right: 16px; vertical-align: 2px; box-shadow: 0 0 14px rgba(242,78,30,.9); }
 
   /* Scene 2: the clock, digit columns that roll (vertical spring ticker, one nested wrapper per step) */
   #f01-clock { position: absolute; left: 0; right: 0; top: 168px; height: 500px; text-align: center; }
   #f01-clock-in { position: relative; display: inline-block; transform-origin: 50% 50%; }
-  #root .f01-layer { display: block; white-space: nowrap; font: 800 440px/500px "Geist", sans-serif; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; color: #f6f1ea; }
-  #root .f01-layer.r, #root .f01-layer.b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; opacity: 0; }
-  #root .f01-layer.r { color: #ff2d55; }
-  #root .f01-layer.b { color: #2de1ff; }
-  #root .f01-col { display: inline-block; height: 500px; overflow: hidden; vertical-align: top; }
-  #root .f01-step { display: block; }
-  #root .f01-dg { display: block; height: 500px; }
-  #root .f01-colon { display: inline-block; height: 500px; vertical-align: top; transform: translateY(-18px); }
+  [data-composition-id="01-mardi"] .f01-layer { display: block; white-space: nowrap; font: 800 440px/500px "Geist", sans-serif; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; color: #f6f1ea; }
+  [data-composition-id="01-mardi"] .f01-layer.r, [data-composition-id="01-mardi"] .f01-layer.b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; opacity: 0; }
+  [data-composition-id="01-mardi"] .f01-layer.r { color: #ff2d55; }
+  [data-composition-id="01-mardi"] .f01-layer.b { color: #2de1ff; }
+  [data-composition-id="01-mardi"] .f01-col { display: inline-block; height: 500px; overflow: hidden; vertical-align: top; }
+  [data-composition-id="01-mardi"] .f01-step { display: block; }
+  [data-composition-id="01-mardi"] .f01-dg { display: block; height: 500px; }
+  [data-composition-id="01-mardi"] .f01-colon { display: inline-block; height: 500px; vertical-align: top; transform: translateY(-18px); }
   #f01-uline { position: absolute; left: 560px; top: 652px; width: 800px; height: 6px; border-radius: 6px; background: #f24e1e;
     box-shadow: 0 0 24px rgba(242,78,30,.85), 0 0 60px rgba(242,78,30,.45); transform-origin: 0 50%; opacity: 0; }
 
@@ -83,27 +83,27 @@
   #f01-card { left: 510px; top: 150px; width: 900px; height: 560px; box-sizing: border-box; padding: 44px 52px; transform-origin: 50% 50%; opacity: 0; }
   #f01-card-head { display: flex; align-items: center; justify-content: space-between; height: 40px; }
   #f01-card-head .fx-label { font-size: 20px; color: #c9c1b6; }
-  #root .f01-ldots { display: flex; gap: 8px; }
-  #root .f01-ldots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.14); }
-  #root .f01-rule { height: 1px; background: rgba(255,255,255,.09); margin: 22px 0 0; }
-  #root .f01-row { position: relative; height: 118px; border-bottom: 1px solid rgba(255,255,255,.07); }
-  #root .f01-row:last-child { border-bottom: 0; }
-  #root .f01-h { position: absolute; left: 0; top: 0; height: 118px; line-height: 118px; font: 500 24px/118px "Geist Mono", monospace; letter-spacing: .08em; color: #9a948c; }
-  #root .f01-t { position: absolute; left: 150px; top: 0; height: 118px; line-height: 118px; font: 500 36px/118px "Geist", sans-serif; letter-spacing: -0.02em; color: #e9e3da; white-space: nowrap; }
-  #root .f01-typed { clip-path: inset(0 100% 0 0); }
-  #root .f01-past { position: absolute; left: 116px; top: 52px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); box-sizing: border-box; }
+  [data-composition-id="01-mardi"] .f01-ldots { display: flex; gap: 8px; }
+  [data-composition-id="01-mardi"] .f01-ldots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.14); }
+  [data-composition-id="01-mardi"] .f01-rule { height: 1px; background: rgba(255,255,255,.09); margin: 22px 0 0; }
+  [data-composition-id="01-mardi"] .f01-row { position: relative; height: 118px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  [data-composition-id="01-mardi"] .f01-row:last-child { border-bottom: 0; }
+  [data-composition-id="01-mardi"] .f01-h { position: absolute; left: 0; top: 0; height: 118px; line-height: 118px; font: 500 24px/118px "Geist Mono", monospace; letter-spacing: .08em; color: #9a948c; }
+  [data-composition-id="01-mardi"] .f01-t { position: absolute; left: 150px; top: 0; height: 118px; line-height: 118px; font: 500 36px/118px "Geist", sans-serif; letter-spacing: -0.02em; color: #e9e3da; white-space: nowrap; }
+  [data-composition-id="01-mardi"] .f01-typed { clip-path: inset(0 100% 0 0); }
+  [data-composition-id="01-mardi"] .f01-past { position: absolute; left: 116px; top: 52px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.18); box-sizing: border-box; }
   /* the 18:00 event chip and its empty slot */
   #f01-slot { position: absolute; left: 132px; top: 14px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
     border: 2px dashed rgba(246,241,234,.16); opacity: 0; }
   #f01-check { position: absolute; left: 22px; top: 21px; width: 48px; height: 48px; opacity: 0; }
   #f01-check path { stroke-dasharray: 40; stroke-dashoffset: var(--f01-d, 40); }
-  #root .f01-chip { position: absolute; left: 132px; top: 14px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
+  [data-composition-id="01-mardi"] .f01-chip { position: absolute; left: 132px; top: 14px; width: 666px; height: 90px; border-radius: 16px; box-sizing: border-box;
     background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); overflow: hidden; }
-  #root .f01-chip .f01-hot { position: absolute; inset: 0; background: linear-gradient(100deg, #ff6a2b 0%, #f24e1e 55%, #d63a12 100%); opacity: 0; }
-  #root .f01-chip .f01-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #f24e1e; }
-  #root .f01-chip .f01-ct { position: absolute; left: 30px; top: 0; line-height: 90px; font: 600 32px/90px "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; white-space: nowrap; }
-  #root .f01-chip .f01-ct b { font-weight: 600; color: #fff; }
-  #root .f01-ghost { opacity: 0; }
+  [data-composition-id="01-mardi"] .f01-chip .f01-hot { position: absolute; inset: 0; background: linear-gradient(100deg, #ff6a2b 0%, #f24e1e 55%, #d63a12 100%); opacity: 0; }
+  [data-composition-id="01-mardi"] .f01-chip .f01-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #f24e1e; }
+  [data-composition-id="01-mardi"] .f01-chip .f01-ct { position: absolute; left: 30px; top: 0; line-height: 90px; font: 600 32px/90px "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; white-space: nowrap; }
+  [data-composition-id="01-mardi"] .f01-chip .f01-ct b { font-weight: 600; color: #fff; }
+  [data-composition-id="01-mardi"] .f01-ghost { opacity: 0; }
   #f01-chip { clip-path: inset(0 100% 0 0); }
 
   #f01-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; pointer-events: none; z-index: 70; opacity: 0;
@@ -180,7 +180,7 @@
 /* ===================== FX : début du kit JS à copier ===================== */
 /* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
 const FX = {
-  /* deterministic pseudo-random from an index (never Math.random) */
+  /* deterministic pseudo-random from an index (no random) */
   rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
   /* split text of el into .fx-w spans per word (call once at build) */
   words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
@@ -208,7 +208,7 @@ const FX = {
   flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
   /* WHIP: blur-pan out of a shot (exit) */
   whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
-  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: d, ease: "expo.out", immediateRender: false }, t); },
   /* PUNCH: fast zoom-in on a target (camera), then slow drift */
   punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
     tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
