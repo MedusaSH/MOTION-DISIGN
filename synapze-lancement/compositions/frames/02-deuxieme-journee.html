@@ -44,7 +44,7 @@
   /* ===================== FIL : fin du bloc CSS à copier ===================== */
 
     /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
-    #f02-wrap #f02-hatch, #f02-wrap .f02-sz, #f02-wrap #f02-thread, #f02-wrap #f02-hang,
+    #f02-wrap #f02-hatch, #f02-wrap .f02-sz, #f02-wrap #f02-clockb, #f02-wrap #f02-thread, #f02-wrap #f02-hang,
     #f02-wrap #f02-nthread, #f02-wrap #f02-nhang { opacity: 0; }
 
     /* clock: digit columns that roll (vertical ticker, one nested wrapper per step) — as in 01-mardi */
@@ -53,6 +53,11 @@
     #f02-wrap .f02-dg { display: block; height: 160px; line-height: 160px; }
     #f02-wrap .f02-colon { display: inline-block; height: 160px; line-height: 160px; vertical-align: top; }
     #f02-wrap .f02-sz { display: inline-block; }
+    /* hatch: the kit's band, its stripes on a skin counter-scaled in x (45° on screen at every camera scale), revealed by
+       an inset clip behind the running point */
+    #f02-wrap #f02-hatch { background: none; overflow: hidden; clip-path: inset(0% 100% 0% 0%); }
+    #f02-wrap .f02-skin { position: absolute; left: 0; top: 0; width: 5600px; height: 100%; transform-origin: 0 0;
+      background: repeating-linear-gradient(-45deg, rgba(91,101,120,.6) 0 10px, transparent 10px 20px); }
 
     /* hanging generic CRM card « Nouveau prospect » (styleframe P03, sf.css), built at ×2 in the world */
     #f02-cw { width: 1120px; height: 1024px; }
@@ -186,18 +191,33 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         Object.assign(dots.style, { left: "-560px", top: "-752px", width: "6336px", height: "1872px" });
         h.point.id = "f02-point"; h.clock.id = "f02-clock"; h.halo.id = "f02-halo"; h.hatch.id = "f02-hatch";
 
+        var skin = filEl(h.hatch, "f02-skin");
         // « SAISIE · SAISIE · SAISIE · SAISIE » printed word by word (same text as the kit)
         h.hatchLabel.textContent = "";
         var SZ = ["SAISIE", " · SAISIE", " · SAISIE", " · SAISIE"].map(function (t) {
           var s = document.createElement("span"); s.className = "f02-sz"; s.textContent = t; h.hatchLabel.appendChild(s); return s;
         });
 
-        // clock as rolling digit columns: 19:00 -> 20:12 -> 21:30 -> 22:15 -> 22:47 (one nested wrapper per step)
+        // the « 19:00 » of the handoff: the pilot's clock, rebuilt as it ends (same columns, rolled to its last digit)
+        var clockA = h.clock;
+        [["0", "1"], ["7", "8", "9"], null, ["4", "5", "0"], ["8", "9", "0"]].forEach(function (items) {
+          if (!items) { var c = document.createElement("span"); c.className = "f02-colon"; c.textContent = ":"; clockA.appendChild(c); return; }
+          var col = document.createElement("span"); col.className = "f02-col";
+          var inner = col;
+          for (var s = 0; s < items.length - 1; s++) {
+            var w = document.createElement("span"); w.className = "f02-step"; w.style.transform = "translate(0px, -160px)"; inner.appendChild(w); inner = w;
+          }
+          items.forEach(function (d) { var e = document.createElement("span"); e.className = "f02-dg"; e.textContent = d; inner.appendChild(e); });
+          clockA.appendChild(col);
+        });
+        // the running clock (comes back at 1.95): rolling digit columns 19:00 -> 20:12 -> 21:30 -> 22:15 -> 22:47
+        var clockB = filEl(h.world, "fil-clock", { left: X19, top: FIL.Y - 230 });
+        clockB.id = "f02-clockb";
         var CLICKS = [2.10, 2.60, 3.10, 3.60];
         var VALUES = ["19:00", "20:12", "21:30", "22:15", "22:47"];
         var steps = [];
         [0, 1, null, 3, 4].forEach(function (ci) {
-          if (ci === null) { var c = document.createElement("span"); c.className = "f02-colon"; c.textContent = ":"; h.clock.appendChild(c); return; }
+          if (ci === null) { var c = document.createElement("span"); c.className = "f02-colon"; c.textContent = ":"; clockB.appendChild(c); return; }
           var col = document.createElement("span"); col.className = "f02-col";
           var inner = col, prev = VALUES[0][ci], items = [prev];
           for (var k = 1; k < VALUES.length; k++) {
@@ -208,7 +228,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
             items.push(d); prev = d;
           }
           items.forEach(function (d) { var e = document.createElement("span"); e.className = "f02-dg"; e.textContent = d; inner.appendChild(e); });
-          h.clock.appendChild(col);
+          clockB.appendChild(col);
         });
 
         // the empty card hangs at 20:00, the notebook will hang at 21:00
@@ -216,7 +236,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         card.thread.id = "f02-thread"; card.hang.id = "f02-hang";
         var nb = filHang(h.world, X21, $("f02-nbw"), { len: 150 });
         nb.thread.id = "f02-nthread"; nb.hang.id = "f02-nhang";
-        h.world.appendChild(h.point); h.world.appendChild(h.clock);
+        h.world.appendChild(h.point); h.world.appendChild(clockA); h.world.appendChild(clockB);
 
         /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
         var C0 = [3000, 540, 1];                        // handoff_in
@@ -232,10 +252,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
         gsap.set(h.cam, { scale: C0[2], filter: "blur(12px)" });
 
-        var hudScale = [h.point, h.clock, h.hatchLabel].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+        var hudScale = [h.point, clockA, clockB, h.hatchLabel].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
         var hudY = [h.orange, h.grey, h.hatch];
-        var hudX = [card.thread, nb.thread];
-        gsap.set(h.clock, { transformOrigin: "50% 230px" });
+        var hudX = [card.thread, nb.thread, skin];
+        gsap.set([clockA, clockB], { transformOrigin: "50% 230px" });
         gsap.set(h.hatchLabel, { transformOrigin: "-10px -70px" });
         h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
         function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
@@ -243,7 +263,6 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         gsap.set(hudScale, { scale: 1 / C0[2] });
         gsap.set(hudY, { scaleY: 1 / C0[2] });
         gsap.set(hudX, { scaleX: 1 / C0[2] });
-        gsap.set(h.hatch, { scaleX: 0 });
 
         var tl = gsap.timeline({ paused: true });
         function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
@@ -287,7 +306,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 
         /* ---------------- Scene 1 (0.00 – 1.80): the empty card catches at 20:00 ---------------- */
         // the clock « 19:00 » leaves while the camera settles (P03 shows only the card, the line and the point)
-        ft(h.clock, { opacity: 1 }, { opacity: 0, duration: 0.18, ease: "power2.in" }, 0.40);
+        ft(clockA, { opacity: 1 }, { opacity: 0, duration: 0.18, ease: "power2.in" }, 0.40);
         // 1.00 -> 1.27 the card falls (×1.15, blur 8) and catches at 20:00 at 1.15, swings 2° once, then drifts 1°
         var hg = card.hang;
         ft(hg, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, 1.00);
@@ -310,18 +329,20 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
 
         /* ---------------- Scene 2 (1.80 – 3.70): the silent gag ---------------- */
         // the card recedes with the pull (one active subject: the point)
-        ft(hg, { scale: 1 }, { scale: 0.6, duration: 0.40, ease: "power3.out" }, 1.90);
+        // the card recedes and is hoisted on its thread (clears the running clock): thread 416 -> 676
+        ft(hg, { scale: 1, y: 0 }, { scale: 0.6, y: -260, duration: 0.40, ease: "power3.out" }, 1.90);
+        ft(card.thread, { scaleY: 1 }, { scaleY: 676 / 416, duration: 0.40, ease: "power3.out" }, 1.90);
         // 1.95 the clock « 19:00 » comes back over the point
-        ft(h.clock, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, 1.95);
+        ft(clockB, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, 1.95);
         // 2.10 -> 3.60 the point runs right, the hatched segment drawn behind it; it slows with the clock and stops dead
         // at 22:47 (passes 22:15 at 3.20 as in P04)
         var RUN = function (p) { return 0.351 * p + 0.649 * (1 - (1 - p) * (1 - p)); };
-        ft([h.point, h.clock], { x: 0 }, { x: XEND - X19, duration: 1.50, ease: RUN }, 2.10);
+        ft([h.point, clockB], { x: 0 }, { x: XEND - X19, duration: 1.50, ease: RUN }, 2.10);
         tl.set(h.hatch, { opacity: 1 }, 2.10);
-        ft(h.hatch, { scaleX: 0 }, { scaleX: 1, duration: 1.50, ease: RUN }, 2.10);
+        ft(h.hatch, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.50, ease: RUN }, 2.10);
         // the clock clicks 20:12 (2.10), 21:30 (2.60), 22:15 (3.10), 22:47 (3.60), digit by digit
         steps.forEach(function (st) {
-          ft(st.el, { y: 0 }, { y: -160, duration: 0.2, ease: "expo.out" }, st.t + st.col * 0.012);
+          ft(st.el, { y: 0 }, { y: -160, duration: 0.16, ease: "expo.out" }, st.t - 0.05 + st.col * 0.012);
         });
         // 2.60 « SAISIE · SAISIE · SAISIE · SAISIE » prints under the segment
         SZ.forEach(function (s, i) {

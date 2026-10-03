@@ -5,6 +5,7 @@
     @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-600.woff2") format("woff2"); font-weight: 600; }
     @font-face { font-family: "DM Sans"; src: url("assets/fonts/DMSans-700.woff2") format("woff2"); font-weight: 700; }
     @font-face { font-family: "DM Mono"; src: url("assets/fonts/DMMono-500.woff2") format("woff2"); font-weight: 500; }
+    @font-face { font-family: "DM Serif Display"; src: url("assets/fonts/DMSerifDisplay-400.woff2") format("woff2"); font-weight: 400; }
 
     #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; }
     #f04-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
@@ -43,40 +44,44 @@
   #f04-wrap .fil-hang { position: absolute; transform-origin: 50% 100%; }  /* an object hanging from the line: bottom center on its thread */
   /* ===================== FIL : fin du bloc CSS à copier ===================== */
 
-    /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
-    #f04-wrap #f04-point, #f04-wrap #f04-halo, #f04-wrap #f04-thread,
-    #f04-wrap #f04-tk2230, #f04-wrap #f04-lb2230, #f04-wrap #f04-tk2247, #f04-wrap #f04-lb2247 { opacity: 0; }
+    /* elements born after t = 0 (ids given right after filBuild) */
+    #f04-wrap #f04-advthread, #f04-wrap #f04-tk2230, #f04-wrap #f04-lb2230, #f04-wrap #f04-tk2247, #f04-wrap #f04-lb2247 { opacity: 0; }
 
-    /* the four empty prospect forms hanging from 21:30 to 22:00 (styleframe P07, end of frame 03) */
-    #root .f04-fpw { width: 200px; height: 235.7px; }
-    #root .f04-fp { position: absolute; left: 0; top: 0; width: 280px; height: 330px; box-sizing: border-box; transform: scale(0.7143); transform-origin: 0 0;
-      background: #F1EBDE; border-radius: 8px; padding: 22px; font: 500 15px "DM Mono", monospace; color: #5B6578;
+    /* generic CRM prospect cards, copied from frame 03 (world scale 0.48) */
+    #root .f04-cw { width: 268.8px; height: 244.8px; }
+    #root .f04-card { position: absolute; left: 0; top: 0; width: 560px; height: 510px; box-sizing: border-box;
+      transform: scale(0.48); transform-origin: 0 0; background: #FBF7EE; border-radius: 10px; padding: 30px 34px; color: #0E1624;
       box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
-    #root .f04-fp i { display: block; height: 12px; background: #D8CFBD; margin-top: 16px; border-radius: 4px; }
-    #root .f04-fp i:first-child { margin-top: 24px; }
+    #root .f04-cm { font: 500 14px/1.2 "DM Mono", monospace; letter-spacing: 2px; color: #9AA3B4; }
+    #root .f04-ct { font: 400 38px/1.2 "DM Serif Display", serif; margin: 6px 0 4px; }
+    #root .f04-f { margin-top: 16px; }
+    #root .f04-k { font: 500 15px/1.2 "DM Mono", monospace; letter-spacing: 1px; color: #5B6578; text-transform: uppercase; margin-bottom: 6px; }
+    #root .f04-v { position: relative; height: 52px; box-sizing: border-box; border: 1.5px solid #D8CFBD; border-radius: 8px; background: #fff;
+      padding: 0 16px; display: flex; align-items: center; font: 500 26px/1 "DM Sans", sans-serif; color: #0E1624; white-space: nowrap; }
+    #root .f04-von { position: absolute; left: -1.5px; top: -1.5px; right: -1.5px; bottom: -1.5px; border: 1.5px solid #F24E1E; border-radius: 8px; }
 
-    /* the advice form (styleframe P08, sf.css .doc): 1100 px wide on screen at the key camera scale 1.53 */
-    #f04-docw { width: 718.95px; height: 403.27px; }
-    #root .f04-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 617px; box-sizing: border-box; padding: 60px 80px;
-      transform: scale(0.65359); transform-origin: 0 0; border-radius: 6px; color: #222; font: 400 26px "DM Sans", sans-serif;
-      background: radial-gradient(1100px 760px at 0% 0%, rgba(255,196,120,.13), rgba(255,196,120,0) 70%), #fff;
+    /* the advice form, copied from frame 03 (world scale 0.5; it lands at x1.3073 so it is 1100 px wide on screen at s 1.53, P08) */
+    #f04-advw { width: 550px; height: 306px; }
+    #f04-advs { position: absolute; left: 0; top: 0; width: 550px; height: 306px; }
+    #f04-wrap .f04-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 612px; box-sizing: border-box; transform: scale(0.5); transform-origin: 0 0;
+      background: #fff; border-radius: 6px; padding: 60px 80px; color: #222; font: 400 26px "DM Sans", sans-serif;
       box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
-    #root .f04-doc h3 { margin: 0 0 6px; font: 700 34px/44px "DM Sans", sans-serif; }
-    #root .f04-s { font: 400 20px/26px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
-    #root .f04-ln { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; box-sizing: border-box; opacity: 0; }
-    #root .f04-ck { position: relative; flex: none; width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; }
-    #root .f04-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
+    #f04-wrap .f04-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #f04-wrap .f04-doc .f04-ds { font: 400 20px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
+    #f04-wrap .f04-doc .f04-dl { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; }
+    #f04-wrap .f04-doc .f04-dk { position: relative; width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; flex: none; }
+    #f04-wrap .f04-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
       border: 2px solid #F24E1E; border-radius: 4px; opacity: 0; }
-    #root .f04-tk { position: absolute; left: 0; top: 0; width: 30px; height: 30px; overflow: visible; }
-    #root .f04-tk path { fill: none; stroke: #F24E1E; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round;
+    #f04-wrap .f04-tk { position: absolute; left: 0; top: 0; width: 30px; height: 30px; overflow: visible; }
+    #f04-wrap .f04-tk path { fill: none; stroke: #F24E1E; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round;
       stroke-dasharray: 32; stroke-dashoffset: 32; }
-    #root .f04-rip { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; box-sizing: border-box;
+    #f04-wrap .f04-rip { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; box-sizing: border-box;
       border: 3px solid #F24E1E; border-radius: 50%; opacity: 0; }
     /* cursor (sf.css .cursor): the tip is the element's top-left corner */
-    #root .f04-cur { position: absolute; left: 0; top: 0; width: 44px; height: 60px; opacity: 0; transform-origin: 0 0;
+    #f04-wrap .f04-cur { position: absolute; left: 0; top: 0; width: 44px; height: 60px; opacity: 0; transform-origin: 0 0;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,.35)); }
-    #root .f04-cur::before { content: ""; position: absolute; inset: 0; background: #fff; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
-    #root .f04-cur::after { content: ""; position: absolute; inset: 4px 6px 6px 3px; background: #111; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f04-wrap .f04-cur::before { content: ""; position: absolute; inset: 0; background: #fff; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f04-wrap .f04-cur::after { content: ""; position: absolute; inset: 4px 6px 6px 3px; background: #111; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
 
     /* scrim + subtitle (frame.md: subtitle, word-by-word, key-word-box) */
     #f04-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; pointer-events: none;
@@ -91,35 +96,49 @@
   </style>
 
   <div id="root" data-composition-id="04-case-par-case" data-width="1920" data-height="1080" data-duration="3.0">
-
     <div id="f04-bg" class="clip" data-start="0" data-duration="3.0" data-track-index="0"></div>
     <div id="f04-wrap"></div>
 
-    <!-- four empty prospect forms (moved under the line by filHang) -->
-    <div class="f04-fpw" id="f04-fp1"><div class="f04-fp">FICHE PROSPECT<i style="width:80%"></i><i style="width:70%"></i><i style="width:50%"></i></div></div>
-    <div class="f04-fpw" id="f04-fp2"><div class="f04-fp">FICHE PROSPECT<i style="width:60%"></i><i style="width:70%"></i><i style="width:50%"></i></div></div>
-    <div class="f04-fpw" id="f04-fp3"><div class="f04-fp">FICHE PROSPECT<i style="width:90%"></i><i style="width:70%"></i><i style="width:50%"></i></div></div>
-    <div class="f04-fpw" id="f04-fp4"><div class="f04-fp">FICHE PROSPECT<i style="width:40%"></i><i style="width:70%"></i><i style="width:50%"></i></div></div>
+    <!-- the card retyped in frame 03 (21:15) -->
+    <div class="f04-cw" id="f04-cf">
+      <div class="f04-card">
+        <div class="f04-cm">MON CRM · FICHE PROSPECT</div>
+        <div class="f04-ct">Nouveau prospect</div>
+        <div class="f04-f"><div class="f04-k">Nom</div><div class="f04-v"><span>Lebrun</span></div></div>
+        <div class="f04-f"><div class="f04-k">Date de naissance</div><div class="f04-v"><span>10/10/1978</span></div></div>
+        <div class="f04-f"><div class="f04-k">Ville</div><div class="f04-v"><i class="f04-von"></i><span>Paris</span></div></div>
+        <div class="f04-f"><div class="f04-k">Besoin</div><div class="f04-v"></div></div>
+      </div>
+    </div>
+    <!-- three empty cards (21:30, 21:45, 22:00) -->
+    <div class="f04-cw" id="f04-e1"><div class="f04-card"><div class="f04-cm">MON CRM · FICHE PROSPECT</div><div class="f04-ct">Nouveau prospect</div>
+      <div class="f04-f"><div class="f04-k">Nom</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Date de naissance</div><div class="f04-v"></div></div>
+      <div class="f04-f"><div class="f04-k">Ville</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Besoin</div><div class="f04-v"></div></div></div></div>
+    <div class="f04-cw" id="f04-e2"><div class="f04-card"><div class="f04-cm">MON CRM · FICHE PROSPECT</div><div class="f04-ct">Nouveau prospect</div>
+      <div class="f04-f"><div class="f04-k">Nom</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Date de naissance</div><div class="f04-v"></div></div>
+      <div class="f04-f"><div class="f04-k">Ville</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Besoin</div><div class="f04-v"></div></div></div></div>
+    <div class="f04-cw" id="f04-e3"><div class="f04-card"><div class="f04-cm">MON CRM · FICHE PROSPECT</div><div class="f04-ct">Nouveau prospect</div>
+      <div class="f04-f"><div class="f04-k">Nom</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Date de naissance</div><div class="f04-v"></div></div>
+      <div class="f04-f"><div class="f04-k">Ville</div><div class="f04-v"></div></div><div class="f04-f"><div class="f04-k">Besoin</div><div class="f04-v"></div></div></div></div>
 
-    <!-- the advice form (moved under the line by filHang, hung at 22:30) -->
-    <div id="f04-docw">
+    <!-- the advice form (hung above 22:30 by filHang) -->
+    <div id="f04-advw"><div id="f04-advs">
       <div class="f04-doc">
         <h3>Fiche de conseil · Mutuelle santé</h3>
-        <div class="f04-s">Modèle_DDA_v3.docx</div>
-        <div class="f04-ln" id="f04-r1"><div class="f04-ck" id="f04-ck1"><i class="f04-ckb" id="f04-ckb1"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk1" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Besoins exprimés</span></div>
-        <div class="f04-ln" id="f04-r2"><div class="f04-ck" id="f04-ck2"><i class="f04-ckb" id="f04-ckb2"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk2" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Situation familiale</span></div>
-        <div class="f04-ln" id="f04-r3"><div class="f04-ck" id="f04-ck3"><i class="f04-ckb" id="f04-ckb3"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk3" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Budget</span></div>
-        <div class="f04-ln" id="f04-r4"><div class="f04-ck"></div><span>Garanties proposées</span></div>
-        <div class="f04-ln" id="f04-r5"><div class="f04-ck"></div><span>Justification du conseil</span></div>
+        <div class="f04-ds">Modèle_DDA_v3.docx</div>
+        <div class="f04-dl"><div class="f04-dk" id="f04-ck1"><i class="f04-ckb" id="f04-ckb1"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk1" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Besoins exprimés</div>
+        <div class="f04-dl"><div class="f04-dk" id="f04-ck2"><i class="f04-ckb" id="f04-ckb2"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk2" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Situation familiale</div>
+        <div class="f04-dl"><div class="f04-dk" id="f04-ck3"><i class="f04-ckb" id="f04-ckb3"></i><svg class="f04-tk" viewBox="0 0 30 30"><path id="f04-tk3" d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Budget</div>
+        <div class="f04-dl"><div class="f04-dk"></div>Garanties proposées</div>
+        <div class="f04-dl"><div class="f04-dk"></div>Justification du conseil</div>
         <i class="f04-rip" id="f04-rip1"></i><i class="f04-rip" id="f04-rip2"></i><i class="f04-rip" id="f04-rip3"></i>
         <div class="f04-cur" id="f04-cur"></div>
       </div>
-    </div>
+    </div></div>
 
     <div id="f04-scrim"></div>
 
     <div class="f04-sub" id="f04-s1"><span class="f04-w" data-cue="0.10">Vous</span> <span class="f04-w" data-cue="0.31">remplissez</span> <span class="f04-w" data-cue="0.84">le</span> <span class="f04-w" data-cue="0.94">devoir</span> <span class="f04-w" data-cue="1.26">de</span> <span class="f04-w" data-cue="1.36">conseil,</span> <span class="f04-kbox"><i class="f04-kbg" id="f04-k1"></i><span class="f04-w" data-cue="2.00">case</span> <span class="f04-w" data-cue="2.27">par</span> <span class="f04-w" data-cue="2.47">case.</span></span></div>
-
   </div>
 
   <script src="assets/vendor/gsap.min.js"></script>
@@ -181,37 +200,43 @@ function filCamSet(h, px, py, s = 1) {
 const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:${String(Math.round(min) % 60).padStart(2, "0")}`;
 /* ===================== FIL : fin du kit JS à copier ===================== */
 
-      /* ---------------- world ---------------- */
-      var X19 = FIL.hx(19), X21 = FIL.hx(21), X22 = FIL.hx(22), X2230 = FIL.hx(22, 30), X2247 = FIL.hx(22, 47);
+      /* ---------------- world: frame 03's last image, rebuilt identically ---------------- */
+      var X19 = FIL.hx(19), X20 = FIL.hx(20), X21 = FIL.hx(21), X2115 = FIL.hx(21, 15), X2130 = FIL.hx(21, 30),
+          X2145 = FIL.hx(21, 45), X22 = FIL.hx(22), X2230 = FIL.hx(22, 30), X2247 = FIL.hx(22, 47), X23 = FIL.hx(23);
       var h = filBuild($("f04-wrap"), {
-        ground: "dark", x0: 1200, x1: 12000, orangeTo: X19, hatch: [X19, X2247], point: X2247, clock: null,
-        ticks: [[X21, "21:00"], [X22, "22:00"], [X2230, "22:30"], [X2247, "22:47"], [FIL.DAYS.sam, "SAM."]],
+        ground: "dark", x0: 0, x1: 12000, orangeTo: X19, hatch: [X19, X2247], point: X2247, clock: "22:47",
+        ticks: [[X19, "19:00"], [X20, "20:00"], [X21, "21:00"], [X22, "22:00"], [X23, "23:00"]],
       });
-      // dot grid (trame 7 %) re-hosted on the stage, just under the cam (pilot 01-mardi): 48 px pitch on screen at every
-      // camera scale; reduced box sized to this frame's travel. Its phase matches the kit's grid exactly at scale 1
-      // (handoff_out cam(7900, 540, 1)): left/top ≡ 0 / 12 (mod 48), offset s·(6976 − px), s·(544 − py).
+      // dot grid on the stage, 2112 x 1248 box, offset = pilot dotsAt(cam) modulo 48 (same as frame 03)
       var dots = h.world.querySelector(".fil-dots");
       h.stage.insertBefore(dots, h.cam);
-      Object.assign(dots.style, { left: "-1680px", top: "-468px", width: "4560px", height: "1584px" });
-      h.point.id = "f04-point"; h.halo.id = "f04-halo";
-      Object.assign(h.halo.style, { left: "6440px", top: "140px" });   // the warm lamp, top left of the form (P08)
-      h.ticks[2][0].id = "f04-tk2230"; h.ticks[2][1].id = "f04-lb2230";
-      h.ticks[3][0].id = "f04-tk2247"; h.ticks[3][1].id = "f04-lb2247";
-
-      // four empty prospect forms, 21:30 → 22:00 (already hanging at handoff_in)
-      var FP = [[FIL.hx(21, 30), -3], [FIL.hx(21, 40), 2], [FIL.hx(21, 50), -1], [X22, 3]];
-      var fps = FP.map(function (f, i) {
-        var g = filHang(h.world, f[0], $("f04-fp" + (i + 1)), { len: 70 });
-        gsap.set(g.hang, { rotation: f[1] });
-        return g;
+      Object.assign(dots.style, { left: "-80px", top: "-80px", width: "2112px", height: "1248px" });
+      // the lamp of the styleframes, fixed on the stage top left (same as frame 03)
+      h.stage.insertBefore(h.halo, h.cam);
+      Object.assign(h.halo.style, { left: "450px", top: "200px" });
+      var rows = [h.hatchLabel,
+        filEl(h.world, "fil-hatch-l", { left: X20 + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE"),
+        filEl(h.world, "fil-hatch-l", { left: X22 + 10, top: FIL.Y + 70 }, "SAISIE · SAISIE · SAISIE")];
+      // this frame's own graduations: 22:30, 22:47 (printed at 0.30) and SAM. (the weekend, reached by the whip)
+      var extra = [[X2230, "22:30", "2230"], [X2247, "22:47", "2247"], [FIL.DAYS.sam, "SAM.", null]].map(function (g) {
+        var t = [filEl(h.world, "fil-tick", { left: g[0], top: FIL.Y }), filEl(h.world, "fil-label", { left: g[0], top: FIL.Y + 30 }, g[1])];
+        if (g[2]) { t[0].id = "f04-tk" + g[2]; t[1].id = "f04-lb" + g[2]; }
+        return t;
       });
-      // the advice form hangs at 22:30; its thread attaches 290 px (screen, at s 1.53) from its left edge (P08: 22:30 under x 700)
-      var S1 = 1.53;
-      var DOC_LEN = 112;
-      var doc = filHang(h.world, X2230, $("f04-docw"), { len: DOC_LEN });
-      $("f04-docw").style.transform = "translateX(" + (-290 / S1) + "px)";
-      doc.thread.id = "f04-thread";
-      h.world.appendChild(h.point);
+      var ticks = h.ticks.concat(extra);
+
+      // hanging cards (frame 03: 21:15 typed, 21:30 / 21:45 / 22:00 empty, 150 px threads) at their 5.80 s rotations
+      var cf = filHang(h.world, X2115, $("f04-cf"), { len: 150 });
+      var e1 = filHang(h.world, X2130, $("f04-e1"), { len: 150 });
+      var e2 = filHang(h.world, X2145, $("f04-e2"), { len: 150 });
+      var e3 = filHang(h.world, X22, $("f04-e3"), { len: 150 });
+      var CF_ROT0 = -0.5 + 0.8 * (1 - Math.cos(Math.PI * 0.41 / 0.9)) / 2;   // frame 03's cf drift at 5.80 (sine.inOut)
+      gsap.set(cf.hang, { rotation: CF_ROT0 });
+      gsap.set(e1.hang, { rotation: -0.8 });
+      // the advice form above 22:30 (frame 03: thread hidden, falling, y -260, x1.15, blur 8)
+      var adv = filHang(h.world, X2230, $("f04-advw"), { len: 120 });
+      adv.thread.id = "f04-advthread";
+      h.world.appendChild(h.point); h.world.appendChild(h.clock);
 
       // tick paths: measured length (svg-path-draw)
       [1, 2, 3].forEach(function (k) {
@@ -220,93 +245,114 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.__len = len;
       });
 
-      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
-      var C0 = [6300, 540, 0.9];                    // handoff_in
-      var PXK = 6770, PYK = 358;                    // P08 at 2.40: the form centered, the line at screen y 818
-      var VX = 16;                                  // drift +16 px/s
-      var C1 = [PXK + VX * (0.50 - 2.40), PYK, S1]; // landing of the end of the travelling (0.50)
-      var C2 = [PXK + VX * (2.70 - 2.40), PYK, S1]; // start of the whip (2.70)
-      var CW = [7900, 540, 1];                      // handoff_out
+      /* ---------------- camera: one source of truth, camAt(t) = [px, py, s] (frame 03 method) ---------------- */
+      // handoff_in: cam(6300, 540, 0.9) at the end of frame 03's power3.in travelling: x speed +6950 px/s, scale speed -2/s.
+      // P08 (2.40): cam(6770, 358, 1.53), the form centered, the line at screen y 818. handoff_out: cam(7900, 540, 1), +6000 px/s.
+      var S1 = 1.53, PXK = 6770, PYK = 358, VX = 16;
+      var C0 = [6300, 540, 0.9];
+      var C1 = [PXK + VX * (0.50 - 2.40), PYK, S1];
+      var C2 = [PXK + VX * (2.70 - 2.40), PYK, S1];
+      var CW = [7900, 540, 1];
+      // x: brake with the incoming speed, f(p) = 1 - (1 - p)^n, f'(0) = n = 6950 * 0.5 / dx
+      var NX = 6950 * 0.50 / (C1[0] - C0[0]);
+      var brakeX = function (p) { return 1 - Math.pow(1 - p, NX); };
+      // scale: keeps the incoming zoom-out speed, then pushes in; cubic with g'(0) = a, g'(1) = 0
+      var SA = -2 * 0.50 / (C1[2] - C0[2]);
+      var pushS = function (p) { return SA * p + (3 - 2 * SA) * p * p + (SA - 2) * p * p * p; };
+      // whip x: accelerating, speed at 3.00 = +6000 px/s (f(p) = A p² + B p³, f'(1) = 6000 · 0.3 / dx)
+      var WV = 6000 * 0.30 / (CW[0] - C2[0]), WA = 3 - WV, WB = WV - 2;
+      var whipX = function (p) { return WA * p * p + WB * p * p * p; };
+      var lin = function (p) { return p; };
+      var SEGS = [
+        [0.00, 0.50, C0, C1, brakeX, gsap.parseEase("power2.inOut"), pushS],
+        [0.50, 2.20, C1, C2, lin, lin, lin],
+        [2.70, 0.30, C2, CW, whipX, gsap.parseEase("power2.inOut"), gsap.parseEase("power2.inOut")],
+      ];
+      function camAt(t) {
+        var s = SEGS[0];
+        for (var i = SEGS.length - 1; i >= 0; i--) { if (t >= SEGS[i][0]) { s = SEGS[i]; break; } }
+        var p = Math.min(1, Math.max(0, (t - s[0]) / s[1])), a = s[2], b = s[3];
+        return [a[0] + (b[0] - a[0]) * s[4](p), a[1] + (b[1] - a[1]) * s[5](p), a[2] + (b[2] - a[2]) * s[6](p)];
+      }
+      function dotsAt(c) { return { x: 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // pilot formula, c = [px, py, s]
+      function mod48(v) { return ((v % 48) + 48) % 48; }
+      // the hatched band: 36 px on screen at the seam (frame 03 does not counter-scale it), 40 px (P08) once landed
+      function hatchK(c, t) { var m = t >= 0.5 ? 1 : 0.9 + 0.1 * pushS(Math.max(0, t) / 0.5); return m / c[2]; }
+
       filCamSet(h, C0[0], C0[1], C0[2]);
       gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
       gsap.set(h.cam, { scale: C0[2], filter: "blur(8px)" });
 
-      // marks of the line keep their screen size whatever the camera scale: counter scale 1 / s through eases derived
-      // from the camera ease (no callbacks, seek-safe)
-      var hudScale = [h.point].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
-      var hudY = [h.orange, h.grey, h.hatch];
-      var hudX = [doc.thread].concat(fps.map(function (g) { return g.thread; }));
-      h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
-      function dotsAt(c) { return { x: c[2] * (6976 - c[0]), y: c[2] * (544 - c[1]) }; }  // c = [px, py, s]
-      gsap.set(dots, dotsAt(C0));
+      var hudScale = [h.point, h.clock].concat(ticks.map(function (t) { return t[0]; }), ticks.map(function (t) { return t[1]; }), rows);
+      var hudY = [h.orange, h.grey];
+      var hudX = [cf.thread, e1.thread, e2.thread, e3.thread, adv.thread];
+      gsap.set(h.clock, { transformOrigin: "50% 230px" });
+      ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
+      gsap.set(rows, { transformOrigin: "0px -70px" });
+      var D0 = dotsAt(C0);
+      gsap.set(dots, { x: -48 + mod48(D0.x), y: -48 + mod48(D0.y) });
       gsap.set(hudScale, { scale: 1 / C0[2] });
       gsap.set(hudY, { scaleY: 1 / C0[2] });
+      gsap.set(h.hatch, { scaleY: 1 });
       gsap.set(hudX, { scaleX: 1 / C0[2] });
 
       var tl = gsap.timeline({ paused: true });
       function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
-      function easeOf(e) { return typeof e === "function" ? e : gsap.parseEase(e); }
-      function camMove(t0, dur, a, b, ex, ey, es) {
-        // a, b: [px, py, s]
-        var Ex = easeOf(ex), Ey = easeOf(ey || ex), Es = easeOf(es || ey || ex);
-        ft(h.world, { x: 960 - a[0] }, { x: 960 - b[0], duration: dur, ease: Ex }, t0);
-        if (a[1] !== b[1]) ft(h.world, { y: 540 - a[1] }, { y: 540 - b[1], duration: dur, ease: Ey }, t0);
-        var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
-        ["x", "y"].forEach(function (k) {
-          var g0 = at(0)[k], g1 = at(1)[k];
-          if (Math.abs(g1 - g0) < 1e-6) return;
-          var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
-          fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
-        });
-        if (a[2] !== b[2]) {
-          ft(h.cam, { scale: a[2] }, { scale: b[2], duration: dur, ease: Es }, t0);
-          var kA = 1 / a[2], kB = 1 / b[2];
-          var e = function (p) { return (1 / (a[2] + (b[2] - a[2]) * Es(p)) - kA) / (kB - kA); };
-          ft(hudScale, { scale: kA }, { scale: kB, duration: dur, ease: e }, t0);
-          ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
-          ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
-        }
+      // whole-frame drivers: value = ease(p), the ease returns the exact camera-derived value at t = p * DUR
+      function drive(target, prop, fn) {
+        var fv = {}, tv = { duration: DUR, immediateRender: false, ease: function (p) { return fn(camAt(p * DUR), p * DUR); } };
+        fv[prop] = 0; tv[prop] = 1; tl.fromTo(target, fv, tv, 0);
       }
-      // 0.00 → 0.50 end of the travelling: it brakes onto the form (x power3.out keeps the incoming speed),
-      // lifts and pushes in to the P08 framing; blur 8 → 0
-      camMove(0, 0.50, C0, C1, "power3.out", "power2.inOut", "power2.inOut");
+      drive(h.world, "x", function (c) { return 960 - c[0]; });
+      drive(h.world, "y", function (c) { return 540 - c[1]; });
+      drive(h.cam, "scale", function (c) { return c[2]; });
+      drive(dots, "x", function (c) { return -48 + mod48(dotsAt(c).x); });
+      drive(dots, "y", function (c) { return -48 + mod48(dotsAt(c).y); });
+      drive(hudScale, "scale", function (c) { return 1 / c[2]; });
+      drive(hudY, "scaleY", function (c) { return 1 / c[2]; });
+      drive(h.hatch, "scaleY", hatchK);
+      drive(hudX, "scaleX", function (c) { return 1 / c[2]; });
+      // camera blur: end of the travelling (8 -> 0), the whip (0 -> 14)
       ft(h.cam, { filter: "blur(8px)" }, { filter: "blur(0px)", duration: 0.30, ease: "power2.out" }, 0);
-      // 0.50 → 2.70 drift +16 px/s
-      camMove(0.50, 2.20, C1, C2, "none");
-      // 2.70 → 3.00 whip right along the line: accelerating curve whose speed at 3.00 is the handoff's +6000 px/s
-      // (f(p) = A p² + B p³, f'(1) = 6000 · 0.3 / dx); y and scale land on the line (540, ×1) with zero speed
-      var WV = 6000 * 0.30 / (CW[0] - C2[0]), WA = 3 - WV, WB = WV - 2;
-      var whipX = function (p) { return WA * p * p + WB * p * p * p; };
-      camMove(2.70, 0.30, C2, CW, whipX, "power2.inOut", "power2.inOut");
       ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(14px)", duration: 0.30, ease: "expo.in" }, 2.70);
 
-      /* ---------------- the advice form: enters right, drops, hangs at 22:30 ---------------- */
-      gsap.set(doc.hang, { x: 420, y: -350, scale: 1.15, rotation: 0, filter: "blur(8px)" });
-      ft(doc.hang, { x: 420 }, { x: 0, duration: 0.25, ease: "power3.out" }, 0);
-      ft(doc.hang, { y: -350, scale: 1.15, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, 0.10);
-      ft(doc.hang, { y: -14, scale: 1.03, filter: "blur(3px)" }, { y: 0, scale: 1, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.25);
-      ft(doc.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.25);
-      ft(doc.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.37);
-      ft(doc.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.57);
-      // living hold: drifts 1° then comes back level for the clicks (P08 at 2.40 is straight)
-      ft(doc.hang, { rotation: 0 }, { rotation: 1, duration: 0.5, ease: "sine.inOut" }, 0.95);
-      ft(doc.hang, { rotation: 1 }, { rotation: -0.4, duration: 0.5, ease: "sine.inOut" }, 1.45);
-      ft(doc.hang, { rotation: -0.4 }, { rotation: 0, duration: 0.4, ease: "sine.inOut" }, 1.95);
-      // the warm lamp behind it
-      ft(h.halo, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.20);
+      /* ---------------- the advice form finishes its fall and hangs at 22:30 ---------------- */
+      // landed: x1.3073 (1100 px on screen at s 1.53), shifted +170 world px so that 22:30 sits under its left third (P08)
+      var DOC_S = 1100 / (550 * S1), DOC_DX = 170 / DOC_S;
+      gsap.set(adv.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" });
+      gsap.set($("f04-advs"), { x: 0 });
+      // the fall keeps frame 03's speed (power2.in, ~7100 px/s): f(p) = 1.7 p - 0.7 p², then catches (expo.out)
+      var fallE = function (p) { return 1.7 * p - 0.7 * p * p; };
+      ft(adv.hang, { y: -260, scale: 1.15, filter: "blur(8px)" }, { y: -10, scale: DOC_S * 1.03, filter: "blur(3px)", duration: 0.06, ease: fallE }, 0);
+      ft(adv.hang, { y: -10, scale: DOC_S * 1.03, filter: "blur(3px)" }, { y: 0, scale: DOC_S, filter: "blur(0px)", duration: 0.12, ease: "expo.out" }, 0.06);
+      ft($("f04-advs"), { x: 0 }, { x: DOC_DX, duration: 0.18, ease: "power2.out" }, 0);
+      ft(adv.thread, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.12, ease: "expo.out" }, 0.06);
+      // swings 2° once, then drifts (living hold), level again for the clicks
+      ft(adv.hang, { rotation: 0 }, { rotation: 2, duration: 0.2, ease: "sine.out" }, 0.18);
+      ft(adv.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.38);
+      ft(adv.hang, { rotation: 0 }, { rotation: 1, duration: 0.5, ease: "sine.inOut" }, 0.95);
+      ft(adv.hang, { rotation: 1 }, { rotation: -0.4, duration: 0.5, ease: "sine.inOut" }, 1.45);
+      ft(adv.hang, { rotation: -0.4 }, { rotation: 0, duration: 0.4, ease: "sine.inOut" }, 1.95);
+      // the cards of frame 03 keep drifting a little while they leave on the left
+      ft(cf.hang, { rotation: CF_ROT0 }, { rotation: 0.3, duration: 0.49, ease: "sine.out" }, 0);
+      ft(e1.hang, { rotation: -0.8 }, { rotation: -0.3, duration: 0.6, ease: "sine.inOut" }, 0.10);
+
+      // the big « 22:47 » clock would cover the form (P08): it fades after 0.10 (0.30 s), comes back on the whip
+      ft(h.clock, { opacity: 1 }, { opacity: 0, duration: 0.30, ease: "power2.out" }, 0.12);
+      ft(h.clock, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 2.72);
+      // 23:00 and the last SAISIE row are not part of P08 (the evening stops at 22:47): they fade (0.35 s)
+      [h.ticks[4][0], h.ticks[4][1], rows[2]].forEach(function (el) {
+        ft(el, { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, 0.40);
+      });
       // 0.30 graduations 22:30 and 22:47 print
-      [[h.ticks[2], 0.30], [h.ticks[3], 0.34]].forEach(function (p) {
+      [[extra[0], 0.30], [extra[1], 0.34]].forEach(function (p) {
         ft(p[0][0], { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power3.out" }, p[1]);
         ft(p[0][1], { opacity: 0, y: 14, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.16, ease: "power3.out" }, p[1]);
       });
-      // 0.40 its five lines print, boxes empty
-      [1, 2, 3, 4, 5].forEach(function (k, i) {
-        ft($("f04-r" + k), { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.18, ease: "power3.out" }, 0.40 + i * 0.05);
-      });
 
-      /* ---------------- the mouse arrow (form units: 1 px = 1 screen px at s 1.53) ---------------- */
+      /* ---------------- the mouse arrow (form units: 1 px = 1 screen px once landed at s 1.53) ---------------- */
       var cur = $("f04-cur");
-      var TIPX = 104, ROW = function (k) { return 205 + 78 * (k - 1) + 8; };
+      var TIPX = 104, ROW = function (k) { return 205 + 79 * (k - 1) + 8; };
       gsap.set(cur, { x: 1560, y: 600 });
       // 0.90 one curved move onto the first box (0.4 s power3.out; y on a softer ease draws the curve)
       tl.set(cur, { opacity: 1 }, 0.90);
@@ -316,11 +362,11 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       var CLICK = [2.00, 2.27, 2.47];
       CLICK.forEach(function (t, i) {
         var k = i + 1, ck = $("f04-ck" + k), path = $("f04-tk" + k), rip = $("f04-rip" + k);
-        gsap.set(rip, { left: 97, top: 205 + 78 * i });   // box center in form units
+        gsap.set(rip, { left: 97, top: 205 + 79 * i });   // box center in form units
         // cursor press (scale .85, 0.06 s) and back
         ft(cur, { scale: 1 }, { scale: 0.85, duration: 0.06, ease: "power1.in" }, t);
         ft(cur, { scale: 0.85 }, { scale: 1, duration: 0.10, ease: "power2.out" }, t + 0.06);
-        // box press-release-spring (×0.9 linear press, back.out release)
+        // box press-release-spring (x0.9 linear press, back.out release)
         ft(ck, { scale: 1 }, { scale: 0.9, duration: 0.06, ease: "power1.in" }, t);
         ft(ck, { scale: 0.9 }, { scale: 1, duration: 0.30, ease: "back.out(1.8)" }, t + 0.06);
         // the tick draws in 0.08 s, the box turns orange
@@ -328,13 +374,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         ft(path, { strokeDashoffset: path.__len }, { strokeDashoffset: 0, duration: 0.08, ease: "power2.out" }, t);
         // accent ripple
         ft(rip, { opacity: 0.7, scale: 0.5 }, { opacity: 0, scale: 1.6, duration: 0.30, ease: "power2.out" }, t);
-        // then the arrow slides to the next box
+        // then the arrow slides to the next box (the fourth stays empty under it)
         var t1 = i < 2 ? CLICK[i + 1] - 0.15 : 2.55;
         ft(cur, { y: ROW(k) }, { y: ROW(k + 1), duration: 0.12, ease: "power3.out" }, t1);
       });
-
-      // 2.60 the line stops at 22:47: the point lights there (two boxes stay empty)
-      ft(h.point, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power3.out" }, 2.60);
 
       /* ---------------- subtitle: word by word, one key-word box ---------------- */
       Array.prototype.forEach.call($("f04-s1").querySelectorAll(".f04-w"), function (w) {

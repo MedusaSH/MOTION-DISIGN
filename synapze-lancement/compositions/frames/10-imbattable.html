@@ -46,10 +46,11 @@
   /* ===================== FIL : fin du bloc CSS à copier ===================== */
 
     /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
-    #f10-wrap #f10-point, #f10-wrap #f10-clock, #f10-wrap #f10-seg, #f10-wrap #f10-navy, #f10-wrap #f10-dotsd,
+    #f10-wrap #f10-point, #f10-wrap #f10-clock, #f10-wrap #f10-seg, #f10-wrap #f10-navy,
     #f10-wrap #f10-tk18, #f10-wrap #f10-lb18, #f10-wrap #f10-tk19, #f10-wrap #f10-lb19, #f10-wrap #f10-tk20, #f10-wrap #f10-lb20,
     #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp { opacity: 0; }
-    #f10-wrap #f10-navy { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
+    #f10-wrap #f10-navy { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; overflow: hidden;
+      clip-path: circle(0px at 960px 540px); }
 
     /* clock « 19:05 » (P16: 110 px, under the line): digit columns that roll (vertical ticker) */
     #f10-wrap #f10-clock { font-size: 110px; line-height: 118px; letter-spacing: -0.045em; }
@@ -141,7 +142,7 @@
       font: 400 26px "DM Sans", sans-serif; flex: none; }
     #root .f10-in-bar .f10-f { flex: 1; height: 34px; box-sizing: border-box; border-radius: 17px; background: #fff; border: 1px solid #E1DED8; }
     #root .f10-in-bar .f10-m { width: 18px; height: 26px; box-sizing: border-box; border: 2.5px solid #1DAB61; border-radius: 9px; }
-    #root .f10-col { display: inline-block; height: 20px; overflow: hidden; vertical-align: top; }
+    #root .f10-scol { display: inline-block; height: 20px; overflow: hidden; vertical-align: top; }
     #root .f10-dgs { display: block; height: 20px; line-height: 20px; }
     #root .f10-colon2 { display: inline-block; height: 20px; line-height: 20px; vertical-align: top; }
     /* the last reply of frame 9, landed in its slot */
@@ -199,7 +200,7 @@
     </div>
     <div id="f10-phw">
       <div class="f10-phone"><div class="f10-scr"><div class="f10-wa2">
-        <div class="f10-st"><span class="f10-clk"><span class="f10-col"><span class="f10-dgs">0</span></span><span class="f10-col"><span class="f10-dgs">3</span></span><span class="f10-colon2">:</span><span class="f10-col"><span class="f10-dgs">1</span></span><span class="f10-col"><span class="f10-dgs">2</span></span></span><span>●●● ▮</span></div>
+        <div class="f10-st"><span class="f10-clk"><span class="f10-scol"><span class="f10-dgs">0</span></span><span class="f10-scol"><span class="f10-dgs">3</span></span><span class="f10-colon2">:</span><span class="f10-scol"><span class="f10-dgs">1</span></span><span class="f10-scol"><span class="f10-dgs">2</span></span></span><span>●●● ▮</span></div>
         <div class="f10-hd"><span class="f10-back">‹</span><div class="f10-av">CR</div><div class="f10-nm">Camille R.<small>en ligne</small></div>
           <div class="f10-ic"><i></i><i style="border-radius:50%;width:18px;height:18px"></i></div></div>
         <div class="f10-body">
@@ -297,7 +298,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // the night-blue ground and its dark trame wait under the cam for the contraction
       var navy = filEl(h.stage, "", {}); navy.id = "f10-navy"; h.stage.insertBefore(navy, dots);
       var dotsD = filEl(h.stage, "fil-dots", { left: "-560px", top: "-752px", width: "4464px", height: "1872px" });
-      dotsD.id = "f10-dotsd"; h.stage.insertBefore(dotsD, h.cam);
+      dotsD.id = "f10-dotsd"; navy.appendChild(dotsD);
       h.point.id = "f10-point"; h.clock.id = "f10-clock";
       var tkSam = h.ticks[0];
       [["18", 1], ["19", 2], ["20", 3]].forEach(function (p) { h.ticks[p[1]][0].id = "f10-tk" + p[0]; h.ticks[p[1]][1].id = "f10-lb" + p[0]; });
@@ -362,7 +363,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       gsap.set(hudX, { scaleX: 1 / C0[2] });
       // the trame follows the pilot's (and frame 9's) convention, rebased by 46 × 48 px for this box (same phase)
       function dotsAt(c) { return { x: 2208 + 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
-      gsap.set([dots, dotsD], dotsAt(C0));
+      gsap.set(dots, dotsAt(C0));
+      // the dark trame of the end card waits still, on frame 11's phase (screen origin -32, -32)
+      gsap.set(dotsD, { x: 528, y: 720 });
 
       var tl = gsap.timeline({ paused: true });
       function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
@@ -387,7 +390,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
             var g0 = at(0)[k], g1 = at(1)[k];
             if (Math.abs(g1 - g0) < 1e-6) return;
             var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
-            fv[k] = g0; tv[k] = g1; ft([dots, dotsD], fv, tv, t0);
+            fv[k] = g0; tv[k] = g1; ft(dots, fv, tv, t0);
           });
         }
       }
@@ -458,9 +461,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft([h.clock].concat(h.ticks.slice(1).map(function (t) { return t[0]; }), h.ticks.slice(1).map(function (t) { return t[1]; })),
         { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.2, ease: "power2.in" }, 3.00);
       ft(OBJ.map(function (o) { return H[o.k].hang; }).concat(hudX), { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in" }, 3.10);
-      ft($("f10-scrim"), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in" }, 3.05);
-      ft([navy, dotsD], { opacity: 0 }, { opacity: 1, duration: 0.37, ease: "power2.inOut" }, 3.05);
-      ft(dots, { opacity: 1 }, { opacity: 0, duration: 0.37, ease: "power2.inOut" }, 3.05);
+      ft($("f10-scrim"), { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.in" }, 3.05);
+      // the night blue opens from the center of the stroke (iris), under the contracting line
+      ft(navy, { opacity: 1, clipPath: "circle(0px at 960px 540px)" }, { clipPath: "circle(1120px at 960px 540px)", duration: 0.22, ease: "sine.in" }, 3.20);
 
       /* ---------------- subtitles: word by word, one key-word box, the peak stroke ---------------- */
       ["f10-s1", "f10-s2"].forEach(function (s) {
@@ -472,7 +475,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft($("f10-k1"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.12, ease: "power3.out" }, 1.08);
       ft($("f10-tr"), { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 2.71 - 1 / 30);
       ft($("f10-s1"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 1.84);
-      ft($("f10-s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 3.22);
+      ft($("f10-s2"), { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 3.16);
 
       tl.set({}, {}, DUR);
       window.__timelines = window.__timelines || {};
