@@ -74,8 +74,8 @@
       mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 12%, #000 88%, rgba(0,0,0,0) 100%); }
     [data-composition-id="05-samedi"] .f05-tki { display: flex; flex-direction: column; }
     [data-composition-id="05-samedi"] .f05-it { height: 300px; display: flex; align-items: center; justify-content: center; white-space: nowrap;
-      font: 900 224px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: rgba(10,9,11,.9); -webkit-text-stroke: 4px rgba(246,241,234,.30); paint-order: stroke fill; }
-    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 165px; }
+      font: 900 220px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: rgba(10,9,11,.9); -webkit-text-stroke: 4px rgba(246,241,234,.30); paint-order: stroke fill; }
+    [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 155px; }
     [data-composition-id="05-samedi"] .f05-it.f05-short { font-size: 256px; }
     [data-composition-id="05-samedi"] .f05-lit .f05-it { -webkit-text-stroke: 4px #ffd2bd; }
     [data-composition-id="05-samedi"] #f05-tklit { opacity: 0; filter: drop-shadow(0 0 20px rgba(242,78,30,.65)); }
@@ -293,7 +293,7 @@ const FX = {
 
       /* ---------- giant days: slow horizontal drift + lit + vertical spring ticker ---------- */
       var tkw = $("f05-tkw");
-      tl.fromTo(tkw, { x: 24 }, { x: -24, duration: DUR, ease: "none" }, 0);
+      tl.fromTo(tkw, { x: 10 }, { x: -10, duration: DUR, ease: "none" }, 0);
       tl.fromTo($("f05-tkbase"), { opacity: 0.55 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
       // 1.36 SAMEDI lights up (on the word « samedi »)
       tl.fromTo($("f05-tklit"), { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "expo.out", immediateRender: false }, 1.36 - E);
