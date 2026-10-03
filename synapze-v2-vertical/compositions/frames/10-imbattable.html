@@ -1,0 +1,435 @@
+<template>
+  <style>
+  /* ===================== FX : début du bloc CSS à copier ===================== */
+  @font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: "Geist Mono"; src: url("assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
+  @font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); }
+  [data-composition-id="10-imbattable"] #f10-st.fx-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+  /* grounds: night (problem), ember (pivot light), paper (solution) */
+  [data-composition-id="10-imbattable"] #f10-st .fx-night { position: absolute; inset: 0; background: radial-gradient(1000px 1400px at 70% 22%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-paper { position: absolute; inset: 0; background: radial-gradient(800px 1000px at 85% 12%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+    radial-gradient(900px 1100px at 10% 92%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-orange { position: absolute; inset: 0; background: radial-gradient(900px 1500px at 50% 45%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-glow { position: absolute; width: 1200px; height: 1200px; margin: -600px 0 0 -600px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 256px 256px; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(800px 1350px at 50% 46%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-paper ~ .fx-vignette, [data-composition-id="10-imbattable"] #f10-st .fx-vignette.soft { background: radial-gradient(800px 1350px at 50% 46%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+  /* kinetic type */
+  [data-composition-id="10-imbattable"] #f10-st .fx-k { position: absolute; left: 0; right: 80px; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-k.ink { color: #0c0c0f; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-w { display: inline-block; will-change: transform, filter, opacity; }
+  /* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
+  [data-composition-id="10-imbattable"] #f10-st .fx-chroma { position: relative; display: inline-block; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-chroma > .r, [data-composition-id="10-imbattable"] #f10-st .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+  /* caption (the voice, readable without sound): 9:16 safe zone, band y 1270-1420 (2 lines max), x 70-930 (right 150 px = app buttons) */
+  [data-composition-id="10-imbattable"] #f10-st .fx-cap { position: absolute; left: 70px; width: 860px; top: 1280px; text-align: center; white-space: normal; font: 600 54px/1.18 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-cap .w { display: inline-block; opacity: 0; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+  /* surfaces */
+  [data-composition-id="10-imbattable"] #f10-st .fx-3d { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; perspective: 1800px; perspective-origin: 46% 42%; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+  [data-composition-id="10-imbattable"] #f10-st .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+  [data-composition-id="10-imbattable"] #f10-st .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+  /* ===================== FX : fin du bloc CSS à copier ===================== */
+
+  /* ---------- frame 10 (9:16) : root + layers ---------- */
+  #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-cam1 { transform-origin: 500px 800px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-cam2, [data-composition-id="10-imbattable"] #f10-st #f10-shk { transform-origin: 500px 840px; }
+
+  /* elements NOT on screen at t = 0 start hidden */
+  [data-composition-id="10-imbattable"] #f10-st #f10-w-ne, [data-composition-id="10-imbattable"] #f10-st #f10-w-rem, [data-composition-id="10-imbattable"] #f10-st #f10-w-pas, [data-composition-id="10-imbattable"] #f10-st #f10-w-le, [data-composition-id="10-imbattable"] #f10-st #f10-w-cour,
+  [data-composition-id="10-imbattable"] #f10-st .f10-fly, [data-composition-id="10-imbattable"] #f10-st #f10-s2, [data-composition-id="10-imbattable"] #f10-st #f10-imb, [data-composition-id="10-imbattable"] #f10-st #f10-clk, [data-composition-id="10-imbattable"] #f10-st #f10-glow2, [data-composition-id="10-imbattable"] #f10-st #f10-line, [data-composition-id="10-imbattable"] #f10-st #f10-dot,
+  [data-composition-id="10-imbattable"] #f10-st #f10-night, [data-composition-id="10-imbattable"] #f10-st .f10-str, [data-composition-id="10-imbattable"] #f10-st #f10-cglow, [data-composition-id="10-imbattable"] #f10-st #f10-glow1b { opacity: 0; }
+
+  /* scene 1 : kinetic, stacked for vertical (L’IA ne / remplace pas / le courtier.) */
+  [data-composition-id="10-imbattable"] #f10-st #f10-l1a, [data-composition-id="10-imbattable"] #f10-st #f10-l1b { font-size: 124px; font-weight: 700; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-l1a { top: 556px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-l1b { top: 676px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-l1a .f10-heavy { font-weight: 900; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-l2 { top: 846px; font-size: 210px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-l2 .fx-w { padding: 0 .04em; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-glow1 { left: 860px; top: 400px; opacity: .55; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-glow1b { left: 500px; top: 820px; width: 960px; height: 1180px; margin: -590px 0 0 -480px; }
+
+  /* fly-through cards (simplified copies of the film's surfaces) */
+  [data-composition-id="10-imbattable"] #f10-st .f10-fly { position: absolute; left: 500px; top: 820px; filter: blur(5px); transform-origin: 50% 50%; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-cal { width: 760px; height: 470px; margin: -235px 0 0 -380px; padding: 40px 44px; box-sizing: border-box; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-cal .f10-row { display: flex; align-items: center; gap: 22px; height: 70px; border-top: 1px solid rgba(255,255,255,.08); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-cal .f10-h { font: 500 22px/1 "Geist Mono", monospace; color: #9a948c; width: 90px; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-cal .f10-bar { height: 16px; border-radius: 8px; background: rgba(246,241,234,.22); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-cal .f10-bar.on { height: 44px; border-radius: 12px; background: #f24e1e; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-nb { width: 520px; height: 680px; margin: -340px 0 0 -260px; border-radius: 10px; background: #fbf6e9;
+    background-image: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 54px, rgba(60,90,140,.22) 54px 56px);
+    box-shadow: 0 40px 100px rgba(120,50,10,.25); padding: 70px 40px 0 92px; box-sizing: border-box; font: 500 46px/56px "Caveat", cursive; color: #26324a; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-nb::before { content: ""; position: absolute; left: 70px; top: 0; bottom: 0; width: 3px; background: rgba(242,78,30,.7); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-scr { width: 960px; height: 540px; margin: -270px 0 0 -480px; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 0 0 10px rgba(255,255,255,.55), 0 0 90px rgba(242,78,30,.45), 0 50px 120px rgba(120,50,10,.3); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-scr img { display: block; width: 960px; height: 540px; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-form { width: 560px; height: 700px; margin: -350px 0 0 -280px; padding: 44px 46px; box-sizing: border-box; border-radius: 14px; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-form .f10-ttl { font: 700 34px/1.15 "Geist"; letter-spacing: -0.02em; color: #141418; margin: 14px 0 34px; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-form .f10-ln { display: flex; align-items: center; gap: 18px; height: 86px; border-top: 1px solid rgba(20,20,30,.08); font: 500 26px/1 "Geist"; color: #2a2a30; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-form .f10-ck { width: 34px; height: 34px; border-radius: 9px; background: #f24e1e; color: #fff; font: 800 24px/34px "Geist"; text-align: center; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph { width: 400px; height: 820px; margin: -410px 0 0 -200px; border-radius: 62px; background: #0b0b0e; padding: 14px; box-sizing: border-box;
+    box-shadow: 0 50px 120px rgba(0,0,0,.35); }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph .f10-scn { width: 100%; height: 100%; border-radius: 48px; overflow: hidden; background: #efe7dc; position: relative; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph .f10-hd { height: 120px; background: #f7f3ee; padding: 64px 26px 0; box-sizing: border-box; font: 600 22px/1 "Geist"; color: #111; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph .f10-hd span { display: block; margin-top: 6px; font: 400 16px/1 "Geist"; color: #6b6b6b; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph .f10-bb { position: absolute; left: 18px; width: 230px; height: 84px; border-radius: 16px; background: #fff; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-ph .f10-bb.g { left: auto; right: 18px; width: 250px; height: 120px; background: #d9fdd3; }
+
+  /* streaks (orange family on paper) */
+  [data-composition-id="10-imbattable"] #f10-st .f10-str { position: absolute; height: 3px; border-radius: 3px; background: linear-gradient(90deg, rgba(242,78,30,0), #ff6a2b, rgba(255,176,138,0)); transform-origin: 50% 50%; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-str.thick { height: 4px; }
+
+  /* scene 2 : IMBATTABLE. stacked on two lines (IMBAT / TABLE.) */
+  [data-composition-id="10-imbattable"] #f10-st #f10-glow2 { left: 500px; top: 800px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb { top: 600px; font-size: 220px; font-weight: 900; letter-spacing: -0.045em; line-height: .9; white-space: pre-line; transform-origin: 500px 198px; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma { line-height: .9; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb-main { position: relative; left: auto; right: auto; display: inline-block; font-weight: 900; letter-spacing: -0.045em; padding: 0 .02em; white-space: pre-line;
+    background-image: linear-gradient(100deg, #d93a12 0%, #f24e1e 22%, #ff6a2b 38%, #ffb08a 47%, #ffd2bd 50%, #ffb08a 53%, #ff6a2b 62%, #f24e1e 78%, #d93a12 100%);
+    background-position: 100% 0%; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma > .r, [data-composition-id="10-imbattable"] #f10-st #f10-imb .fx-chroma > .b { mix-blend-mode: multiply; padding: 0 .02em; opacity: 0; width: 100%; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb .f10-depth { position: absolute; left: 0; top: 0; width: 100%; padding: 0 .02em; color: rgba(184,39,10,.30); filter: blur(16px); transform: translateY(26px); }
+  [data-composition-id="10-imbattable"] #f10-st #f10-imb .f10-sheen { position: absolute; left: 0; top: 0; width: 100%; padding: 0 .02em; color: transparent;
+    background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 44%, rgba(255,250,244,.55) 50%, rgba(255,255,255,0) 56%, rgba(255,255,255,0) 100%);
+    background-size: 220% 100%; background-position: 100% 0%; -webkit-background-clip: text; background-clip: text; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-clk { position: absolute; left: 0; right: 80px; top: 1062px; text-align: center; font: 500 66px/1 "Geist Mono", monospace; letter-spacing: .12em;
+    color: #0c0c0f; font-variant-numeric: tabular-nums; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-clk .f10-cdot { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: #f24e1e; margin: 0 26px 0 0; vertical-align: 12px;
+    box-shadow: 0 0 0 7px rgba(242,78,30,.18); }
+  [data-composition-id="10-imbattable"] #f10-st #f10-clkv { display: inline-block; }
+
+  /* the end : night + orange line (handoff to frame 11) */
+  [data-composition-id="10-imbattable"] #f10-st #f10-night { background: #050507; clip-path: circle(0px at 500px 880px); }
+  [data-composition-id="10-imbattable"] #f10-st #f10-line { position: absolute; left: 350px; top: 878px; width: 300px; height: 4px; border-radius: 4px; background: #f24e1e; transform-origin: 50% 50%; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-dot { position: absolute; left: 341px; top: 871px; width: 18px; height: 18px; border-radius: 50%; background: #f24e1e; }
+  [data-composition-id="10-imbattable"] #f10-st .f10-top { z-index: 60; }
+  [data-composition-id="10-imbattable"] #f10-st #f10-core { position: absolute; left: 488px; top: 788px; width: 24px; height: 24px; border-radius: 50%; background: #f24e1e; opacity: 0;
+    box-shadow: 0 0 0 10px rgba(242,78,30,.16), 0 0 60px 20px rgba(255,106,43,.45); }
+  [data-composition-id="10-imbattable"] #f10-st #f10-cglow { background: radial-gradient(closest-side, rgba(255,106,43,.55), rgba(242,78,30,.18) 50%, rgba(242,78,30,0)); }
+  </style>
+
+  <div id="root" data-composition-id="10-imbattable" data-width="1080" data-height="1920" data-duration="3.5">
+    <div id="f10-st" class="fx-stage">
+      <div id="f10-bg" class="clip fx-paper" data-start="0" data-duration="3.5" data-track-index="0"></div>
+      <div id="f10-night" class="f10-full"></div>
+
+      <!-- ============ SCENE 1 : le courtier ============ -->
+      <div id="f10-s1" class="f10-full">
+        <div id="f10-cam1" class="f10-full">
+          <div id="f10-glow1" class="fx-glow"></div>
+          <div id="f10-glow1b" class="fx-glow"></div>
+          <!-- fly-through behind the text -->
+          <div id="f10-fly" class="fx-3d">
+            <div id="f10-c1" class="f10-fly fx-card f10-cal">
+              <div class="fx-label">Mardi</div>
+              <div style="height:24px"></div>
+              <div class="f10-row"><div class="f10-h">14:00</div><div class="f10-bar" style="width:300px"></div></div>
+              <div class="f10-row"><div class="f10-h">16:30</div><div class="f10-bar" style="width:380px"></div></div>
+              <div class="f10-row"><div class="f10-h">18:00</div><div class="f10-bar on" style="width:500px"></div></div>
+              <div class="f10-row"><div class="f10-h">19:00</div><div class="f10-bar" style="width:220px"></div></div>
+            </div>
+            <div id="f10-c2" class="f10-fly f10-nb">Louis Lebrun<br>mutuelle santé<br>famille<br>→ conseil</div>
+            <div id="f10-c3" class="f10-fly f10-scr"><img src="assets/ui/voice-note/vn-22.jpg" alt=""></div>
+            <div id="f10-c4" class="f10-fly fx-card light f10-form">
+              <div class="fx-label">Fiche de conseil</div>
+              <div class="f10-ttl">Santé Individuel</div>
+              <div class="f10-ln"><div class="f10-ck">✓</div>Besoins exprimés</div>
+              <div class="f10-ln"><div class="f10-ck">✓</div>Situation familiale</div>
+              <div class="f10-ln"><div class="f10-ck">✓</div>Budget</div>
+              <div class="f10-ln"><div class="f10-ck">✓</div>Garanties proposées</div>
+              <div class="f10-ln"><div class="f10-ck">✓</div>Justification du conseil</div>
+            </div>
+            <div id="f10-c5" class="f10-fly f10-ph"><div class="f10-scn">
+              <div class="f10-hd">Camille R.<span>en ligne</span></div>
+              <div class="f10-bb" style="top:170px"></div>
+              <div class="f10-bb g" style="top:280px"></div>
+              <div class="f10-bb" style="top:430px;width:200px"></div>
+              <div class="f10-bb g" style="top:540px;height:100px"></div>
+            </div></div>
+          </div>
+          <div id="f10-sa" class="f10-str" style="left:-420px;top:470px;width:720px"></div>
+          <div id="f10-sb" class="f10-str" style="left:780px;top:1150px;width:720px"></div>
+          <!-- kinetic text -->
+          <div id="f10-l1" class="f10-full">
+            <div id="f10-l1a" class="fx-k ink"><span id="f10-w-lia" class="fx-w f10-heavy">L’IA</span> <span id="f10-w-ne" class="fx-w">ne</span></div>
+            <div id="f10-l1b" class="fx-k ink"><span id="f10-w-rem" class="fx-w">remplace</span> <span id="f10-w-pas" class="fx-w">pas</span></div>
+          </div>
+          <div id="f10-l2" class="fx-k ink serif"><span id="f10-w-le" class="fx-w">le</span> <span id="f10-w-cour" class="fx-w">courtier.</span></div>
+        </div>
+      </div>
+
+      <!-- ============ SCENE 2 : imbattable ============ -->
+      <div id="f10-s2" class="f10-full">
+        <div id="f10-cam2" class="f10-full">
+          <div id="f10-shk" class="f10-full">
+            <div id="f10-glow2" class="fx-glow"></div>
+            <div id="f10-cglow" class="fx-glow" style="left:500px;top:800px;width:900px;height:900px;margin:-450px 0 0 -450px"></div>
+            <div id="f10-suck" class="f10-full"></div>
+            <div id="f10-core"></div>
+            <div id="f10-i1" class="f10-str thick" style="left:-520px;top:790px;width:620px"></div>
+            <div id="f10-i2" class="f10-str thick" style="left:980px;top:860px;width:620px"></div>
+            <div id="f10-i3" class="f10-str" style="left:-460px;top:560px;width:520px"></div>
+            <div id="f10-i4" class="f10-str" style="left:1000px;top:1050px;width:520px"></div>
+            <div id="f10-i5" class="f10-str" style="left:-480px;top:1010px;width:500px"></div>
+            <div id="f10-i6" class="f10-str" style="left:1020px;top:620px;width:500px"></div>
+            <div id="f10-imb" class="fx-k"><span id="f10-imb-ch" class="fx-chroma"><span id="f10-imb-main" class="fx-k ink hot">IMBAT
+TABLE.</span></span></div>
+            <div id="f10-clk"><span class="f10-cdot"></span><span id="f10-clkv">19:00</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="f10-cap" class="fx-cap ink"><span id="f10-c-elle" class="w">Elle</span> <span id="f10-c-le" class="w">le</span> <span id="f10-c-rend" class="w">rend</span></div>
+
+      <!-- ============ END : night + orange line ============ -->
+      <div id="f10-e1" class="f10-str f10-top" style="left:-120px;top:879px;width:420px"></div>
+      <div id="f10-e2" class="f10-str f10-top" style="left:700px;top:879px;width:420px"></div>
+      <div id="f10-e3" class="f10-str f10-top" style="left:250px;top:879px;width:500px"></div>
+      <div id="f10-e4" class="f10-str f10-top" style="left:250px;top:879px;width:500px"></div>
+      <div id="f10-line" class="f10-top"></div>
+      <div id="f10-dot" class="f10-top"></div>
+
+      <div id="f10-flash" class="fx-flash"></div>
+      <div class="fx-vignette"></div><div class="fx-grain"></div>
+    </div>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+    (function () {
+      /* ===================== FX : début du kit JS à copier ===================== */
+      /* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
+      const FX = {
+        /* deterministic pseudo-random from an index (no random) */
+        rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
+        /* split text of el into .fx-w spans per word (call once at build) */
+        words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
+          return t.map((w, i) => { const s = document.createElement("span"); s.className = "fx-w"; s.textContent = w;
+            el.appendChild(s); if (i < t.length - 1) el.appendChild(document.createTextNode(" ")); return s; }); },
+        /* chromatic copies inside a .fx-chroma wrapper: returns {r, b} */
+        chroma(wrap) { const txt = wrap.textContent; const mk = (c) => { const s = document.createElement("span"); s.className = c; s.textContent = txt; s.setAttribute("aria-hidden", "true"); wrap.appendChild(s); return s; };
+          return { r: mk("r"), b: mk("b") }; },
+        /* SLAM: element arrives too big + blurred and lands hard (1-4 frames), chromatic split snaps back */
+        slam(tl, el, t, { from = 1.6, blur = 18, d = 0.12, chroma = null, rot = 0 } = {}) {
+          tl.fromTo(el, { scale: from, opacity: 0, filter: `blur(${blur}px)`, rotation: rot }, { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: d, ease: "expo.out", immediateRender: false }, t);
+          if (chroma) { tl.fromTo(chroma.r, { x: -14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t);
+                        tl.fromTo(chroma.b, { x: 14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t); }
+        },
+        /* RISE: words mask-up one by one (wrap each .fx-w parent with overflow hidden yourself if you want a hard mask) */
+        rise(tl, words, t, { stagger = 0.06, d = 0.32, y = 60 } = {}) {
+          words.forEach((w, i) => tl.fromTo(w, { y, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t + i * stagger)); },
+        /* cue a single word exactly on its voice time */
+        cue(tl, w, t, { y = 30, d = 0.14 } = {}) { tl.fromTo(w, { y, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+        /* SHAKE: deterministic camera shake on an impact (finite keyframes) */
+        shake(tl, el, t, { amp = 14, d = 0.32, n = 7, seed = 1 } = {}) {
+          for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.to(el, { x: (FX.rnd(seed + i) - .5) * 2 * amp * k, y: (FX.rnd(seed + i + 50) - .5) * 2 * amp * k, duration: d / n, ease: "none" }, t + i * d / n); }
+          tl.to(el, { x: 0, y: 0, duration: d / n, ease: "power2.out" }, t + d); },
+        /* FLASH: 1-2 frame white (or ember) flash on a cut */
+        flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
+        /* WHIP: blur-pan out of a shot (exit) */
+        whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
+        whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: d, ease: "expo.out", immediateRender: false }, t); },
+        /* PUNCH: fast zoom-in on a target (camera), then slow drift */
+        punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
+          tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
+          tl.to(cam, { scale: s * (1 + drift), duration: hold, ease: "none" }, t + d); },
+        /* KEY BOX: the orange box of a caption keyword opens left to right */
+        key(tl, el, t) { tl.fromTo(el, { "--k": 0 }, { "--k": 1, duration: .14, ease: "power3.out", immediateRender: false }, t); },
+        /* SHIMMER: gradient sweep through .fx-k.hot text */
+        shimmer(tl, el, t, { d = 1.2 } = {}) { tl.fromTo(el, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: d, ease: "power2.inOut", immediateRender: false }, t); },
+        /* ROLL: digits text sequence (discrete, seek-safe) e.g. ["19:00","20:12","21:30","22:47"] at times */
+        roll(tl, el, values, times) { values.forEach((v, i) => tl.set(el, { textContent: v }, times[i])); },
+      };
+      /* ===================== FX : fin du kit JS à copier ===================== */
+
+      const FID = "10-imbattable", DUR = 3.5, F = 1 / 30;
+      const $ = (id) => document.getElementById(id);
+      const tl = gsap.timeline({ paused: true });
+      const ft = (el, a, b, t) => { b.immediateRender = false; tl.fromTo(el, a, b, t); };
+
+      /* measured line offsets (half the width of the words still hidden), so each partial line sits centred on x 500 */
+      const XA0 = 91, XB0 = 112, YL1 = 152;
+
+      /* ====================== SCENE 1 (0.00 – 2.06) : le courtier ====================== */
+      // camera push 4 %/s, linear, never stops
+      tl.fromTo($("f10-cam1"), { scale: 1 }, { scale: 1 + 0.04 * 2.06, duration: 2.06, ease: "none" }, 0);
+      tl.fromTo($("f10-glow1"), { x: 0, y: 0 }, { x: -120, y: 90, duration: 2.06, ease: "none" }, 0);
+
+      // lines 1-2 sit centred alone, then lift when « le courtier. » arrives
+      gsap.set($("f10-l1"), { y: YL1 }); gsap.set($("f10-l1a"), { x: XA0 }); gsap.set($("f10-l1b"), { x: XB0 });
+      tl.set($("f10-l1"), { y: YL1 }, 0);
+      tl.set($("f10-l1a"), { x: XA0 }, 0);
+      tl.set($("f10-l1b"), { x: XB0 }, 0);
+      tl.fromTo($("f10-l1"), { y: YL1 }, { y: 0, duration: 0.42, ease: "expo.out", immediateRender: false }, 1.10);
+      tl.to($("f10-l1a"), { x: 0, duration: 0.22, ease: "expo.out" }, 0.37 - F);
+      tl.to($("f10-l1b"), { x: 0, duration: 0.24, ease: "expo.out" }, 0.96 - F);
+      // L'IA rises from the very first image (handoff_in), lands on its cue 0.13
+      tl.fromTo($("f10-w-lia"), { y: 70, opacity: 0.35, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, 0);
+      // ne : cue rise
+      FX.cue(tl, $("f10-w-ne"), 0.37 - F, { y: 34, d: 0.16 });
+      // remplace : drops in from above onto its own line (vertical snap)
+      ft($("f10-w-rem"), { y: -70, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 0.48 - F);
+      // pas : mini slam (the negation)
+      FX.slam(tl, $("f10-w-pas"), 0.96 - F, { from: 1.7, blur: 12, d: 0.12 });
+
+      // line 3 : « le courtier. » rises (le 1.13, courtier 1.25)
+      FX.rise(tl, [$("f10-w-le"), $("f10-w-cour")], 1.13 - F, { stagger: 0.12, d: 0.42, y: 110 });
+      ft($("f10-glow1b"), { opacity: 0, scale: 0.7 }, { opacity: 0.55, scale: 1, duration: 0.6, ease: "power2.out" }, 1.15);
+      // micro drift of the serif hero against the push (parallax)
+      tl.to($("f10-l2"), { x: -12, duration: 0.8, ease: "none" }, 1.26);
+
+      // 1.40 – 2.00 : fly-through of the film's surfaces, back -> camera, blurred, 40 %
+      const fly = [
+        { id: "f10-c1", x: -240, y: -330, ry: 12, rz: -3 },
+        { id: "f10-c2", x: 250, y: 300, ry: -14, rz: 4 },
+        { id: "f10-c3", x: 0, y: -60, ry: 0, rz: 0 },
+        { id: "f10-c4", x: -250, y: 330, ry: 10, rz: 3 },
+        { id: "f10-c5", x: 240, y: -300, ry: -12, rz: -4 },
+      ];
+      fly.forEach((c, i) => {
+        const t0 = 1.40 + i * 0.12, d = 0.34, el = $(c.id);
+        ft(el, { x: c.x * 0.6, y: c.y * 0.6, z: -2400, rotationY: c.ry, rotationZ: c.rz },
+               { x: c.x, y: c.y * 1.5, z: 650, rotationY: c.ry * 0.4, rotationZ: 0, duration: d, ease: "power1.in" }, t0);
+        ft(el, { opacity: 0 }, { opacity: 0.4, duration: 0.08, ease: "none" }, t0);
+        tl.to(el, { opacity: 0, duration: 0.1, ease: "power1.in" }, t0 + d - 0.1);
+      });
+      // whoosh 1.40 : two light streaks cross behind the text
+      ft($("f10-sa"), { x: -200, opacity: 0, scaleX: 0.4 }, { x: 1400, opacity: 0.8, scaleX: 1.4, duration: 0.3, ease: "power2.in" }, 1.40);
+      tl.to($("f10-sa"), { opacity: 0, duration: 0.08, ease: "none" }, 1.62);
+      ft($("f10-sb"), { x: 200, opacity: 0, scaleX: 0.4 }, { x: -1400, opacity: 0.7, scaleX: 1.4, duration: 0.3, ease: "power2.in" }, 1.52);
+      tl.to($("f10-sb"), { opacity: 0, duration: 0.08, ease: "none" }, 1.74);
+
+      /* ====================== CUT 2.06 ====================== */
+      tl.set($("f10-s1"), { opacity: 0 }, 2.06 - F);
+      tl.set($("f10-s2"), { opacity: 1 }, 2.06 - F);
+      FX.flash(tl, $("f10-flash"), 2.06 - F, { peak: 0.55, d: 0.1 });
+
+      /* ====================== SCENE 2 (2.06 – 3.50) : imbattable ====================== */
+      // caption « Elle le rend », word by word, cleared hard on the slam
+      FX.cue(tl, $("f10-c-elle"), 2.06 - F, { y: 18, d: 0.1 });
+      FX.cue(tl, $("f10-c-le"), 2.25 - F, { y: 18, d: 0.1 });
+      FX.cue(tl, $("f10-c-rend"), 2.35 - F, { y: 18, d: 0.1 });
+      tl.set($("f10-cap"), { opacity: 0 }, 2.71 - F);
+
+      // anticipation : ember gathers in the centre, streaks get sucked in
+      ft($("f10-cglow"), { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.in" }, 2.08);
+      tl.to($("f10-cglow"), { opacity: 0, scale: 1.8, duration: 0.3, ease: "power2.out" }, 2.69);
+      // slow push-in x1 -> x1.1 under the whole build-up
+      tl.fromTo($("f10-cam2"), { scale: 1 }, { scale: 1.1, duration: 0.65, ease: "power1.in" }, 2.06);
+      // the centre dot : appears, then pulses faster and hotter until the implosion
+      const core = $("f10-core");
+      ft(core, { opacity: 0, scale: 0, filter: "brightness(1)" }, { opacity: 1, scale: 1.2, filter: "brightness(1)", duration: 0.14, ease: "back.out(2.5)" }, 2.07);
+      [[2.22, 1.7, 1.2], [2.36, 2.0, 1.4], [2.48, 2.4, 1.7], [2.57, 2.8, 2.0], [2.64, 3.3, 2.5]].forEach((q, i) => {
+        tl.to(core, { scale: q[1], filter: `brightness(${1.15 + i * 0.12})`, duration: 0.04, ease: "power2.out" }, q[0]);
+        tl.to(core, { scale: q[2], duration: 0.07, ease: "power2.in" }, q[0] + 0.04);
+      });
+      tl.to(core, { scale: 3.6, filter: "brightness(1.8)", duration: 0.04, ease: "power3.in" }, 2.67);
+      tl.set(core, { opacity: 0 }, 2.71 - F);
+      // the film's five surfaces are sucked in from the frame edges (top / bottom / sides) and implode into the dot at 2.71
+      const suck = $("f10-suck");
+      const SK = [
+        { src: "f10-c1", x: -620, y: -640, r: -16, s: 0.7 },
+        { src: "f10-c2", x: 640, y: -600, r: 14, s: 0.75 },
+        { src: "f10-c3", x: -560, y: 700, r: 10, s: 0.62 },
+        { src: "f10-c4", x: 620, y: 660, r: -12, s: 0.72 },
+        { src: "f10-c5", x: 20, y: -1000, r: 8, s: 0.8 },
+      ];
+      SK.forEach((k, i) => {
+        const el = $(k.src).cloneNode(true); el.id = "f10-k" + (i + 1); suck.appendChild(el);
+        el.style.top = "800px";
+        const t0 = 2.08 + i * 0.08, t1 = 2.675 - (4 - i) * 0.025, d = t1 - t0;
+        ft(el, { opacity: 0 }, { opacity: 0.8, duration: 0.1, ease: "none" }, t0);
+        // curved path : x and y converge with different eases
+        ft(el, { x: k.x }, { x: 0, duration: d, ease: "power3.in" }, t0);
+        ft(el, { y: k.y }, { y: 0, duration: d, ease: "power2.in" }, t0);
+        ft(el, { scale: k.s, rotation: 0, filter: "blur(3px)" }, { scale: 0.02, rotation: k.r * 3, filter: "blur(18px)", duration: d, ease: "power3.in" }, t0);
+        tl.to(el, { opacity: 0, duration: 0.05, ease: "power1.in" }, t1 - 0.05);
+      });
+      // first wave of converging light streaks (second wave below at 2.40)
+      [["f10-i3", 1], ["f10-i4", -1], ["f10-i5", 1], ["f10-i6", -1]].forEach((q, i) => {
+        const el = $(q[0]), t0 = 2.14 + i * 0.05;
+        ft(el, { x: 0, opacity: 0, scaleX: 0.5 }, { x: q[1] * 640, opacity: 0.75, scaleX: 1.2, duration: 0.22, ease: "power3.in" }, t0);
+        tl.to(el, { opacity: 0, duration: 0.03, ease: "none" }, t0 + 0.22);
+      });
+      const inS = [["f10-i1", 1], ["f10-i2", -1], ["f10-i3", 1], ["f10-i4", -1], ["f10-i5", 1], ["f10-i6", -1]];
+      inS.forEach((s, i) => {
+        const t0 = 2.40 + i * 0.035, el = $(s[0]);
+        ft(el, { x: 0, opacity: 0, scaleX: 0.5 }, { x: s[1] * 700, opacity: 0.9, scaleX: 1.3, duration: 0.27 - i * 0.02, ease: "power3.in" }, t0);
+        tl.set(el, { opacity: 0 }, 2.69);
+      });
+
+      // 2.71 : SLAM « IMBATTABLE. » + chroma + shake + flash + punch ×1.12
+      const imb = $("f10-imb"), ch = FX.chroma($("f10-imb-ch"));
+      const mkCopy = (cls, before) => { const s = document.createElement("span"); s.className = cls; s.textContent = "IMBAT\nTABLE."; s.setAttribute("aria-hidden", "true");
+        const w = $("f10-imb-ch"); if (before) w.insertBefore(s, w.firstChild); else w.appendChild(s); return s; };
+      const depth = mkCopy("f10-depth", true), sheen = mkCopy("f10-sheen", false);
+      FX.slam(tl, imb, 2.71 - F, { from: 1.6, blur: 18, d: 0.12, chroma: ch });
+      ft(depth, { y: 0, opacity: 0 }, { y: 26, opacity: 1, duration: 0.3, ease: "expo.out" }, 2.71);
+      FX.flash(tl, $("f10-flash"), 2.71 - F, { peak: 0.7, d: 0.1 });
+      FX.shake(tl, $("f10-shk"), 2.71, { amp: 14, d: 0.32, n: 7, seed: 10 });
+      tl.set($("f10-cam2"), { scale: 1 }, 2.71 - F);
+      tl.to($("f10-cam2"), { scale: 1.12, duration: 0.18, ease: "expo.out" }, 2.71);
+      tl.to($("f10-cam2"), { scale: 1.145, duration: 0.21, ease: "none" }, 2.89);
+      ft($("f10-glow2"), { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.25, ease: "expo.out" }, 2.71);
+      tl.to($("f10-glow2"), { scale: 1.08, duration: 0.14, ease: "none" }, 2.96);
+      // impact burst : streaks fly out from the word
+      inS.forEach((s, i) => {
+        const el = $(s[0]);
+        ft(el, { x: s[1] * 700, opacity: 0.85, scaleX: 1.3 }, { x: s[1] * -340, opacity: 0, scaleX: 0.6, duration: 0.3, ease: "expo.out" }, 2.72 + i * 0.012);
+      });
+
+      // 2.80 : shimmer (gradient sweep) + a one-pass white sheen band through the letters
+      FX.shimmer(tl, $("f10-imb-main"), 2.80, { d: 0.5 });
+      FX.shimmer(tl, sheen, 2.80, { d: 0.5 });
+
+      // 2.77 – 2.93 : the clock rolls 19:00 -> 19:05 and lands
+      FX.cue(tl, $("f10-clk"), 2.77, { y: 22, d: 0.14 });
+      FX.roll(tl, $("f10-clkv"), ["19:00", "19:01", "19:02", "19:03", "19:04", "19:05"], [2.0, 2.8, 2.8333, 2.8667, 2.9, 2.9333]);
+      ft($("f10-clkv"), { scale: 1.16, color: "#f24e1e" }, { scale: 1, color: "#0c0c0f", duration: 0.2, ease: "expo.out" }, 2.9333);
+
+      // 3.10 – 3.45 : everything collapses into the orange line at (500, 880), ground turns to night
+      const C0 = 3.10, CD = 0.35;
+      tl.to($("f10-cam2"), { scale: 1, duration: CD, ease: "power3.in" }, C0);
+      tl.to(imb, { scaleX: 0.42, scaleY: 0.02, y: 82, duration: CD, ease: "power3.in" }, C0);
+      tl.to(imb, { opacity: 0, duration: 0.06, ease: "none" }, C0 + CD - 0.06);
+      tl.to($("f10-clk"), { y: -190, scale: 0.2, opacity: 0, duration: 0.24, ease: "power3.in" }, C0);
+      tl.to($("f10-glow2"), { scale: 0.15, opacity: 0, duration: CD, ease: "power3.in" }, C0);
+      ft($("f10-night"), { opacity: 1, clipPath: "circle(0px at 500px 880px)" }, { clipPath: "circle(1250px at 500px 880px)", duration: 0.32, ease: "power3.in" }, 3.12);
+      // whoosh 3.10 : trails converge on the line ends (sides) and down / up the axis (vertical)
+      ft($("f10-e1"), { x: -420, opacity: 0, scaleX: 0.5 }, { x: 330, opacity: 0.9, scaleX: 1, duration: 0.3, ease: "power3.in" }, C0 + 0.04);
+      tl.to($("f10-e1"), { opacity: 0, duration: 0.05, ease: "none" }, 3.38);
+      ft($("f10-e2"), { x: 420, opacity: 0, scaleX: 0.5 }, { x: -330, opacity: 0.9, scaleX: 1, duration: 0.3, ease: "power3.in" }, C0 + 0.04);
+      tl.to($("f10-e2"), { opacity: 0, duration: 0.05, ease: "none" }, 3.38);
+      ft($("f10-e3"), { rotation: 90, y: -900, opacity: 0, scaleX: 0.6 }, { rotation: 90, y: -150, opacity: 0.8, scaleX: 1, duration: 0.26, ease: "power3.in" }, C0 + 0.06);
+      tl.to($("f10-e3"), { opacity: 0, duration: 0.05, ease: "none" }, 3.36);
+      ft($("f10-e4"), { rotation: 90, y: 900, opacity: 0, scaleX: 0.6 }, { rotation: 90, y: 150, opacity: 0.8, scaleX: 1, duration: 0.26, ease: "power3.in" }, C0 + 0.06);
+      tl.to($("f10-e4"), { opacity: 0, duration: 0.05, ease: "none" }, 3.36);
+      ft($("f10-line"), { opacity: 0, scaleX: 1.6 }, { opacity: 1, scaleX: 1, duration: 0.14, ease: "power3.in" }, 3.31);
+      ft($("f10-dot"), { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.06, ease: "back.out(2.5)" }, 3.39);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+    </script>
+  </div>
+</template>
