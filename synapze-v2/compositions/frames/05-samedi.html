@@ -306,9 +306,9 @@ const FX = {
       // first image = phone entering from below, tilted rotateX 20°, lock « samedi 16 · 21:14 »
       tl.fromTo(ph, { y: 560, rotationX: 20, rotationY: 12, z: 0 },
                     { y: 0, rotationX: 7, rotationY: 12, duration: 0.32, ease: "expo.out" }, 0);
-      tl.fromTo($("f05-halo"), { opacity: 0.3 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 0.05);
+      tl.fromTo($("f05-halo"), { opacity: 0.3 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
       // idle float (finite)
-      tl.fromTo(phf, { y: 0 }, { y: -12, duration: 1.2, ease: "sine.inOut" }, 0.32);
+      tl.fromTo(phf, { y: 0 }, { y: -12, duration: 1.2, ease: "sine.inOut", immediateRender: false }, 0.32);
       tl.to(phf, { y: 4, duration: 1.1, ease: "sine.inOut" }, 1.52);
       // 1.80 the phone turns gently rotateY 12° → -8°
       tl.to(ph, { rotationY: -8, rotationX: 5, duration: 1.0, ease: "power2.inOut" }, 1.80);
