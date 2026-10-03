@@ -90,7 +90,7 @@ Scene 2 (1.50 à 3.70 s) : P2, le dernier rendez-vous part
 - scene: À 20:00, une fiche prospect vide tombe et pend à la ligne ; dans le silence, le point court de 19:00 à 22:47 en traînant un segment hachuré gris pendant que la fiche reste vide
 - duration: 3.70s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/02-deuxieme-journee.html
 - voiceover: "Et votre deuxième journée commence."
 - type: pain_point
@@ -128,7 +128,7 @@ Scene 2 (1.80 à 3.70 s) : P4, le gag muet
 - scene: Le carnet du rendez-vous pend à 21:00 ; « Pas la saisie » sur le segment hachuré ; puis carnet et fiche côte à côte, il retape ses notes, les fiches s'accrochent les unes après les autres
 - duration: 5.80s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/03-saisie.html
 - voiceover: "Votre métier, c'est le conseil. Pas la saisie. Pourtant, vous retapez vos notes, fiche par fiche."
 - type: pain_point
@@ -176,7 +176,7 @@ Scene 3 (2.80 à 5.80 s) : P7, retaper fiche par fiche
 - scene: La fiche de conseil pend à 22:30 ; une flèche de souris coche les cases une à une ; la ligne s'arrête à 22:47 et la caméra file vers le week-end
 - duration: 3.00s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/04-case-par-case.html
 - voiceover: "Vous remplissez le devoir de conseil, case par case."
 - type: pain_point
@@ -204,7 +204,7 @@ Scene 1 (0.00 à 3.00 s) : P8, case par case
 - scene: Sur la ligne du week-end, un iPhone pend dans le noir à « SAM. 21:14 » : la notification WhatsApp d'un prospect ; la caméra longe la ligne jusqu'à « LUN. 08:30 », la notification grisée sans réponse
 - duration: 3.30s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/05-samedi.html
 - voiceover: "Et le prospect qui vous écrit samedi soir... attend lundi."
 - type: pain_point
@@ -242,7 +242,7 @@ Scene 2 (2.30 à 3.30 s) : P10, attend lundi
 - scene: Sur noir, la ligne plate traverse le cadre ; la phrase s'écrit au-dessus, suivie du caret orange ; le caret l'efface, reste seul, la ligne frémit, il devient une barre de son ; flash clair
 - duration: 2.45s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/06-pivot.html
 - voiceover: "Et si vous arrêtiez d'écrire ?"
 - type: pivot
@@ -270,7 +270,7 @@ Scene 1 (0.00 à 2.45 s) : P11, le pivot
 - scene: Sur le crème, la ligne est devenue la forme d'onde orange d'une note vocale ; Synapze ; l'onde court vers la droite et entre dans le vrai écran Synapze, où la fiche « Louis Lebrun » se remplit seule
 - duration: 4.75s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/07-vous-parlez.html
 - voiceover: "Avec Synapze, vous parlez. Une note vocale après le rendez-vous, et la fiche client s'écrit."
 - type: demo
@@ -308,7 +308,7 @@ Scene 2 (1.80 à 4.75 s) : P13, la fiche s'écrit
 - scene: La fiche de conseil du plan 8 pend à la ligne orange : ses cinq cases se cochent seules avec la puce « IA », la complétude se remplit, le tampon « Piste d'audit · horodatée » se pose
 - duration: 2.95s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/08-tracable.html
 - voiceover: "Le devoir de conseil se remplit tout seul, traçable."
 - type: demo
@@ -336,7 +336,7 @@ Scene 1 (0.00 à 2.95 s) : P14, la fiche de conseil se remplit seule
 - scene: À « SAM. 21:14 », le même iPhone pend à la ligne, WhatsApp ouvert : l'assistant répond à Camille à la minute, puis à 03:12
 - duration: 3.30s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/09-whatsapp.html
 - voiceover: "Sur WhatsApp, votre assistant répond à vos clients, jour et nuit."
 - type: demo
@@ -364,7 +364,7 @@ Scene 1 (0.00 à 3.30 s) : P15, l'assistant répond
 - scene: La caméra recule sur toute la soirée en crème : de 18:00 à 20:00, plus de segment hachuré, les objets remplis pendent au fil ; le point s'arrête à 19:05 ; puis la ligne se contracte au centre
 - duration: 3.50s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/10-imbattable.html
 - voiceover: "L'IA ne remplace pas le courtier. Elle le rend imbattable."
 - type: payoff
@@ -392,7 +392,7 @@ Scene 1 (0.00 à 3.50 s) : P16, la soirée rendue
 - scene: Sur le bleu nuit, le logo « • Synapze • » s'assemble sur le trait ; « Le courtier parle. L'IA fait tout le reste. » ; un curseur arrive et clique « Demander une démo »
 - duration: 7.35s
 - transition_in: cut
-- status: outline
+- status: animated
 - src: compositions/frames/11-fin.html
 - voiceover: "Synapze. Le courtier parle, l'IA fait tout le reste. Demandez votre démo."
 - type: cta

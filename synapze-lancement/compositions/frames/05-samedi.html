@@ -46,24 +46,24 @@
     /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
     #f05-wrap #f05-thread { opacity: 0; }
 
-    /* the advice form of frame 04 at its last image (three boxes ticked, the arrow on row 4): leaves left in the whip */
-    #f05-docw { width: 718.95px; height: 403.27px; }
-    #root .f05-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 617px; box-sizing: border-box; padding: 60px 80px;
-      transform: scale(0.65359); transform-origin: 0 0; border-radius: 6px; color: #222; font: 400 26px "DM Sans", sans-serif;
-      background: radial-gradient(1100px 760px at 0% 0%, rgba(255,196,120,.13), rgba(255,196,120,0) 70%), #fff;
+    /* the advice form of frame 04 at its last image (centred on 22:30, x1.3073, three boxes ticked, the arrow on row 4) */
+    #f05-docw { width: 550px; height: 306px; }
+    #f05-docs { position: absolute; left: 0; top: 0; width: 550px; height: 306px; }
+    #f05-wrap .f05-doc { position: absolute; left: 0; top: 0; width: 1100px; height: 612px; box-sizing: border-box; transform: scale(0.5); transform-origin: 0 0;
+      background: #fff; border-radius: 6px; padding: 60px 80px; color: #222; font: 400 26px "DM Sans", sans-serif;
       box-shadow: 0 30px 60px rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); }
-    #root .f05-doc h3 { margin: 0 0 6px; font: 700 34px/44px "DM Sans", sans-serif; }
-    #root .f05-ds { font: 400 20px/26px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
-    #root .f05-ln { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; box-sizing: border-box; }
-    #root .f05-ck { position: relative; flex: none; width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; }
-    #root .f05-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
+    #f05-wrap .f05-doc h3 { margin: 0 0 6px; font: 700 34px "DM Sans", sans-serif; }
+    #f05-wrap .f05-doc .f05-dsub { font: 400 20px "DM Sans", sans-serif; color: #888; margin-bottom: 30px; }
+    #f05-wrap .f05-doc .f05-dl { display: flex; align-items: center; gap: 22px; height: 78px; border-bottom: 1px solid #eee; }
+    #f05-wrap .f05-doc .f05-dk { position: relative; width: 34px; height: 34px; box-sizing: border-box; border: 2px solid #9AA0AA; border-radius: 4px; flex: none; }
+    #f05-wrap .f05-ckb { position: absolute; left: -2px; top: -2px; width: 34px; height: 34px; box-sizing: border-box;
       border: 2px solid #F24E1E; border-radius: 4px; }
-    #root .f05-tk { position: absolute; left: 0; top: 0; width: 30px; height: 30px; overflow: visible; }
-    #root .f05-tk path { fill: none; stroke: #F24E1E; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-    #root .f05-cur { position: absolute; left: 0; top: 0; width: 44px; height: 60px; transform: translate(104px, 447px); transform-origin: 0 0;
+    #f05-wrap .f05-tk { position: absolute; left: 0; top: 0; width: 30px; height: 30px; overflow: visible; }
+    #f05-wrap .f05-tk path { fill: none; stroke: #F24E1E; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    #f05-wrap .f05-cur { position: absolute; left: 0; top: 0; width: 44px; height: 60px; transform: translate(104px, 450px); transform-origin: 0 0;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,.35)); }
-    #root .f05-cur::before { content: ""; position: absolute; inset: 0; background: #fff; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
-    #root .f05-cur::after { content: ""; position: absolute; inset: 4px 6px 6px 3px; background: #111; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f05-wrap .f05-cur::before { content: ""; position: absolute; inset: 0; background: #fff; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
+    #f05-wrap .f05-cur::after { content: ""; position: absolute; inset: 4px 6px 6px 3px; background: #111; clip-path: polygon(0 0,0 80%,22% 62%,40% 100%,55% 94%,38% 58%,70% 58%); }
 
     /* hanging iPhone (frame.md iphone-lock; styleframes sf.css .phone / .lock / .notif), world scale 0.57 */
     #f05-phw { width: 228px; height: 467.4px; opacity: 0; }
@@ -90,9 +90,6 @@
     #root .f05-bhalo { position: absolute; left: -114px; top: -114px; width: 857px; height: 1048px; pointer-events: none;
       background: radial-gradient(closest-side, rgba(120,160,230,.18), transparent); }
 
-    /* warm lamp of the dark stage (styleframes .dark.lamp) */
-    #f05-lamp { position: absolute; left: -300px; top: -400px; width: 1500px; height: 1200px; pointer-events: none; opacity: 0;
-      background: radial-gradient(closest-side, rgba(255,196,120,.20), transparent); }
 
     /* the days, DM Mono, right of the phone (styleframes P09 / P10) */
     #f05-days { position: absolute; left: 1290px; top: 260px; font: 500 26px/57.2px "DM Mono", monospace; letter-spacing: 4px;
@@ -120,19 +117,19 @@
     <div id="f05-bg" class="clip" data-start="0" data-duration="3.3" data-track-index="0"></div>
     <div id="f05-wrap"></div>
 
-    <!-- the advice form of frame 04 (moved under the line by filHang, hung at 22:30) -->
-    <div id="f05-docw">
+    <!-- the advice form of frame 04 (hung above 22:30 by filHang) -->
+    <div id="f05-docw"><div id="f05-docs">
       <div class="f05-doc">
         <h3>Fiche de conseil · Mutuelle santé</h3>
-        <div class="f05-ds">Modèle_DDA_v3.docx</div>
-        <div class="f05-ln"><div class="f05-ck"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Besoins exprimés</span></div>
-        <div class="f05-ln"><div class="f05-ck"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Situation familiale</span></div>
-        <div class="f05-ln"><div class="f05-ck"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div><span>Budget</span></div>
-        <div class="f05-ln"><div class="f05-ck"></div><span>Garanties proposées</span></div>
-        <div class="f05-ln"><div class="f05-ck"></div><span>Justification du conseil</span></div>
+        <div class="f05-dsub">Modèle_DDA_v3.docx</div>
+        <div class="f05-dl"><div class="f05-dk"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Besoins exprimés</div>
+        <div class="f05-dl"><div class="f05-dk"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Situation familiale</div>
+        <div class="f05-dl"><div class="f05-dk"><i class="f05-ckb"></i><svg class="f05-tk" viewBox="0 0 30 30"><path d="M3 13.5 L11.2 20.8 L23.9 6.7"/></svg></div>Budget</div>
+        <div class="f05-dl"><div class="f05-dk"></div>Garanties proposées</div>
+        <div class="f05-dl"><div class="f05-dk"></div>Justification du conseil</div>
         <div class="f05-cur"></div>
       </div>
-    </div>
+    </div></div>
 
     <!-- the iPhone (moved under the line by filHang) -->
     <div id="f05-phw">
@@ -152,8 +149,6 @@
         <div class="f05-bhalo"></div>
       </div>
     </div>
-
-    <div id="f05-lamp"></div>
 
     <div id="f05-days">
       <span class="f05-day" id="f05-dsam">SAM. 21:14</span>
@@ -229,22 +224,25 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       /* ---------------- world ---------------- */
       var XSAM = FIL.DAYS.sam, XDIM = FIL.DAYS.dim, XLUN = FIL.DAYS.lun, X2247 = FIL.hx(22, 47);
       // the world of frame 04 at its last image (handoff_in): grey line past 19:00 with the hatched « saisie » to 22:47,
-      // the point and the graduation « 22:47 » leaving on the left, « SAM. » ahead; no clock
+      // the point, the big « 22:47 » clock and its graduation leaving on the left, « SAM. » ahead
       var h = filBuild($("f05-wrap"), {
-        ground: "dark", x0: FIL.hx(18), x1: 13000, orangeTo: FIL.hx(19), hatch: [FIL.hx(19), X2247], point: X2247, clock: null,
+        ground: "dark", x0: 0, x1: 13000, orangeTo: FIL.hx(19), hatch: [FIL.hx(19), X2247], point: X2247, clock: "22:47",
         ticks: [[X2247, "22:47"], [XSAM, "SAM."], [XDIM, "DIM."], [XLUN, "LUN. 08:30"]],
       });
-      Object.assign(h.halo.style, { left: "6440px", top: "140px" });   // frame 04's warm lamp, top left of the form
       // the dot grid (trame 7 %) on the stage, just under the cam (pilot pattern), same pattern phase as the pilot
       // (box offset and translation constant shifted by whole 48 px pitches), box trimmed to this frame's travel
       var dots = h.world.querySelector(".fil-dots");
       h.stage.insertBefore(dots, h.cam);
       Object.assign(dots.style, { left: "-80px", top: "-752px", width: "9600px", height: "1872px" });
+      // the lamp of the styleframes, fixed on the stage top left (frames 03 and 04)
+      h.stage.insertBefore(h.halo, h.cam);
+      Object.assign(h.halo.style, { left: "450px", top: "200px" });
 
-      // frame 04's advice form, still hanging at 22:30 (its thread 112 px, attached 290 px / 1.53 from its left edge)
-      var doc = filHang(h.world, FIL.hx(22, 30), $("f05-docw"), { len: 112 });
-      $("f05-docw").style.transform = "translateX(" + (-290 / 1.53) + "px)";
-      h.world.appendChild(h.point);
+      // frame 04's advice form, still hanging centred on 22:30 (thread 120 px, landed at x1100 / (550 · 1.53));
+      // the point and the clock sit behind it, as in frame 04
+      var doc = filHang(h.world, FIL.hx(22, 30), $("f05-docw"), { len: 120 });
+      gsap.set(doc.hang, { scale: 1100 / (550 * 1.53) });
+      h.world.insertBefore(h.point, doc.thread); h.world.insertBefore(h.clock, doc.thread);
 
       // the iPhone hangs at SAM. 21:14 by a short thread, just above the line
       var PH_LEN = 14;
@@ -263,9 +261,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
       gsap.set(h.cam, { scale: C0[2], filter: "blur(14px)" });
 
-      var hudScale = [h.point].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
+      var hudScale = [h.point, h.clock].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
       var hudY = [h.orange, h.grey, h.hatch];
       var hudX = [ph.thread, doc.thread];
+      gsap.set(h.clock, { transformOrigin: "50% 230px" });
       h.ticks.forEach(function (t) { gsap.set(t[1], { transformOrigin: "50% -30px" }); });
       function dotsAt(c) { return { x: 6320 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
       gsap.set(dots, dotsAt(C0));
@@ -318,8 +317,6 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       ft(ph.hang, { rotation: 2 }, { rotation: 0, duration: 0.2, ease: "sine.inOut" }, 0.57);
       ft(ph.hang, { rotation: 0 }, { rotation: 1, duration: 0.6, ease: "sine.inOut" }, 1.20);
       ft(ph.hang, { rotation: 1 }, { rotation: 0, duration: 0.5, ease: "sine.inOut" }, 1.80);
-      // warm lamp of the stage lights up
-      ft($("f05-lamp"), { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0.10);
       // 0.95 the WhatsApp notification slides down from the top of the screen (×1.08 blurred → sharp in 0.12 s)
       var nw = $("f05-nw");
       ft(nw, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, 0.95);

@@ -180,9 +180,15 @@ if iris_at is not None:
         tl.to("#fxiris-ring", {{ opacity: 0, duration: 0.15 }}, {t(0.70)});
 '''
 anchor = re.search(r"(?m)^[ \t]*tl\.to\(\{\}, \{ duration: [0-9.]+ \}, 0\);", s)
-if not anchor:
-    raise SystemExit("assemble: full-span anchor tl.to({}, { duration: N }, 0); not found in index.html")
-s = s[:anchor.start()] + tl + s[anchor.start():]
+if anchor:
+    s = s[:anchor.start()] + tl + s[anchor.start():]
+else:
+    # newer assembler: the main timeline is a bare registration; wrap it so the orchestrator tweens can run on it
+    reg = 'window.__timelines["main"] = gsap.timeline({ paused: true });'
+    if reg not in s:
+        raise SystemExit("assemble: main timeline registration not found in index.html")
+    s = s.replace(reg, 'const tl = gsap.timeline({ paused: true });\n' + tl +
+                  f'        tl.to({{}}, {{ duration: {env["TOTAL"]} }}, 0);\n        window.__timelines["main"] = tl;', 1)
 open(p, "w", encoding="utf-8").write(s)
 print("orchestrator layer patched:", ", ".join(k for k, v in (("audio", env.get("AUDIO")), ("flash", leak_at is not None),
       ("iris", iris_at is not None), ("paper bed", "paperbed" in s)) if v) or "nothing")
