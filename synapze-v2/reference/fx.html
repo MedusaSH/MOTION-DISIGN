@@ -7,7 +7,7 @@
   Source UNIQUE du look v2 (voir frame.md). Chaque séquence copie MOT POUR MOT le bloc CSS et le kit JS entre les
   marqueurs « FX : début / fin » (seul changement : « ../assets/ » devient « assets/ » ; sélecteurs scopés sous le root
   de la séquence). Les helpers prennent la timeline GSAP de la séquence : tout est seek-safe (fromTo +
-  immediateRender:false), déterministe (aucun Math.random), sans callback.
+  immediateRender:false), déterministe (aucun aléatoire), sans callback.
   Ouvrir ce fichier dans Chromium : la démo montre la grammaire (slam chromatique, caption, carte glass 3D, grain).
 -->
 <style>
@@ -75,7 +75,7 @@ html, body { margin: 0; background: #000; }
 /* ===================== FX : début du kit JS à copier ===================== */
 /* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
 const FX = {
-  /* deterministic pseudo-random from an index (never Math.random) */
+  /* deterministic pseudo-random from an index (no random) */
   rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
   /* split text of el into .fx-w spans per word (call once at build) */
   words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";

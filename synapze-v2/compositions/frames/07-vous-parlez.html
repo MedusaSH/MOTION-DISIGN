@@ -1,0 +1,336 @@
+<template>
+  <style>
+/* ===================== FX : début du bloc CSS à copier ===================== */
+@font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Geist"; src: url("assets/fonts/Geist-Italic-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Geist Mono"; src: url("assets/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; }
+@font-face { font-family: "Caveat"; src: url("assets/fonts/Caveat-500.woff2") format("woff2"); }
+#f07-stage.fx-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+/* grounds: night (problem), ember (pivot light), paper (solution) */
+#f07-stage .fx-night { position: absolute; inset: 0; background: radial-gradient(1200px 800px at 70% 20%, #1a1210 0%, #0b0b0e 45%, #050507 100%); }
+#f07-stage .fx-paper { position: absolute; inset: 0; background: radial-gradient(900px 700px at 80% 15%, #ffd9c2 0%, rgba(255,217,194,0) 60%),
+  radial-gradient(1000px 800px at 10% 95%, #ffc7a8 0%, rgba(255,199,168,0) 55%), #f6f1ea; }
+#f07-stage .fx-orange { position: absolute; inset: 0; background: radial-gradient(1400px 900px at 50% 50%, #ff6a2b 0%, #f24e1e 45%, #b8270a 100%); }
+#f07-stage .fx-glow { position: absolute; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(242,78,30,.45), rgba(242,78,30,.12) 45%, rgba(242,78,30,0)); }
+#f07-stage .fx-grain { position: absolute; inset: -40px; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 90;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 256px 256px; }
+#f07-stage .fx-vignette { position: absolute; inset: 0; pointer-events: none; z-index: 89; background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+#f07-stage .fx-paper ~ .fx-vignette, #f07-stage .fx-vignette.soft { background: radial-gradient(1300px 820px at 50% 50%, rgba(0,0,0,0) 60%, rgba(60,30,10,.18) 100%); }
+#f07-stage .fx-flash { position: absolute; inset: 0; z-index: 95; pointer-events: none; opacity: 0; background: #fff; }
+#f07-stage .fx-flash.ember { background: radial-gradient(circle at 50% 50%, #fff4ea 0%, #ffb08a 40%, #f24e1e 100%); }
+/* kinetic type */
+#f07-stage .fx-k { position: absolute; left: 0; right: 0; text-align: center; color: #f6f1ea; white-space: nowrap; line-height: .9; font-weight: 800; letter-spacing: -0.045em; }
+#f07-stage .fx-k.ink { color: #0c0c0f; }
+#f07-stage .fx-k.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+#f07-stage .fx-k.outline { color: transparent; -webkit-text-stroke: 3px #f6f1ea; }
+#f07-stage .fx-k.hot { background: linear-gradient(100deg, #ffb08a 0%, #ff6a2b 35%, #f24e1e 60%, #ffd2bd 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+#f07-stage .fx-w { display: inline-block; will-change: transform, filter, opacity; }
+/* chromatic slam: wrap > [r, b, main] stacked copies (fxChroma builds them) */
+#f07-stage .fx-chroma { position: relative; display: inline-block; }
+#f07-stage .fx-chroma > .r, #f07-stage .fx-chroma > .b { position: absolute; left: 0; top: 0; mix-blend-mode: screen; pointer-events: none; }
+#f07-stage .fx-chroma > .r { color: #ff2d55 !important; -webkit-text-fill-color: #ff2d55; }
+#f07-stage .fx-chroma > .b { color: #2de1ff !important; -webkit-text-fill-color: #2de1ff; }
+/* caption (the voice, readable without sound): bottom center, band y 890-980 */
+#f07-stage .fx-cap { position: absolute; left: 0; right: 0; top: 905px; text-align: center; font: 600 46px/1.15 "Geist", sans-serif; letter-spacing: -0.02em; color: #f6f1ea; z-index: 80; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+#f07-stage .fx-cap.ink { color: #141418; text-shadow: 0 2px 14px rgba(246,241,234,.8); }
+#f07-stage .fx-cap .w { display: inline-block; opacity: 0; }
+#f07-stage .fx-key { position: relative; display: inline-block; padding: 0 .18em; color: #fff; text-shadow: none; }
+#f07-stage .fx-key::before { content: ""; position: absolute; inset: -.04em 0 -.02em; background: #f24e1e; border-radius: 8px; z-index: -1; transform: scaleX(var(--k, 1)); transform-origin: 0 50%; }
+/* surfaces */
+#f07-stage .fx-3d { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 1800px; perspective-origin: 50% 45%; }
+#f07-stage .fx-card { position: absolute; border-radius: 22px; background: rgba(24,22,26,.82); border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset, 0 1px 0 rgba(255,255,255,.08) inset; color: #f6f1ea; }
+#f07-stage .fx-card.light { background: rgba(255,255,255,.92); border: 1px solid rgba(20,20,30,.06); color: #141418; box-shadow: 0 50px 120px rgba(120,50,10,.22), 0 2px 8px rgba(0,0,0,.06); }
+#f07-stage .fx-label { font: 500 18px/1 "Geist Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #9a948c; }
+#f07-stage .fx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: #f24e1e; color: #fff; font: 600 26px/1 "Geist"; }
+#f07-stage .fx-streak { position: absolute; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff, rgba(255,255,255,0)); opacity: 0; }
+/* ===================== FX : fin du bloc CSS à copier ===================== */
+
+    #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+    #f07-stage .f07-layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 960px 540px; }
+
+    /* ---- Scene 1 : the voice ---- */
+    #f07-glow1 { left: 960px; top: 610px; opacity: 0; }
+    #f07-wave { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    #f07-stage .f07-bar { position: absolute; top: 400px; width: 10px; height: 280px; border-radius: 5px; opacity: 0;
+      background: linear-gradient(180deg, #ff6a2b 0%, #f24e1e 50%, #ff6a2b 100%); box-shadow: 0 0 18px rgba(242,78,30,.35); }
+    /* handoff bar : 10 x 160, frame centre */
+    #f07-hbar { position: absolute; left: 955px; top: 460px; width: 10px; height: 160px; border-radius: 5px; background: #f24e1e;
+      box-shadow: 0 0 22px rgba(242,78,30,.45); }
+    #f07-pillrow { position: absolute; left: 0; right: 0; top: 118px; text-align: center; }
+    #f07-pill { opacity: 0; box-shadow: 0 14px 40px rgba(242,78,30,.35); }
+    #f07-dot { width: 14px; height: 14px; border-radius: 50%; background: #fff; display: inline-block; }
+    #f07-parlez { top: 196px; font-size: 280px; overflow: visible; }
+    #f07-parlez .f07-mask { display: inline-block; overflow: hidden; padding: 0 40px 30px; margin-bottom: -30px; vertical-align: top; }
+    #f07-pw { opacity: 0; }
+    #f07-streak1 { left: 360px; top: 470px; width: 1200px; }
+
+    /* ---- Scene 2 : the real screen ---- */
+    #f07-s2 { opacity: 0; }
+    #f07-glow2 { left: 960px; top: 900px; opacity: 0; transform: scaleY(.35); }
+    #f07-card { left: 210px; top: 50px; width: 1500px; height: 844px; padding: 0; box-sizing: border-box; overflow: visible; }
+    #f07-scr { position: absolute; left: 10px; top: 10px; width: 1480px; height: 824px; border-radius: 14px; overflow: hidden; background: #efe8dd; }
+    #f07-scr img { position: absolute; left: 0; top: 0; width: 1480px; height: 832.5px; opacity: 0; }
+    #f07-scr .f07-mk { position: absolute; width: 2px; height: 2px; }
+    #f07-sheen { position: absolute; left: -700px; top: -200px; width: 420px; height: 1300px; opacity: 0; mix-blend-mode: soft-light;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9), rgba(255,255,255,0)); transform: rotate(18deg); }
+    #f07-sweep { position: absolute; left: 0; top: 478px; width: 360px; height: 140px; opacity: 0; mix-blend-mode: multiply;
+      background: linear-gradient(90deg, rgba(255,176,138,0), rgba(255,140,90,.55) 45%, rgba(242,78,30,.6) 50%, rgba(255,140,90,.55) 55%, rgba(255,176,138,0)); }
+    #f07-rim { position: absolute; inset: -2px; border-radius: 24px; opacity: 0; pointer-events: none;
+      box-shadow: 0 0 0 2px rgba(242,78,30,.85), 0 0 40px 6px rgba(242,78,30,.45); }
+    #f07-botfade { position: absolute; left: 0; right: 0; top: 820px; height: 260px; z-index: 70; opacity: 0; pointer-events: none;
+      background: linear-gradient(180deg, rgba(246,241,234,0) 0%, rgba(246,241,234,.78) 45%, rgba(246,241,234,.9) 100%); }
+    #f07-cap1, #f07-cap2 { white-space: nowrap; }
+  </style>
+
+  <div id="root" data-composition-id="07-vous-parlez" data-width="1920" data-height="1080" data-duration="4.75">
+    <div id="f07-stage" class="fx-stage clip" data-start="0" data-duration="4.75" data-track-index="0">
+      <div class="fx-paper" id="f07-paper"></div>
+
+      <!-- Scene 1 : waveform + parlez. -->
+      <div class="f07-layer" id="f07-s1">
+        <div class="fx-glow" id="f07-glow1"></div>
+        <div class="f07-layer" id="f07-shk1">
+          <div class="f07-layer" id="f07-cam1">
+            <div id="f07-wave"></div>
+            <div id="f07-hbar"></div>
+            <div class="fx-streak" id="f07-streak1"></div>
+            <div id="f07-pillrow"><div class="fx-pill" id="f07-pill"><i id="f07-dot"></i>Enregistrement…</div></div>
+            <div class="fx-k ink serif" id="f07-parlez"><span class="f07-mask"><span class="fx-w" id="f07-pw">parlez.</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 : the real Synapze screen, floating in 3D -->
+      <div class="f07-layer" id="f07-s2">
+        <div class="f07-layer" id="f07-cam2">
+          <div class="fx-glow" id="f07-glow2"></div>
+          <div class="fx-3d" id="f07-3d">
+            <div class="fx-card light" id="f07-card">
+              <div id="f07-scr">
+                <img id="f07-vn01" src="assets/ui/voice-note/vn-01.jpg" alt="">
+                <img id="f07-vn02" src="assets/ui/voice-note/vn-02.jpg" alt="">
+                <img id="f07-vn03" src="assets/ui/voice-note/vn-03.jpg" alt="">
+                <img id="f07-vn04" src="assets/ui/voice-note/vn-04.jpg" alt="">
+                <img id="f07-vn05" src="assets/ui/voice-note/vn-05.jpg" alt="">
+                <img id="f07-vn06" src="assets/ui/voice-note/vn-06.jpg" alt="">
+                <img id="f07-vn07" src="assets/ui/voice-note/vn-07.jpg" alt="">
+                <img id="f07-vn08" src="assets/ui/voice-note/vn-08.jpg" alt="">
+                <img id="f07-vn09" src="assets/ui/voice-note/vn-09.jpg" alt="">
+                <img id="f07-vn10" src="assets/ui/voice-note/vn-10.jpg" alt="">
+                <img id="f07-vn11" src="assets/ui/voice-note/vn-11.jpg" alt="">
+                <img id="f07-vn12" src="assets/ui/voice-note/vn-12.jpg" alt="">
+                <img id="f07-vn13" src="assets/ui/voice-note/vn-13.jpg" alt="">
+                <img id="f07-vn14" src="assets/ui/voice-note/vn-14.jpg" alt="">
+                <img id="f07-vn15" src="assets/ui/voice-note/vn-15.jpg" alt="">
+                <img id="f07-vn16" src="assets/ui/voice-note/vn-16.jpg" alt="">
+                <!-- invisible measuring markers (image px x 1.02778) : transcription card centre, Identité block centre -->
+                <i class="f07-mk" id="f07-mkT" style="left:830px;top:383px"></i>
+                <i class="f07-mk" id="f07-mkI" style="left:830px;top:546px"></i>
+                <div id="f07-sheen"></div>
+                <div id="f07-sweep"></div>
+              </div>
+              <div id="f07-rim"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="f07-botfade"></div>
+      <div class="fx-cap ink" id="f07-cap1"><span class="w" data-cue="0.11">Avec</span> <span class="w fx-key" id="f07-k1" data-cue="0.36">Synapze,</span> <span class="w" data-cue="0.87">vous</span></div>
+      <div class="fx-cap ink" id="f07-cap2"><span class="w" data-cue="1.86">Une</span> <span class="w" data-cue="2.00">note</span> <span class="w" data-cue="2.18">vocale</span> <span class="w" data-cue="2.45">après</span> <span class="w" data-cue="2.68">le</span> <span class="w" data-cue="2.77">rendez-vous,</span> <span class="w" data-cue="3.48">et</span> <span class="w" data-cue="3.57">la</span> <span class="w" data-cue="3.67">fiche</span> <span class="w" data-cue="3.90">client</span> <span class="w fx-key" id="f07-k2" data-cue="4.18">s’écrit.</span></div>
+
+      <div class="fx-vignette soft"></div>
+      <div class="fx-grain"></div>
+      <div class="fx-flash" id="f07-flash"></div>
+    </div>
+
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+    (function () {
+/* ===================== FX : début du kit JS à copier ===================== */
+/* All helpers add seek-safe tweens to the frame's paused timeline `tl`. Times are frame-local seconds. */
+const FX = {
+  /* deterministic pseudo-random from an index (never Math.random) */
+  rnd: (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); },
+  /* split text of el into .fx-w spans per word (call once at build) */
+  words(el) { const t = el.textContent.trim().split(/\s+/); el.textContent = "";
+    return t.map((w, i) => { const s = document.createElement("span"); s.className = "fx-w"; s.textContent = w;
+      el.appendChild(s); if (i < t.length - 1) el.appendChild(document.createTextNode(" ")); return s; }); },
+  /* chromatic copies inside a .fx-chroma wrapper: returns {r, b} */
+  chroma(wrap) { const txt = wrap.textContent; const mk = (c) => { const s = document.createElement("span"); s.className = c; s.textContent = txt; s.setAttribute("aria-hidden", "true"); wrap.appendChild(s); return s; };
+    return { r: mk("r"), b: mk("b") }; },
+  /* SLAM: element arrives too big + blurred and lands hard (1-4 frames), chromatic split snaps back */
+  slam(tl, el, t, { from = 1.6, blur = 18, d = 0.12, chroma = null, rot = 0 } = {}) {
+    tl.fromTo(el, { scale: from, opacity: 0, filter: `blur(${blur}px)`, rotation: rot }, { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: d, ease: "expo.out", immediateRender: false }, t);
+    if (chroma) { tl.fromTo(chroma.r, { x: -14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t);
+                  tl.fromTo(chroma.b, { x: 14, opacity: .9 }, { x: 0, opacity: 0, duration: .28, ease: "power3.out", immediateRender: false }, t); }
+  },
+  /* RISE: words mask-up one by one (wrap each .fx-w parent with overflow hidden yourself if you want a hard mask) */
+  rise(tl, words, t, { stagger = 0.06, d = 0.32, y = 60 } = {}) {
+    words.forEach((w, i) => tl.fromTo(w, { y, opacity: 0, filter: "blur(8px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t + i * stagger)); },
+  /* cue a single word exactly on its voice time */
+  cue(tl, w, t, { y = 30, d = 0.14 } = {}) { tl.fromTo(w, { y, opacity: 0, filter: "blur(6px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* SHAKE: deterministic camera shake on an impact (finite keyframes) */
+  shake(tl, el, t, { amp = 14, d = 0.32, n = 7, seed = 1 } = {}) {
+    for (let i = 0; i < n; i++) { const k = 1 - i / n; tl.to(el, { x: (FX.rnd(seed + i) - .5) * 2 * amp * k, y: (FX.rnd(seed + i + 50) - .5) * 2 * amp * k, duration: d / n, ease: "none" }, t + i * d / n); }
+    tl.to(el, { x: 0, y: 0, duration: d / n, ease: "power2.out" }, t + d); },
+  /* FLASH: 1-2 frame white (or ember) flash on a cut */
+  flash(tl, el, t, { peak = 0.85, d = 0.1 } = {}) { tl.fromTo(el, { opacity: peak }, { opacity: 0, duration: d, ease: "power2.out", immediateRender: false }, t); },
+  /* WHIP: blur-pan out of a shot (exit) */
+  whipOut(tl, el, t, { x = -900, d = 0.16 } = {}) { tl.to(el, { x, filter: "blur(28px)", duration: d, ease: "power3.in" }, t); },
+  whipIn(tl, el, t, { x = 900, d = 0.22 } = {}) { tl.fromTo(el, { x, filter: "blur(28px)", opacity: 1 }, { x: 0, filter: "blur(0px)", duration: d, ease: "expo.out", immediateRender: false }, t); },
+  /* PUNCH: fast zoom-in on a target (camera), then slow drift */
+  punch(tl, cam, t, { s = 1.35, x = 0, y = 0, d = 0.18, drift = 0.04, hold = 1 } = {}) {
+    tl.to(cam, { scale: s, x, y, duration: d, ease: "expo.out" }, t);
+    tl.to(cam, { scale: s * (1 + drift), duration: hold, ease: "none" }, t + d); },
+  /* KEY BOX: the orange box of a caption keyword opens left to right */
+  key(tl, el, t) { tl.fromTo(el, { "--k": 0 }, { "--k": 1, duration: .14, ease: "power3.out", immediateRender: false }, t); },
+  /* SHIMMER: gradient sweep through .fx-k.hot text */
+  shimmer(tl, el, t, { d = 1.2 } = {}) { tl.fromTo(el, { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: d, ease: "power2.inOut", immediateRender: false }, t); },
+  /* ROLL: digits text sequence (discrete, seek-safe) e.g. ["19:00","20:12","21:30","22:47"] at times */
+  roll(tl, el, values, times) { values.forEach((v, i) => tl.set(el, { textContent: v }, times[i])); },
+};
+/* ===================== FX : fin du kit JS à copier ===================== */
+
+      var FID = "07-vous-parlez";
+      var DUR = 4.75;
+      var root = document.querySelector('[data-composition-id="' + FID + '"]');
+      var $ = function (id) { return root.querySelector("#" + id); };
+      var tl = gsap.timeline({ paused: true });
+      var F = 1 / 30;
+
+      /* ================= Scene 1 (0.00 – 1.86) : the bar becomes the voice ================= */
+      /* Real voice RMS of assets/audio/voix-montage.wav, 21.95 → 26.70 s, 15 Hz, normalised (baked). */
+      var ENV = [0.0,0.22,0.55,0.85,0.23,0.3,0.31,0.73,0.71,0.33,0.08,0.26,0.16,0.01,0.22,0.22,0.36,0.03,0.51,0.67,0.2,0.34,0.23,0.07,0.0,0.0,0.0,0.04,0.82,1.0,0.79,0.7,0.22,0.51,0.59,0.04,0.55,0.43,0.46,0.14,0.38,0.56,0.39,0.68,0.51,0.84,0.35,0.37,0.44,0.18,0.0,0.0,0.5,0.54,0.45,0.13,0.4,0.25,0.03,0.27,0.53,0.71,0.47,0.18,0.37,0.06,0.13,0.16,0.06,0.0,0.0];
+      function env(t) { var x = Math.max(0, t * 15), i = Math.floor(x), f = x - i;
+        var a = ENV[Math.min(i, ENV.length - 1)], b = ENV[Math.min(i + 1, ENV.length - 1)]; return a + (b - a) * f; }
+
+      var N = 90, PITCH = 20, BH = 280, C = (N - 1) / 2;
+      var wave = $("f07-wave"), bars = [];
+      for (var i = 0; i < N; i++) {
+        var b = document.createElement("div"); b.className = "f07-bar"; b.id = "f07-bar" + i;
+        b.style.left = (960 + (i - C) * PITCH - 5) + "px"; wave.appendChild(b); bars.push(b);
+      }
+      function bell(i) { var d = Math.abs(i - C) / (C + 1); return Math.cos(d * Math.PI / 2); }
+      function idleH(i) { return 26 + 120 * bell(i) * (0.45 + 0.55 * FX.rnd(i + 7)); }
+
+      /* the wave sits a little lower than the handoff centre once the headline arrives */
+      tl.fromTo(wave, { y: 0 }, { y: 70, duration: 0.9, ease: "power3.inOut", immediateRender: false }, 0.12);
+      tl.fromTo($("f07-hbar"), { y: 0 }, { y: 70, duration: 0.9, ease: "power3.inOut", immediateRender: false }, 0.12);
+
+      /* 0.00 the bar multiplies, from the centre out, 0.012 s apart */
+      bars.forEach(function (b, i) {
+        var rank = Math.floor(Math.abs(i - C));
+        var x0 = 960 - (960 + (i - C) * PITCH);
+        tl.fromTo(b, { x: x0, scaleY: 160 / BH, opacity: 1 },
+          { x: 0, scaleY: idleH(i) / BH, duration: 0.24, ease: "expo.out", immediateRender: false }, rank * 0.012);
+      });
+      tl.fromTo($("f07-hbar"), { opacity: 1 }, { opacity: 0, duration: 0.06, ease: "none", immediateRender: false }, 0.05);
+
+      /* 0.40 → 1.86 the wave follows the real amplitude, rippling out from the centre */
+      var STEP = 1 / 15;
+      bars.forEach(function (b, i) {
+        var lag = Math.abs(i - C) * 0.006;
+        for (var k = 0; k * STEP + 0.40 < 1.86; k++) {
+          var t = 0.40 + k * STEP;
+          var e = env(t - lag);
+          var peak = 0.85 * Math.exp(-Math.pow((t - 1.16) / 0.12, 2)); /* 1.12 « parlez. » : peak */
+          var amp = Math.min(1, e * 0.95 + peak) * Math.pow(bell(i), 0.55) * (0.5 + 0.5 * FX.rnd(i * 31 + k * 7));
+          var h = 16 + (BH - 16) * amp;
+          tl.to(b, { scaleY: h / BH, duration: STEP, ease: "sine.inOut" }, t);
+        }
+      });
+
+      /* ember glow behind the wave, breathing up to the peak */
+      tl.fromTo($("f07-glow1"), { opacity: 0, scale: 0.6 }, { opacity: 0.55, scale: 0.9, duration: 0.5, ease: "power2.out", immediateRender: false }, 0.05);
+      tl.to($("f07-glow1"), { opacity: 0.9, scale: 1.05, duration: 0.14, ease: "expo.out" }, 1.12);
+      tl.to($("f07-glow1"), { opacity: 0.6, scale: 1.0, duration: 0.6, ease: "power2.out" }, 1.26);
+
+      /* camera : pull −2 %/s */
+      tl.fromTo($("f07-cam1"), { scale: 1 }, { scale: 1 - 0.02 * 1.86, duration: 1.86, ease: "none", immediateRender: false }, 0);
+
+      /* 0.80 « ● Enregistrement… » lands above */
+      tl.fromTo($("f07-pill"), { opacity: 0, y: -24, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(2.2)", immediateRender: false }, 0.80);
+      tl.fromTo($("f07-dot"), { opacity: 1 }, { opacity: 0.25, duration: 0.25, ease: "sine.inOut", immediateRender: false }, 1.15);
+      tl.to($("f07-dot"), { opacity: 1, duration: 0.25, ease: "sine.inOut" }, 1.40);
+      tl.to($("f07-dot"), { opacity: 0.25, duration: 0.2, ease: "sine.inOut" }, 1.65);
+
+      /* 1.12 « parlez. » rises over the wave + peak impact */
+      tl.fromTo($("f07-pw"), { yPercent: 105, opacity: 1, filter: "blur(10px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 0.34, ease: "expo.out", immediateRender: false }, 1.12 - F);
+      tl.fromTo($("f07-pw"), { scale: 1 }, { scale: 1.035, duration: 0.74 - 0.0, ease: "none", immediateRender: false }, 1.12 + 0.34 - F);
+      FX.shake(tl, $("f07-shk1"), 1.14, { amp: 7, d: 0.24, n: 6, seed: 7 });
+      tl.fromTo($("f07-streak1"), { opacity: 0, scaleX: 0.2, y: 70 }, { opacity: 0.9, scaleX: 1.2, y: 70, duration: 0.12, ease: "expo.out", immediateRender: false }, 1.12);
+      tl.to($("f07-streak1"), { opacity: 0, scaleX: 1.6, duration: 0.3, ease: "power2.out" }, 1.24);
+
+      /* captions scene 1 : « Avec [Synapze,] vous » 0.11 → 0.87, out at 1.05 */
+      function cueWords(cap) {
+        Array.prototype.forEach.call(cap.querySelectorAll(".w"), function (w) {
+          var c = parseFloat(w.getAttribute("data-cue"));
+          var at = c <= 1.86 && cap.id === "f07-cap2" ? c : Math.max(0.001, c - F);
+          FX.cue(tl, w, at, { y: 18, d: 0.1 });
+        });
+      }
+      cueWords($("f07-cap1"));
+      FX.key(tl, $("f07-k1"), 0.36 - F);
+      tl.fromTo($("f07-cap1"), { opacity: 1, y: 0 }, { opacity: 0, y: -10, duration: 0.1, ease: "power2.in", immediateRender: false }, 1.05);
+
+      /* ================= Scene 2 (1.86 – 4.75) : the fiche writes itself ================= */
+      tl.set($("f07-s1"), { opacity: 0 }, 1.86);
+      tl.set($("f07-s2"), { opacity: 1 }, 1.86);
+      FX.flash(tl, $("f07-flash"), 1.86, { peak: 0.55, d: 0.1 });
+
+      /* discrete swaps of the real screen (never redrawn) */
+      var SW = [["01", 1.86]];
+      for (var j = 2; j <= 10; j++) SW.push([("0" + j).slice(-2), 2.40 + (j - 2) * 0.125]);
+      for (var m = 11; m <= 16; m++) SW.push(["" + m, 3.48 + (m - 11) * 0.14]);
+      SW.forEach(function (s, n) {
+        tl.set($("f07-vn" + s[0]), { opacity: 1 }, s[1]);
+        if (n > 0) tl.set($("f07-vn" + SW[n - 1][0]), { opacity: 0 }, s[1]);
+      });
+
+      /* the glass card arrives tilted and straightens (−16° → −6° in 0.6 s), then keeps drifting */
+      var card = $("f07-card");
+      tl.fromTo(card, { rotationY: -16, rotationX: 6, z: -120, y: 30 },
+        { rotationY: -6, rotationX: 4, z: 0, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 1.86);
+      tl.fromTo(card, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.16, ease: "power2.out", immediateRender: false }, 1.86);
+      tl.to(card, { rotationY: -5, rotationX: 3.4, duration: DUR - 2.46, ease: "none" }, 2.46);
+
+      tl.fromTo($("f07-glow2"), { opacity: 0, scaleX: 0.8, scaleY: 0.3 }, { opacity: 0.9, scaleX: 1.15, scaleY: 0.38, duration: 0.6, ease: "power2.out", immediateRender: false }, 1.86);
+      tl.fromTo($("f07-botfade"), { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power1.out", immediateRender: false }, 1.86);
+      /* white light sheen across the glass on arrival */
+      tl.fromTo($("f07-sheen"), { x: 0, opacity: 0.85 }, { x: 2400, opacity: 0.85, duration: 0.55, ease: "power2.inOut", immediateRender: false }, 1.9);
+      tl.set($("f07-sheen"), { opacity: 0 }, 2.46);
+
+      /* camera : creep, punch on the transcription (2.45), punch moved to Identité (3.48), drift */
+      var cam = $("f07-cam2");
+      /* baked target offsets from the frame centre, measured in the settled pose (card rotY −6, rotX 4) */
+      var T_OFF = { x: 91, y: -96 }, I_OFF = { x: 90, y: 68 };
+      var S1 = 1.5, S2 = 1.62;
+      tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.03, duration: 0.59, ease: "none", immediateRender: false }, 1.86);
+      FX.punch(tl, cam, 2.45, { s: S1, x: -T_OFF.x * S1, y: -T_OFF.y * S1, d: 0.2, drift: 0.035, hold: 0.83 });
+      FX.punch(tl, cam, 3.48, { s: S2, x: -I_OFF.x * S2, y: -I_OFF.y * S2, d: 0.2, drift: 0.03, hold: DUR - 3.68 });
+
+      /* 4.18 « REMPLIE AUTOMATIQUEMENT » : a short orange glint runs over the Identité block + rim light on the frame */
+      tl.fromTo($("f07-sweep"), { x: 80, opacity: 1 }, { x: 1480, opacity: 1, duration: 0.42, ease: "power2.inOut", immediateRender: false }, 4.16);
+      tl.set($("f07-sweep"), { opacity: 0 }, 4.58);
+      tl.fromTo($("f07-rim"), { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out", immediateRender: false }, 4.16);
+      tl.to($("f07-rim"), { opacity: 0.35, duration: 0.45, ease: "power2.out" }, 4.26);
+      tl.to($("f07-glow2"), { opacity: 1, scaleX: 1.3, duration: 0.12, ease: "expo.out" }, 4.16);
+      tl.to($("f07-glow2"), { opacity: 0.85, scaleX: 1.2, duration: 0.4, ease: "power2.out" }, 4.3);
+
+      /* captions scene 2, word by word, key box on « s’écrit. » */
+      cueWords($("f07-cap2"));
+      FX.key(tl, $("f07-k2"), 4.18 - F);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+    </script>
+  </div>
+</template>
