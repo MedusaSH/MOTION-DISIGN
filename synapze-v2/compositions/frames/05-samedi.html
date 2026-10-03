@@ -72,9 +72,9 @@
       mask-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 14%, #000 86%, rgba(0,0,0,0) 100%); }
     [data-composition-id="05-samedi"] .f05-tki { display: flex; flex-direction: column; }
     [data-composition-id="05-samedi"] .f05-it { height: 440px; display: flex; align-items: center; justify-content: center; white-space: nowrap;
-      font: 900 420px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: transparent; -webkit-text-stroke: 3px rgba(246,241,234,.30); }
+      font: 900 420px/1 "Geist", sans-serif; letter-spacing: -0.045em; color: rgba(10,9,11,.9); -webkit-text-stroke: 5px rgba(246,241,234,.30); paint-order: stroke fill; }
     [data-composition-id="05-samedi"] .f05-it.f05-long { font-size: 336px; }
-    [data-composition-id="05-samedi"] .f05-lit .f05-it { -webkit-text-stroke: 3px #ffd2bd; }
+    [data-composition-id="05-samedi"] .f05-lit .f05-it { -webkit-text-stroke: 5px #ffd2bd; }
     [data-composition-id="05-samedi"] #f05-tklit { opacity: 0; filter: drop-shadow(0 0 22px rgba(242,78,30,.65)); }
 
     /* streaks */
@@ -315,7 +315,7 @@ const FX = {
       tl.fromTo($("f05-sheen"), { x: 0 }, { x: 420, duration: 1.0, ease: "power2.inOut", immediateRender: false }, 1.80);
       // 3.00 the phone recedes, out of focus (depth of field, not an exit)
       tl.to(phf, { z: -260, y: -30, duration: 0.3, ease: "power3.out" }, 2.80);
-      tl.fromTo(phst, { filter: "blur(0px)", opacity: 1 }, { filter: "blur(9px)", opacity: 0.8, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.82);
+      tl.fromTo(phst, { filter: "blur(0px)", opacity: 1 }, { filter: "blur(6px)", opacity: 0.85, duration: 0.3, ease: "power2.out", immediateRender: false }, 2.82);
 
       // lock screen: date and time tick on the cues (vertical spring steps, same items moved)
       tl.fromTo($("f05-dsa"), { y: 0 }, { y: -28, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 2.40);
