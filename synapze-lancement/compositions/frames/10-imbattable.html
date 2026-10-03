@@ -48,12 +48,11 @@
     /* elements born after t = 0 (built by the kit, ids given right after filBuild) */
     #f10-wrap #f10-point, #f10-wrap #f10-clock, #f10-wrap #f10-seg, #f10-wrap #f10-navy, #f10-wrap #f10-dotsd,
     #f10-wrap #f10-tk18, #f10-wrap #f10-lb18, #f10-wrap #f10-tk19, #f10-wrap #f10-lb19, #f10-wrap #f10-tk20, #f10-wrap #f10-lb20,
-    #f10-wrap #f10-h-ag, #f10-wrap #f10-t-ag, #f10-wrap #f10-h-cn, #f10-wrap #f10-t-cn,
-    #f10-wrap #f10-h-fm, #f10-wrap #f10-t-fm, #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp { opacity: 0; }
+    #f10-wrap #f10-h-lp, #f10-wrap #f10-t-lp { opacity: 0; }
     #f10-wrap #f10-navy { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: #0E1624; }
 
     /* clock « 19:05 » (P16: 110 px, under the line): digit columns that roll (vertical ticker) */
-    #f10-wrap #f10-clock { font-size: 110px; line-height: 118px; }
+    #f10-wrap #f10-clock { font-size: 110px; line-height: 118px; letter-spacing: -0.045em; }
     #f10-wrap .f10-col { display: inline-block; height: 118px; overflow: hidden; vertical-align: top; }
     #f10-wrap .f10-step { display: block; }
     #f10-wrap .f10-dg { display: block; height: 118px; line-height: 118px; }
@@ -294,10 +293,10 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       // the dot grid (trame 9 %) is re-hosted on the stage, as in the pilot, in a trimmed box (same 48 px phase)
       var dots = h.world.querySelector(".fil-dots");
       h.stage.insertBefore(dots, h.cam);
-      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "3888px", height: "1872px" });
+      Object.assign(dots.style, { left: "-560px", top: "-752px", width: "4464px", height: "1872px" });
       // the night-blue ground and its dark trame wait under the cam for the contraction
       var navy = filEl(h.stage, "", {}); navy.id = "f10-navy"; h.stage.insertBefore(navy, dots);
-      var dotsD = filEl(h.stage, "fil-dots", { left: "-560px", top: "-752px", width: "3888px", height: "1872px" });
+      var dotsD = filEl(h.stage, "fil-dots", { left: "-560px", top: "-752px", width: "4464px", height: "1872px" });
       dotsD.id = "f10-dotsd"; h.stage.insertBefore(dotsD, h.cam);
       h.point.id = "f10-point"; h.clock.id = "f10-clock";
       var tkSam = h.ticks[0];
@@ -327,7 +326,7 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
         { k: "cn", el: "f10-cnw", x: X19 + (610 - 960) / 0.36, len: 333 },
         { k: "fm", el: "f10-fmw", x: X19 + (875 - 960) / 0.36, len: 222 },
         { k: "lp", el: "f10-lpw", x: X19 + (1350 - 960) / 0.36, len: 250 },
-        { k: "ph", el: "f10-phw", x: XSAM, len: 90 },
+        { k: "ph", el: "f10-phw", x: XSAM, len: 20 },     // as in frame 9
       ];
       var H = {};
       OBJ.forEach(function (o) {
@@ -339,14 +338,19 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       var seg = filEl(h.world, "fil-line", { left: X19 - 962 / S3, top: FIL.Y, width: 2 * 962 / S3 }); seg.id = "f10-seg";
       h.world.appendChild(h.point); h.world.appendChild(h.clock);
 
-      /* ---------------- camera (world x/y, cam scale) ---------------- */
+      /* ---------------- camera (world x/y, cam scale + filter) ---------------- */
+      // frame 9 plays the first 0.35 s of a 0.75 s power3.out pull from CA; this frame plays its last 0.40 s (same curve)
+      var CA = [8447.6, 212.4, 1.05];
       var C0 = [8600, 540, 0.6];                 // handoff_in: mid pull, on the phone at SAM. 21:14
-      var C1 = [X19, 373, 0.3726];               // end of the pull: the whole evening, line at screen y 600
-      var C2 = [X19, 373, S3];                   // pull drift -2 %/s (×0.36 at the key image 2.40)
+      var P3 = gsap.parseEase("power3.out"), PF = 0.35 / 0.75, P3F = P3(PF);
+      var CE = [0, 1, 2].map(function (i) { return CA[i] + (C0[i] - CA[i]) / P3F; });   // ≈ (8627, 599, ×0.52) at 0.40
+      var pullTail = function (p) { return (P3(PF + (1 - PF) * p) - P3F) / (1 - P3F); };
+      var C1 = [X19, CE[1], 0.37008];            // the whole evening at 1.00 (zoom-out workspace reveal)
+      var C2 = [X19, CE[1], S3];                 // pull drift -2 %/s (×0.36 at the key image 2.40)
       var C3 = [X19, 540, SE];                   // contraction: the line becomes a 360 px stroke at (960, 540)
       filCamSet(h, C0[0], C0[1], C0[2]);
       gsap.set(h.world, { x: 960 - C0[0], y: 540 - C0[1] });
-      gsap.set(h.cam, { scale: C0[2] });
+      gsap.set(h.cam, { scale: C0[2], filter: "blur(0px)" });
 
       var hudScale = [h.point, h.clock].concat(h.ticks.map(function (t) { return t[0]; }), h.ticks.map(function (t) { return t[1]; }));
       var hudY = [h.orange, seg];
@@ -356,9 +360,9 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       gsap.set(hudScale, { scale: 1 / C0[2] });
       gsap.set(hudY, { scaleY: 1 / C0[2] });
       gsap.set(hudX, { scaleX: 1 / C0[2] });
-      // trame phase of the pilot's convention at cam(8600, 540, 0.6): 32 + 0.6 (1600 - 8600) = -4168 ≡ -424 (mod 48)
-      var DX0 = -4168 + 48 * 78;
-      gsap.set([dots, dotsD], { x: DX0, y: 0 });
+      // the trame follows the pilot's (and frame 9's) convention, rebased by 46 × 48 px for this box (same phase)
+      function dotsAt(c) { return { x: 2208 + 32 + c[2] * (1600 - c[0]), y: c[2] * (540 - c[1]) }; }  // c = [px, py, s]
+      gsap.set([dots, dotsD], dotsAt(C0));
 
       var tl = gsap.timeline({ paused: true });
       function ft(target, from, to, pos) { if (pos > 0) to.immediateRender = false; tl.fromTo(target, from, to, pos); }
@@ -377,38 +381,40 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
           ft(hudY, { scaleY: kA }, { scaleY: kB, duration: dur, ease: e }, t0);
           ft(hudX, { scaleX: kA }, { scaleX: kB, duration: dur, ease: e }, t0);
         }
-        return { Ex: Ex, Ey: Ey, Es: Es };
+        if (withDots) {
+          var at = function (p) { return dotsAt([a[0] + (b[0] - a[0]) * Ex(p), a[1] + (b[1] - a[1]) * Ey(p), a[2] + (b[2] - a[2]) * Es(p)]); };
+          ["x", "y"].forEach(function (k) {
+            var g0 = at(0)[k], g1 = at(1)[k];
+            if (Math.abs(g1 - g0) < 1e-6) return;
+            var fv = {}, tv = { duration: dur, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
+            fv[k] = g0; tv[k] = g1; ft([dots, dotsD], fv, tv, t0);
+          });
+        }
       }
-      // 0.00 → 0.65 end of the pull (power3.out on the scale) while the frame slides onto the whole evening:
-      // the phone drifts from the center to its slot at 19:53 (zoom-out workspace reveal)
-      var A = camMove(0, 0.65, C0, C1, "sine.inOut", "sine.inOut", "power3.out");
-      // the trame travels with the line (screen displacement of the world under the camera)
-      (function () {
-        var at = function (p) {
-          var s = C0[2] + (C1[2] - C0[2]) * A.Es(p);
-          return { x: DX0 + s * (A.Ex(p) * (C0[0] - C1[0])), y: s * (A.Ey(p) * (C0[1] - C1[1])) };
-        };
-        ["x", "y"].forEach(function (k) {
-          var g0 = at(0)[k], g1 = at(1)[k];
-          var fv = {}, tv = { duration: 0.65, ease: function (p) { return (at(p)[k] - g0) / (g1 - g0); } };
-          fv[k] = g0; tv[k] = g1; ft([dots, dotsD], fv, tv, 0);
-        });
-      })();
-      // 0.65 → 3.00 slow pull drift (-2 %/s)
-      camMove(0.65, 2.35, C1, C2, "none");
-      // 3.00 → 3.50 the line and its objects contract to the center (power3.in)
+      var withDots = true;
+      // 0.00 → 0.40 the tail of frame 9's pull (same power3.out curve, same speed at the seam), on the phone
+      camMove(0, 0.40, C0, CE, pullTail);
+      // 0.40 → 1.00 the frame slides back over the whole evening and keeps pulling (power2.inOut, light motion blur):
+      // the phone drifts from the center to its slot at 19:53, the evening was there all along
+      camMove(0.40, 0.60, CE, C1, "power2.inOut");
+      ft(h.cam, { filter: "blur(0px)" }, { filter: "blur(4px)", duration: 0.3, ease: "power2.in" }, 0.40);
+      ft(h.cam, { filter: "blur(4px)" }, { filter: "blur(0px)", duration: 0.3, ease: "power2.out" }, 0.70);
+      // 1.00 → 3.00 slow pull drift (-2 %/s)
+      camMove(1.00, 2.00, C1, C2, "none");
+      // 3.00 → 3.50 the line and its objects contract to the center (power3.in); the trame holds still
+      withDots = false;
       camMove(3.00, 0.50, C2, C3, "power3.in");
 
       /* ---------------- Scene 1 (0.00 – 3.50) ---------------- */
       // 0.07 → 0.25 the « SAM. 21:14 » graduation gives way to the hours of the evening
       ft(tkSam, { opacity: 1 }, { opacity: 0, duration: 0.16, ease: "power2.in" }, 0.07);
-      [[h.ticks[1], 0.40], [h.ticks[2], 0.44], [h.ticks[3], 0.48]].forEach(function (p) {
+      [[h.ticks[3], 0.30], [h.ticks[2], 0.40], [h.ticks[1], 0.44]].forEach(function (p) {
         ft(p[0][0], { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power3.out" }, p[1]);
         ft(p[0][1], { opacity: 0, y: 14, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.16, ease: "power3.out" }, p[1]);
       });
-      // 0.08 → 0.55 the filled objects drop on the line, right to left as the frame opens (×1.15 blurred → caught,
-      // swing 2° once); the phone is already there
-      [["lp", 0.08], ["fm", 0.16], ["cn", 0.24], ["ag", 0.32]].forEach(function (p) {
+      // 0.10 the filled Synapze screen drops on the line beside the phone (×1.15 blurred → caught, swing 2° once);
+      // the other objects already hang off screen to the left: the pull reveals them
+      [["lp", 0.10]].forEach(function (p) {
         var r = H[p[0]], t = p[1];
         ft(r.hang, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, t);
         ft(r.hang, { y: -260, scale: 1.15, rotation: 0, filter: "blur(8px)" }, { y: -14, scale: 1.03, filter: "blur(3px)", duration: 0.15, ease: "power2.in" }, t);
@@ -419,15 +425,15 @@ const filHHMM = (min) => `${String(Math.floor(min / 60) % 24).padStart(2, "0")}:
       });
       // living hold: the other objects drift 1° (finite)
       ["ag", "fm", "lp", "ph"].forEach(function (k, i) {
-        var t = 1.05 + i * 0.12;
+        var t = 0.95 + i * 0.12;
         ft(H[k].hang, { rotation: 0 }, { rotation: 1, duration: 0.7, ease: "sine.inOut" }, t);
         ft(H[k].hang, { rotation: 1 }, { rotation: -0.6, duration: 0.8, ease: "sine.inOut" }, t + 0.7);
         ft(H[k].hang, { rotation: -0.6 }, { rotation: 0, duration: 0.6, ease: "sine.inOut" }, t + 1.5);
       });
-      // 0.60 the notebook lights up (the tool of advice, the broker's own); the others step back
+      // 0.90 (as the frame lands) the notebook lights up (the tool of advice, the broker's own); the others step back
       var others = [H.ag.hang, H.fm.hang, H.lp.hang, H.ph.hang];
-      ft(others, { opacity: 1 }, { opacity: 0.38, duration: 0.3, ease: "power2.out" }, 0.60);
-      ft(H.cn.hang, { y: 0, scale: 1 }, { y: -24, scale: 1.1, duration: 0.3, ease: "power3.out" }, 0.60);
+      ft(others, { opacity: 1 }, { opacity: 0.38, duration: 0.3, ease: "power2.out" }, 0.90);
+      ft(H.cn.hang, { y: 0, scale: 1 }, { y: -24, scale: 1.1, duration: 0.3, ease: "power3.out" }, 0.90);
       // 1.25 on « courtier » the notebook swings
       ft(H.cn.hang, { rotation: 0 }, { rotation: 3, duration: 0.22, ease: "sine.out" }, 1.22);
       ft(H.cn.hang, { rotation: 3 }, { rotation: -1.6, duration: 0.3, ease: "sine.inOut" }, 1.44);
